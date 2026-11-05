@@ -269,3 +269,6 @@ button:disabled,[aria-disabled=true]{cursor:not-allowed;opacity:.45;}
 @media(max-width:1150px) and (min-width:801px){.app-shell:not(.sidebar-collapsed){--nav-width:225px;}}
 @media(max-width:800px){.app-shell{--nav-width:225px;}.app-shell.sidebar-collapsed{--nav-width:80px;}.app-shell .section-nav [data-slot=badge]{display:inline-flex;}}
 @media(prefers-reduced-motion:reduce){.app-shell .sidebar,.app-shell .main-shell,.app-shell .sidebar .nav-label,.app-shell .brand-image,.app-shell .brand-mark{transition:none;}}
+.sidebar-edge-toggle{position:fixed;z-index:40;left:calc(var(--nav-width) - 14px);top:96px;width:28px;height:36px;border-radius:8px;background:var(--card);border:1px solid var(--border);box-shadow:0 2px 8px color-mix(in srgb,var(--background) 60%,transparent);transition:left var(--nav-motion) cubic-bezier(.2,.8,.2,1),background-color .16s ease;}
+.sidebar-edge-toggle svg{width:15px;height:15px;}
+@media(prefers-reduced-motion:reduce){.sidebar-edge-toggle{transition:none;}}
