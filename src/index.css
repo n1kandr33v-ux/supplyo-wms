@@ -290,3 +290,5 @@ button:disabled,[aria-disabled=true]{cursor:not-allowed;opacity:.45;}
 .scanner-panel #product-scan{height:40px;min-height:40px;padding:10px 12px;background:var(--card);border-color:color-mix(in srgb,var(--foreground) 13%,var(--border));font-size:13px;box-shadow:none;}
 .scanner-panel #product-scan:hover{border-color:color-mix(in srgb,var(--primary) 45%,var(--border));}
 .scanner-panel #product-scan:focus-visible{outline:none;border-color:color-mix(in srgb,var(--primary) 60%,var(--border));box-shadow:0 0 0 1px color-mix(in srgb,var(--primary) 20%,transparent);}
+.direct-print-sticker{display:none;}
+@media print{.direct-print-sticker,.direct-print-sticker *{visibility:visible;}.direct-print-sticker{display:block;position:absolute;left:0;top:0;background:white;color:black;padding:8mm;font-size:14pt;}.direct-print-sticker strong{font-size:24pt;}body:has(.direct-print-sticker) [role=dialog]{display:none;}}
