@@ -242,3 +242,7 @@ button:disabled,[aria-disabled=true]{cursor:not-allowed;opacity:.45;}
 .topbar{justify-content:flex-start;gap:16px;}
 .sidebar-toggle{flex-shrink:0;color:var(--muted-foreground);}
 .section-nav{margin-top:14px;}
+.brand-mark{display:none;}
+.sidebar-collapsed .brand-image{display:none;}
+.sidebar-collapsed .brand-mark{display:block;width:38px;height:38px;object-fit:contain;filter:invert(1) brightness(60);mix-blend-mode:screen;}
+@media(max-width:800px){.brand-image{display:none;}.brand-mark{display:block;width:38px;height:38px;object-fit:contain;filter:invert(1) brightness(60);mix-blend-mode:screen;}}
