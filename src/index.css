@@ -331,3 +331,9 @@ button:disabled,[aria-disabled=true]{cursor:not-allowed;opacity:.45;}
 @media(prefers-reduced-motion:reduce){.box-count-slot .box-count-visible{animation:none;}}
 .assembly-progress-count{margin-left:auto;flex-shrink:0;white-space:nowrap;padding:8px 12px;border-radius:8px;background:var(--secondary);color:var(--muted-foreground);font-size:12px;font-variant-numeric:tabular-nums;}
 .assembly-progress-count strong{color:var(--foreground);font-weight:600;}
+.table-toolbar{align-items:center;gap:10px;}
+.table-toolbar>.search-wrap{flex:1 1 0;min-width:180px;max-width:none;}
+.table-toolbar :is(.search-wrap input,[data-slot=select-trigger],[data-slot=button]),.table-toolbar .assembly-progress-count{height:36px;min-height:36px;}
+.table-toolbar .assembly-progress-count{display:flex;align-items:center;gap:4px;margin-left:0;padding:0 12px;line-height:1;}
+.table-toolbar>[data-slot=select-trigger],.table-toolbar>[data-slot=button]{flex-shrink:0;}
+@media(max-width:800px){.table-toolbar>.search-wrap{flex-basis:100%;}.table-toolbar .assembly-progress-count{margin-left:auto;}}
