@@ -6,6 +6,7 @@ if not exist "%~dp0wb-print-agent.ps1" (
  pause
  exit /b 1
 )
-powershell.exe -NoProfile -File "%~dp0wb-print-agent.ps1"
+powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -File "%~dp0wb-print-agent.ps1"
 echo.
 pause
+
