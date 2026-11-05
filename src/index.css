@@ -337,3 +337,11 @@ button:disabled,[aria-disabled=true]{cursor:not-allowed;opacity:.45;}
 .table-toolbar .assembly-progress-count{display:flex;align-items:center;gap:4px;margin-left:0;padding:0 12px;line-height:1;}
 .table-toolbar>[data-slot=select-trigger],.table-toolbar>[data-slot=button]{flex-shrink:0;}
 @media(max-width:800px){.table-toolbar>.search-wrap{flex-basis:100%;}.table-toolbar .assembly-progress-count{margin-left:auto;}}
+/* Shared content edges for assembly controls and table. */
+[data-slot=table] :is([data-slot=table-head],[data-slot=table-cell]):first-child{padding-left:0;}
+[data-slot=table] :is([data-slot=table-head],[data-slot=table-cell]):last-child{padding-right:0;}
+[data-slot=table-cell]:last-child>.flex{justify-content:flex-end;}
+.scanner-panel{padding:16px;margin-bottom:20px;}
+.table-toolbar{width:100%;}
+[data-slot=table-head]{vertical-align:middle;}
+[data-slot=table-cell]{vertical-align:middle;}
