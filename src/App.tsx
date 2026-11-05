@@ -16,7 +16,7 @@ const names=['Блузка жаккард, бежевая ромашка','Бл�
 type Item={id:number;client:number;name:string;size:string;barcode:string;cell:string;address:string;stock:number;ready:boolean;phase:string;warehouse:string}
 const seed:Item[]=clients.flatMap((_,c)=>names.map((name,i)=>({id:6200001000+c*100+i,client:c,name:c===4?['Ридекс х1','Кнопка х1','Дырявый х1','Чёрный дырявый х1'][i%4]:name,size:['42–44','46–48','50–52','54–56'][i%4],barcode:String(2049000000100+c*100+i),cell:`${c===1?'Н':'Г'}${[78,17,1,7,99,84,40,92][i]}-${[42,46,50,54][i%4]}`,address:['A-1-1','A-1-2','B-2-1','B-2-2','C-1-3','D-1-1','F-2-2','G-3-3'][i],stock:[24,18,32,11,46,29,14,8][i],ready:i<3,phase:i>5?'new':'assembly',warehouse:i===7?'Москва':'Казань'})))
 function restore():Item[]{try{return JSON.parse(localStorage.getItem('wms-v2-demo')||'null')||seed}catch{return seed}}
-const sections=[['overview','Обзор',LayoutDashboard],['new','Новые заказы',Package],['supplies','Поставки',Truck],['assembly','Сборка',ScanLine],['stocks','Остатки',Boxes],['settings','Настройки',Settings2]] as const
+const sections=[['overview','Обзор',LayoutDashboard],['new','Новые заказы',Package],['assembly','Сборка',ScanLine],['supplies','Поставки',Truck],['stocks','Остатки',Boxes],['settings','Настройки',Settings2]] as const
 function Picker({value,onChange,values}:{value:string;onChange:(v:string)=>void;values:string[]}){return <Select value={value} onValueChange={onChange}><SelectTrigger><SelectValue/></SelectTrigger><SelectContent><SelectGroup>{values.map(v=><SelectItem key={v} value={v}>{v}</SelectItem>)}</SelectGroup></SelectContent></Select>}
 function AnimatedNumber({value}:{value:number}){return <span key={value} className="number-reveal">{value.toLocaleString('ru')}</span>}
 export default function App(){
@@ -40,5 +40,6 @@ export default function App(){
  <Dialog open={!!edit} onOpenChange={v=>!v&&setEdit(null)}><DialogContent><DialogHeader><DialogTitle>Размещение товара</DialogTitle><DialogDescription>{edit?.name} · {edit?.size}</DialogDescription></DialogHeader><FieldGroup><Field><FieldLabel htmlFor="cell">Ячейка</FieldLabel><Input id="cell" value={cell} onChange={e=>setCell(e.target.value)}/></Field><Field><FieldLabel htmlFor="address">Адрес</FieldLabel><Input id="address" value={address} onChange={e=>setAddress(e.target.value)}/></Field><Field><FieldLabel htmlFor="stock">Остаток, шт.</FieldLabel><Input id="stock" type="number" min="0" value={stock} onChange={e=>setStock(e.target.value)}/></Field></FieldGroup><DialogFooter><Button disabled={!cell.trim()||!address.trim()||!stock||!Number.isInteger(Number(stock))||Number(stock)<0} onClick={()=>{if(edit){update(edit.id,{cell:cell.trim(),address:address.trim(),stock:Number(stock)});setEdit(null);toast.success('Размещение сохранено')}}}>Сохранить</Button></DialogFooter></DialogContent></Dialog>
 <Toaster position="bottom-right"/></div>
 }
+
 
 
