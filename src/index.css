@@ -329,3 +329,5 @@ button:disabled,[aria-disabled=true]{cursor:not-allowed;opacity:.45;}
 .box-count-slot .box-count-visible{animation:box-count-enter 280ms cubic-bezier(.2,.75,.25,1) both;}
 @keyframes box-count-enter{from{opacity:0;transform:translateX(-7px)}to{opacity:1;transform:translateX(0)}}
 @media(prefers-reduced-motion:reduce){.box-count-slot .box-count-visible{animation:none;}}
+.assembly-progress-count{margin-left:auto;flex-shrink:0;white-space:nowrap;padding:8px 12px;border-radius:8px;background:var(--secondary);color:var(--muted-foreground);font-size:12px;font-variant-numeric:tabular-nums;}
+.assembly-progress-count strong{color:var(--foreground);font-weight:600;}
