@@ -322,3 +322,7 @@ button:disabled,[aria-disabled=true]{cursor:not-allowed;opacity:.45;}
 .box-count-slot [data-slot=field-label]{font-size:12px;white-space:nowrap;}
 .box-count-slot input{width:70px;}
 @media(max-width:800px){.delivery-controls{grid-template-columns:1fr 190px;}}
+.delivery-controls{width:100%;grid-template-columns:auto 1fr auto;justify-content:stretch;}
+.delivery-controls .box-count-slot{justify-self:start;}
+.delivery-controls>button{justify-self:end;}
+@media(max-width:800px){.delivery-controls{grid-template-columns:auto 1fr;}.delivery-controls>button{grid-column:1/-1;justify-self:end;}}
