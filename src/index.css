@@ -246,3 +246,5 @@ button:disabled,[aria-disabled=true]{cursor:not-allowed;opacity:.45;}
 .sidebar-collapsed .brand-image{display:none;}
 .sidebar-collapsed .brand-mark{display:block;width:38px;height:38px;object-fit:contain;filter:invert(1) brightness(60);mix-blend-mode:screen;}
 @media(max-width:800px){.brand-image{display:none;}.brand-mark{display:block;width:38px;height:38px;object-fit:contain;filter:invert(1) brightness(60);mix-blend-mode:screen;}}
+.sidebar-collapsed .brand-mark{filter:none;}
+@media(max-width:800px){.brand-mark{filter:none;}}
