@@ -248,3 +248,24 @@ button:disabled,[aria-disabled=true]{cursor:not-allowed;opacity:.45;}
 @media(max-width:800px){.brand-image{display:none;}.brand-mark{display:block;width:38px;height:38px;object-fit:contain;filter:invert(1) brightness(60);mix-blend-mode:screen;}}
 .sidebar-collapsed .brand-mark{filter:none;}
 @media(max-width:800px){.brand-mark{filter:none;}}
+/* Stable sidebar geometry: icons stay anchored while labels fade. */
+.app-shell{--nav-width:264px;--nav-motion:240ms;}
+.app-shell.sidebar-collapsed{--nav-width:80px;}
+.app-shell .sidebar{width:var(--nav-width);padding:24px 14px 16px;overflow-x:hidden;transition:width var(--nav-motion) cubic-bezier(.2,.8,.2,1);}
+.app-shell .main-shell{margin-left:var(--nav-width);transition:margin-left var(--nav-motion) cubic-bezier(.2,.8,.2,1);}
+.app-shell .brand{height:64px;min-height:64px;padding:0 12px;margin-bottom:22px;position:relative;flex-shrink:0;}
+.app-shell .brand-image{display:block;position:absolute;left:12px;top:9px;width:150px;height:46px;opacity:1;transition:opacity 120ms ease;}
+.app-shell .brand-mark{display:block;position:absolute;left:7px;top:13px;width:38px;height:38px;object-fit:contain;filter:none;mix-blend-mode:screen;opacity:0;transition:opacity 120ms ease;}
+.app-shell.sidebar-collapsed .brand-image{opacity:0;pointer-events:none;}
+.app-shell.sidebar-collapsed .brand-mark{opacity:1;}
+.app-shell .section-nav [data-slot=button],.app-shell .help-control{justify-content:flex-start;padding-inline:16px;gap:12px;overflow:hidden;white-space:nowrap;min-height:44px;}
+.app-shell .section-nav [data-slot=button]>svg,.app-shell .help-control>svg{width:18px;height:18px;flex-shrink:0;}
+.app-shell .sidebar .nav-label{display:block;opacity:1;white-space:nowrap;transition:opacity 100ms ease;}
+.app-shell.sidebar-collapsed .sidebar .nav-label{display:block;opacity:0;pointer-events:none;}
+.app-shell .section-nav [data-slot=badge]{flex-shrink:0;transition:opacity 100ms ease;}
+.app-shell.sidebar-collapsed .section-nav [data-slot=badge]{opacity:0;pointer-events:none;}
+.app-shell .profile{justify-content:flex-start;padding-left:10px;gap:10px;overflow:hidden;min-height:53px;}
+.app-shell .avatar{flex-shrink:0;}
+@media(max-width:1150px) and (min-width:801px){.app-shell:not(.sidebar-collapsed){--nav-width:225px;}}
+@media(max-width:800px){.app-shell{--nav-width:225px;}.app-shell.sidebar-collapsed{--nav-width:80px;}.app-shell .section-nav [data-slot=badge]{display:inline-flex;}}
+@media(prefers-reduced-motion:reduce){.app-shell .sidebar,.app-shell .main-shell,.app-shell .sidebar .nav-label,.app-shell .brand-image,.app-shell .brand-mark{transition:none;}}
