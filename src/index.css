@@ -346,3 +346,8 @@ button:disabled,[aria-disabled=true]{cursor:not-allowed;opacity:.45;}
 [data-slot=table-head]{vertical-align:middle;}
 [data-slot=table-cell]{vertical-align:middle;}
 [data-slot=table] :is([data-slot=table-head],[data-slot=table-cell]):last-child{padding-right:16px;}
+.table-toolbar .create-supply-action{width:210px;min-width:210px;max-width:210px;justify-content:center;transform:none!important;}
+.selection-count{display:inline-block;width:5ch;text-align:center;font-variant-numeric:tabular-nums;flex-shrink:0;}
+.table-toolbar [data-slot=button]{transform:none!important;}
+.table-toolbar{font-variant-numeric:tabular-nums;}
+.order-checkbox{flex-shrink:0;margin:0;}
