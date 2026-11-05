@@ -287,3 +287,6 @@ button:disabled,[aria-disabled=true]{cursor:not-allowed;opacity:.45;}
 .scanner-panel #product-scan::placeholder{color:var(--muted-foreground);opacity:.85;}
 .scanner-panel #product-scan:hover{border-color:var(--primary);}
 .scanner-panel #product-scan:focus-visible{border-color:var(--ring);outline:2px solid var(--ring);outline-offset:2px;box-shadow:none;}
+.scanner-panel #product-scan{height:40px;min-height:40px;padding:10px 12px;background:var(--card);border-color:color-mix(in srgb,var(--foreground) 13%,var(--border));font-size:13px;box-shadow:none;}
+.scanner-panel #product-scan:hover{border-color:color-mix(in srgb,var(--primary) 45%,var(--border));}
+.scanner-panel #product-scan:focus-visible{outline:none;border-color:color-mix(in srgb,var(--primary) 60%,var(--border));box-shadow:0 0 0 1px color-mix(in srgb,var(--primary) 20%,transparent);}
