@@ -326,3 +326,6 @@ button:disabled,[aria-disabled=true]{cursor:not-allowed;opacity:.45;}
 .delivery-controls .box-count-slot{justify-self:start;}
 .delivery-controls>button{justify-self:end;}
 @media(max-width:800px){.delivery-controls{grid-template-columns:auto 1fr;}.delivery-controls>button{grid-column:1/-1;justify-self:end;}}
+.box-count-slot .box-count-visible{animation:box-count-enter 280ms cubic-bezier(.2,.75,.25,1) both;}
+@keyframes box-count-enter{from{opacity:0;transform:translateX(-7px)}to{opacity:1;transform:translateX(0)}}
+@media(prefers-reduced-motion:reduce){.box-count-slot .box-count-visible{animation:none;}}
