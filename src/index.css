@@ -292,3 +292,7 @@ button:disabled,[aria-disabled=true]{cursor:not-allowed;opacity:.45;}
 .scanner-panel #product-scan:focus-visible{outline:none;border-color:color-mix(in srgb,var(--primary) 60%,var(--border));box-shadow:0 0 0 1px color-mix(in srgb,var(--primary) 20%,transparent);}
 .direct-print-sticker{display:none;}
 @media print{.direct-print-sticker,.direct-print-sticker *{visibility:visible;}.direct-print-sticker{display:block;position:absolute;left:0;top:0;background:white;color:black;padding:8mm;font-size:14pt;}.direct-print-sticker strong{font-size:24pt;}body:has(.direct-print-sticker) [role=dialog]{display:none;}}
+:root{--status-error:var(--destructive);--status-checking:var(--ring);}
+.status-waiting{color:var(--warning);background:color-mix(in srgb,var(--warning) 10%,var(--card));}
+.status-checking{color:var(--status-checking);background:color-mix(in srgb,var(--status-checking) 10%,var(--card));}
+.status-error,.status-kiz-error{color:var(--status-error);background:color-mix(in srgb,var(--status-error) 10%,var(--card));border-color:color-mix(in srgb,var(--status-error) 25%,var(--border));}
