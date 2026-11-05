@@ -352,3 +352,6 @@ button:disabled,[aria-disabled=true]{cursor:not-allowed;opacity:.45;}
 .table-toolbar{font-variant-numeric:tabular-nums;}
 .order-checkbox{flex-shrink:0;margin:0;}
 [data-slot=table] :is([data-slot=table-head],[data-slot=table-cell]):first-child:has(.order-checkbox){padding-left:8px;}
+.create-supply-action{gap:8px;align-items:center;}
+.create-supply-label{display:inline-flex;align-items:baseline;gap:4px;line-height:1;}
+.create-supply-label .selection-count{width:3ch;text-align:left;line-height:1;}
