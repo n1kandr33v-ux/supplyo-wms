@@ -24,7 +24,7 @@ export default function App(){
  const searchRef=useRef<HTMLInputElement>(null)
  useEffect(()=>{
   if(!searchFocused||query.trim())return
-  const timer=setTimeout(()=>{if(document.activeElement===searchRef.current&&!searchRef.current?.value.trim()){searchRef.current?.blur();if(tab==='assembly'&&!actionItem&&!edit)scannerRef.current?.focus()}},3000)
+  const timer=setTimeout(()=>{if(document.activeElement===searchRef.current&&!searchRef.current?.value.trim()){searchRef.current?.blur();if(tab==='assembly'&&!actionItem&&!edit)scannerRef.current?.focus()}},4000)
   return()=>clearTimeout(timer)
  },[searchFocused,query,tab,actionItem,edit])
  const scannerRef=useRef<HTMLInputElement>(null)
@@ -63,6 +63,7 @@ export default function App(){
  <Dialog open={!!edit} onOpenChange={v=>!v&&setEdit(null)}><DialogContent><DialogHeader><DialogTitle>Размещение товара</DialogTitle><DialogDescription>{edit?.name} · {edit?.size}</DialogDescription></DialogHeader><FieldGroup><Field><FieldLabel htmlFor="cell">Ячейка</FieldLabel><Input id="cell" value={cell} onChange={e=>setCell(e.target.value)}/></Field><Field><FieldLabel htmlFor="address">Адрес</FieldLabel><Input id="address" value={address} onChange={e=>setAddress(e.target.value)}/></Field><Field><FieldLabel htmlFor="stock">Остаток, шт.</FieldLabel><Input id="stock" type="number" min="0" value={stock} onChange={e=>setStock(e.target.value)}/></Field></FieldGroup><DialogFooter><Button disabled={!cell.trim()||!address.trim()||!stock||!Number.isInteger(Number(stock))||Number(stock)<0} onClick={()=>{if(edit){update(edit.id,{cell:cell.trim(),address:address.trim(),stock:Number(stock)});setEdit(null);toast.success('Размещение сохранено')}}}>Сохранить</Button></DialogFooter></DialogContent></Dialog>
 <Toaster position="bottom-right"/></div>
 }
+
 
 
 
