@@ -429,3 +429,9 @@ main{padding-bottom:40px}.main-shell main>[data-slot=card]:last-child{margin-bot
 @media(prefers-reduced-motion:reduce){.app-shell .brand-image{transition:none}}
 
 .app-shell .brand-image,.app-shell.sidebar-collapsed .brand-image{left:8px}
+.app-shell.sidebar-collapsed .brand-image{clip-path:inset(0 121px 0 0)}
+.dark .app-shell .brand:hover,.dark .app-shell .brand:active{background:transparent;border-color:transparent}
+.app-shell .brand::before{content:"";position:absolute;inset:10px 0;border-radius:8px;background:transparent;transition:background-color 150ms ease;pointer-events:none}
+.dark .app-shell .brand:hover::before{background:var(--portal-primary-hover)}
+.dark .app-shell .brand:active::before{background:var(--portal-primary-active)}
+.app-shell .brand-image{z-index:1}
