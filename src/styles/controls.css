@@ -1,0 +1,94 @@
+/* Shared field contract. Input, SelectTrigger and editable values opt in
+   through data-ui-control; feature styles own layout, never field states. */
+:root {
+  --control-radius: 8px;
+  --separator-color: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --control-height: 36px;
+  --control-height-compact: 32px;
+  --control-padding: 12px;
+  --control-icon-gap: 8px;
+  --control-background: var(--secondary);
+  --control-background-hover: var(--accent);
+  --control-text: var(--foreground);
+  --control-border: transparent;
+  --control-focus: var(--ring);
+  --control-focus-width: 2px;
+}
+:root .app-shell [data-ui-control] {
+  box-sizing: border-box;
+  height: var(--control-height);
+  min-height: var(--control-height);
+  border: 1px solid var(--control-border);
+  border-radius: var(--control-radius);
+  padding-inline: var(--control-padding);
+  background: var(--control-background);
+  color: var(--control-text);
+  outline: none;
+  box-shadow: none;
+  transition: background-color 150ms ease;
+}
+:root .app-shell [data-ui-control]:hover:not(:disabled) {
+  background: var(--control-background-hover);
+  border-color: var(--control-focus);
+  color: var(--control-text);
+  box-shadow: inset 0 0 0 1px var(--control-focus);
+}
+:root .app-shell [data-ui-control]:is(:focus-visible,[data-state=open]) {
+  background: var(--control-background);
+  border-color: var(--control-focus);
+  box-shadow: inset 0 0 0 1px var(--control-focus);
+  outline: none;
+}
+:root .app-shell [data-ui-control][aria-invalid=true] {
+  border-color: var(--destructive);
+  box-shadow: inset 0 0 0 1px var(--destructive);
+}
+:root .app-shell [data-ui-control]:disabled { opacity: .5; cursor: not-allowed; }
+:root .app-shell [data-ui-control=select] { gap: var(--control-icon-gap); }
+:root .app-shell [data-ui-control=select] [data-slot=select-value] { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+:root .app-shell [data-ui-control=select] > svg { flex-shrink: 0; color: currentColor; }
+:root .app-shell .search-wrap > svg {
+  left: var(--control-padding); top: 50%; transform: translateY(-50%); pointer-events: none;
+}
+:root .app-shell .search-wrap [data-ui-control] { padding-left: calc(var(--control-padding) + 16px + var(--control-icon-gap)); }
+:root .app-shell :is(.stock-text-value,.stock-quantity-value) [data-ui-control] {
+  --control-height: var(--control-height-compact);
+  padding-inline: var(--control-padding);
+  font-size: 13px;
+  line-height: 20px;
+}
+@media(prefers-reduced-motion:reduce) { :root .app-shell [data-ui-control] { transition: none; } }
+
+.cabinet-multi-trigger{display:flex;align-items:center;justify-content:space-between;width:280px;max-width:100%;gap:var(--control-icon-gap);cursor:pointer;text-align:left;font-size:13px;}
+.cabinet-multi-trigger>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.cabinet-multi-trigger>svg{flex-shrink:0;}
+.cabinet-options{width:var(--radix-dropdown-menu-trigger-width);max-width:calc(100vw - 24px);max-height:var(--radix-dropdown-menu-content-available-height);overflow:auto;}
+.cabinet-option{display:flex;align-items:center;gap:10px;min-height:36px;padding:8px 12px;border-radius:var(--control-radius);font-size:13px;cursor:pointer;outline:none;}
+.cabinet-option[data-highlighted]{background:var(--portal-primary-hover);color:var(--portal-on-primary);}
+.cabinet-checkbox{width:16px;height:16px;display:grid;place-items:center;border:1px solid var(--portal-muted);border-radius:4px;flex-shrink:0;}
+.cabinet-option:is([data-state=checked],[data-state=indeterminate]) .cabinet-checkbox{background:var(--primary);border-color:var(--primary);color:var(--primary-foreground);}
+.cabinet-option-separator{height:1px;background:var(--separator-color);margin:6px 12px;}
+[data-slot=select-separator]{background:var(--separator-color);height:1px;}
+
+/* Destructive actions have a shared danger outline, never a blue hover. */
+:root [data-slot=button]:is([data-intent=destructive],[data-variant=destructive]):is(:hover,:focus-visible):not(:disabled){
+  background:var(--secondary);border-color:var(--destructive);color:white;
+  box-shadow:inset 0 0 0 1px var(--destructive);outline:none;
+}
+:root [data-slot=button]:is([data-intent=destructive],[data-variant=destructive]):is(:hover,:focus-visible) svg{color:inherit;}
+
+/* Toolbar actions and fields use the same vertical rhythm. */
+:root .accounting-toolbar > :is([data-slot=button],[data-ui-control],.date-range-trigger){height:var(--control-height);min-height:var(--control-height);box-sizing:border-box;}
+
+:root .app-shell [data-slot=button].export-action{color:var(--foreground);}
+:root .app-shell [data-slot=button].export-action svg{color:inherit;}
+.table-sort-trigger{display:inline-flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 8px;margin-left:-8px;border-radius:var(--control-radius);cursor:pointer;color:inherit;font:inherit;}
+.table-sort-trigger:hover,.table-sort-trigger[data-state=open]{background:var(--secondary);color:var(--foreground);}
+.table-sort-trigger:focus-visible{outline:2px solid var(--ring);outline-offset:0;}
+.table-sort-trigger[data-active=true]>svg{color:var(--primary);}
+.table-sort-menu{min-width:250px;}
+.table-sort-label{padding:8px 12px;font-size:11px;color:var(--muted-foreground);}
+.table-sort-option{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--control-radius);cursor:pointer;outline:none;font-size:13px;}
+.table-sort-option>span:first-child{flex:1;}
+.table-sort-option[data-highlighted]{background:var(--primary);color:var(--primary-foreground);}
+.table-sort-indicator{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:14px;height:14px;}
