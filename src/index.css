@@ -427,3 +427,5 @@ main{padding-bottom:40px}.main-shell main>[data-slot=card]:last-child{margin-bot
 .app-shell .brand-image,.app-shell.sidebar-collapsed .brand-image{opacity:1;transform:none;pointer-events:auto;clip-path:inset(0 0 0 0);transition:clip-path 240ms ease;object-fit:contain;object-position:left center}
 .app-shell.sidebar-collapsed .brand-image{clip-path:inset(0 125px 0 0)}
 @media(prefers-reduced-motion:reduce){.app-shell .brand-image{transition:none}}
+
+.app-shell .brand-image,.app-shell.sidebar-collapsed .brand-image{left:8px}
