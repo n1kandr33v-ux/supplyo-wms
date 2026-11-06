@@ -1,0 +1,16 @@
+import { useState } from 'react'
+import { UserRound, Building2, ShieldCheck } from 'lucide-react'
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Field, FieldLabel, FieldGroup } from '@/components/ui/field'
+import { toast } from 'sonner'
+type Profile={name:string;email:string;telegram:string;company:string;phone:string}
+const empty:Profile={name:'Администратор',email:'',telegram:'',company:'',phone:''}
+export function PersonalAccount(){
+ const [saved,setSaved]=useState<Profile>(()=>{try{return {...empty,...JSON.parse(localStorage.getItem('supplyo-profile')||'{}')}}catch{return empty}}),[draft,setDraft]=useState(saved)
+ const changed=JSON.stringify(saved)!==JSON.stringify(draft)
+ function save(e:React.FormEvent){e.preventDefault();const next={...draft,name:draft.name.trim(),telegram:draft.telegram.trim(),company:draft.company.trim(),email:draft.email.trim(),phone:draft.phone.trim()};if(!next.name)return;localStorage.setItem('supplyo-profile',JSON.stringify(next));setSaved(next);setDraft(next);toast.success('Данные профиля сохранены')}
+ return <div className="personal-account mt-6"><div className="account-heading"><div className="account-avatar"><UserRound size={26}/></div><div><h1>Личный кабинет</h1><p>{saved.name}</p></div><Badge variant="secondary">Администратор</Badge></div><div className="account-grid"><form onSubmit={save}><Card><CardHeader><CardTitle>Личные данные</CardTitle><CardDescription>Контактная информация вашего профиля</CardDescription></CardHeader><CardContent><FieldGroup>{([['name','Имя','text'],['email','Электронная почта','email'],['phone','Телефон','tel'],['telegram','Telegram','text']] as const).map(([key,label,type])=><Field key={key}><FieldLabel htmlFor={'profile-'+key}>{label}</FieldLabel><Input id={'profile-'+key} type={type} value={draft[key]} required={key==='name'} placeholder={key==='telegram'?'@username':label} onChange={e=>setDraft({...draft,[key]:e.target.value})}/></Field>)}</FieldGroup></CardContent><CardFooter className="account-actions"><Button type="button" variant="outline" disabled={!changed} onClick={()=>setDraft(saved)}>Отменить</Button><Button type="submit" disabled={!changed||!draft.name.trim()}>Сохранить изменения</Button></CardFooter></Card></form><div className="account-side"><Card><CardHeader><CardTitle className="flex items-center gap-2"><Building2 size={18}/>Организация</CardTitle></CardHeader><CardContent><Field><FieldLabel htmlFor="profile-company">Название фулфилмента</FieldLabel><Input id="profile-company" value={draft.company} placeholder="Название организации" onChange={e=>setDraft({...draft,company:e.target.value})}/></Field></CardContent></Card><Card><CardHeader><CardTitle className="flex items-center gap-2"><ShieldCheck size={18}/>Доступ</CardTitle></CardHeader><CardContent><div className="account-access-row"><span>Роль</span><strong>Администратор</strong></div><div className="account-access-row"><span>Права</span><strong>Полный доступ</strong></div><div className="account-access-row"><span>Рабочее пространство</span><strong>WMS / Фулфилмент</strong></div></CardContent></Card></div></div></div>
+}
