@@ -400,3 +400,9 @@ main{padding-bottom:40px}.main-shell main>[data-slot=card]:last-child{margin-bot
 
 [data-slot=card-content]:has(.orders-table-stocks){padding-bottom:0}[data-slot=card]:has(.orders-table-stocks){row-gap:0}
 [data-slot=card-footer].table-ending{background:var(--portal-elevated);border-top:1px solid var(--portal-line);min-height:40px}[data-slot=card-footer].table-ending:empty{display:flex;min-height:40px;padding-block:0}[data-slot=card]:has([data-slot=table]){row-gap:0}[data-slot=card-content]:has([data-slot=table]){padding-bottom:0}
+/* Row backgrounds share the table bounds, with equal insets for content. */
+[data-slot=table] :is([data-slot=table-head],[data-slot=table-cell]):first-child{padding-left:16px}
+[data-slot=table] :is([data-slot=table-head],[data-slot=table-cell]):last-child{padding-right:16px}
+[data-slot=table] :is([data-slot=table-head],[data-slot=table-cell]):first-child:has(.order-checkbox){padding-left:16px}
+.orders-table-stocks :is([data-slot=table-head],[data-slot=table-cell]):first-child{padding-left:16px}
+[data-slot=table-row]{background-clip:padding-box}
