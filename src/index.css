@@ -380,3 +380,5 @@ html{scrollbar-gutter:stable;}
 .stocks-warehouse-filter{min-width:170px;flex-shrink:0}.stocks-warehouse-filter [data-slot=select-trigger]{width:100%}
 
 .product-barcodes{gap:5px}
+
+.product-barcodes>div:first-child{font-size:13px;line-height:1.5;color:var(--portal-text)}.product-barcodes>div:not(:first-child){font-size:11px;line-height:1.4;color:var(--portal-muted)}
