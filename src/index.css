@@ -439,3 +439,5 @@ main{padding-bottom:40px}.main-shell main>[data-slot=card]:last-child{margin-bot
 .app-shell.sidebar-collapsed .brand-image{clip-path:inset(0 122.5px 0 0)}
 
 .app-shell.sidebar-collapsed .brand-image{clip-path:inset(0 123.5px 0 0)}
+
+[data-slot=card]:has(.orders-table-assembly)>[data-slot=card-header],[data-slot=card]:has(.orders-table-new)>[data-slot=card-header]{padding-bottom:20px}
