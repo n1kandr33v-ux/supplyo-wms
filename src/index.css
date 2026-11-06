@@ -408,3 +408,5 @@ main{padding-bottom:40px}.main-shell main>[data-slot=card]:last-child{margin-bot
 [data-slot=table-row]{background-clip:padding-box}
 
 .box-count-slot{width:240px;min-width:240px}.box-count{width:240px;flex-shrink:0}.box-count #delivery-boxes{width:96px;min-width:96px;flex:0 0 96px;padding-inline:10px}.box-count [data-slot=field-label]{white-space:nowrap}
+
+.app-shell .brand-mark{width:30px;height:30px;left:11px;top:17px}
