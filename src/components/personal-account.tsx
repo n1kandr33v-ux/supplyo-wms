@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { UserRound, Building2, Warehouse, Plus, Pencil, Trash2, LockKeyhole } from 'lucide-react'
+import { UserRound, Warehouse, Plus, Pencil, Trash2, LockKeyhole } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -35,3 +35,4 @@ export function PersonalAccount({section}:{section:string}){
  <Dialog open={!!remove} onOpenChange={open=>!open&&setRemove(null)}><DialogContent><DialogHeader><DialogTitle>Удалить склад?</DialogTitle><DialogDescription>Склад «{remove?.name}» будет удалён из списка организации.</DialogDescription></DialogHeader><DialogFooter><Button variant="outline" onClick={()=>setRemove(null)}>Отменить</Button><Button onClick={()=>{persistStores(stores.filter(s=>s.id!==remove?.id));setRemove(null);toast.success('Склад удалён')}}>Удалить склад</Button></DialogFooter></DialogContent></Dialog>
  </div>
 }
+
