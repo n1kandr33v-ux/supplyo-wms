@@ -527,3 +527,5 @@ button.profile{width:100%;text-align:left;cursor:pointer;border-radius:10px;padd
 .operation-category-filter{min-width:190px;flex-shrink:0}
 
 .invoice-payment-details{display:grid;gap:8px}.invoice-payment-details strong{font-size:20px}
+/* The root already reserves the scrollbar gutter. Radix must not reserve it a second time. */
+body[data-scroll-locked]{margin-right:0!important;padding-right:0!important;--removed-body-scroll-bar-size:0px}
