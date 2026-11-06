@@ -435,3 +435,5 @@ main{padding-bottom:40px}.main-shell main>[data-slot=card]:last-child{margin-bot
 .dark .app-shell .brand:hover::before{background:var(--portal-primary-hover)}
 .dark .app-shell .brand:active::before{background:var(--portal-primary-active)}
 .app-shell .brand-image{z-index:1}
+
+.app-shell.sidebar-collapsed .brand-image{clip-path:inset(0 122.5px 0 0)}
