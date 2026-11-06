@@ -15,8 +15,7 @@ const emptyProfile:Profile={name:'Администратор',email:'',telegram:
 const emptyOrg:Organization={name:'',legalName:'',inn:'',kpp:'',ogrn:'',legalAddress:'',bank:'',account:'',bik:'',correspondent:'',email:'',phone:'',contact:''}
 const blankStore:Store={id:'',name:'',city:'',address:'',staff:[]}
 const sections=[['profile','Мой профиль',UserRound],['organization','Организация',Building2],['warehouses','Склады',Warehouse]] as const
-export function PersonalAccount(){
- const [section,setSection]=useState('profile')
+export function PersonalAccount({section,onSectionChange:setSection}:{section:string;onSectionChange:(section:string)=>void}){
  const [profile,setProfile]=useState(()=>read('supplyo-profile',emptyProfile)),[profileDraft,setProfileDraft]=useState(profile)
  const [organization,setOrganization]=useState(()=>read('supplyo-organization',{...emptyOrg,name:profile.company||''})),[orgDraft,setOrgDraft]=useState(organization)
  const [stores,setStores]=useState<Store[]>(()=>{try{const value=JSON.parse(localStorage.getItem('supplyo-warehouses')||'null');return Array.isArray(value)?value:[]}catch{return []}})
