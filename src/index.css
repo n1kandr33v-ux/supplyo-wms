@@ -498,3 +498,10 @@ button.profile{width:100%;text-align:left;cursor:pointer;border-radius:10px;padd
 .warehouse-staff-row{transition:background-color 150ms ease,border-color 150ms ease;overflow:hidden}.warehouse-staff-row:hover,.warehouse-staff-row:focus-within{background:var(--portal-primary-hover);border-color:var(--portal-primary-hover);color:var(--portal-on-primary)}.warehouse-staff-row:hover .staff-access-button small,.warehouse-staff-row:focus-within .staff-access-button small{color:var(--portal-on-primary)}.warehouse-staff-row:hover .staff-access-button,.warehouse-staff-row:focus-within .staff-access-button{color:var(--portal-on-primary)}
 
 .warehouse-address-row>[data-slot=button]{margin-left:auto}.warehouse-account-card .account-staff-title{margin-top:12px}
+.warehouse-staff-row:hover,.warehouse-staff-row:focus-within{background:var(--portal-elevated);border-color:var(--portal-line);color:var(--portal-text)}
+.warehouse-staff-row:hover .staff-access-button small,.warehouse-staff-row:focus-within .staff-access-button small{color:var(--portal-muted)}
+.warehouse-staff-row:hover .staff-access-button,.warehouse-staff-row:focus-within .staff-access-button{color:var(--portal-text)}
+.warehouse-staff-row .staff-access-button:hover,.warehouse-staff-row .staff-access-button:focus-visible{background:var(--portal-primary-hover);color:var(--portal-on-primary)}
+.warehouse-staff-row .staff-access-button:hover small,.warehouse-staff-row .staff-access-button:focus-visible small{color:var(--portal-on-primary)}
+.dark .warehouse-staff-row .staff-remove-action:hover,.dark .warehouse-staff-row .staff-remove-action:focus-visible{background:var(--destructive);color:var(--portal-on-primary);border-color:var(--destructive)}
+.staff-remove-action{border-left:1px solid var(--portal-line);border-radius:6px;margin-left:0}
