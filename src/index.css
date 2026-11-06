@@ -475,3 +475,5 @@ button.profile{width:100%;text-align:left;cursor:pointer;border-radius:10px;padd
 .personal-account:has(>.account-details){width:100%;max-width:960px;margin-left:auto;margin-right:auto}.personal-account>.account-details{max-width:100%}.account-detail-row{grid-template-columns:180px minmax(0,1fr) 100px;gap:24px}@media(max-width:750px){.account-detail-row{grid-template-columns:minmax(0,1fr) 90px;gap:8px 12px}}
 
 .account-detail-value .account-timezone-select{width:100%;min-width:240px;max-width:360px;height:36px;justify-content:space-between}.account-timezone-select [data-slot=select-value]{display:block;flex:1;min-width:0;text-align:left}
+
+.warehouse-add-staff{margin-bottom:12px}
