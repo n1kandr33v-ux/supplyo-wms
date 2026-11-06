@@ -472,3 +472,4 @@ button.profile{width:100%;text-align:left;cursor:pointer;border-radius:10px;padd
 @media(max-width:750px){.account-details{padding-inline:16px}.account-details>section:last-child{margin-inline:-16px;padding-inline:16px}.account-detail-row{grid-template-columns:minmax(0,1fr) 90px;gap:8px 12px}}
 
 .personal-account,.personal-account:has(>.account-details){width:100%;max-width:none}.personal-account>.account-details{width:100%;max-width:none}
+.personal-account:has(>.account-details){width:100%;max-width:960px;margin-left:auto;margin-right:auto}.personal-account>.account-details{max-width:100%}.account-detail-row{grid-template-columns:180px minmax(0,1fr) 100px;gap:24px}@media(max-width:750px){.account-detail-row{grid-template-columns:minmax(0,1fr) 90px;gap:8px 12px}}
