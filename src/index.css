@@ -359,3 +359,9 @@ button:disabled,[aria-disabled=true]{cursor:not-allowed;opacity:.45;}
 .create-supply-label .selection-count{width:6ch;text-align:left;}
 .table-toolbar .create-supply-action{width:220px;min-width:220px;max-width:220px;justify-content:center;padding-inline:12px;}
 .create-supply-label .selection-count{width:auto;min-width:0;text-align:center;}
+html{scrollbar-gutter:stable;}
+.orders-table{table-layout:fixed;width:100%;}
+.orders-table-new{min-width:950px;}
+.orders-table-assembly{min-width:1120px;}
+.orders-table-stocks{min-width:850px;}
+.orders-table [data-slot=table-cell]{overflow-wrap:break-word;}
