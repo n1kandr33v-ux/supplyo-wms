@@ -512,3 +512,5 @@ button.profile{width:100%;text-align:left;cursor:pointer;border-radius:10px;padd
 .staff-identity-field{display:flex;align-items:center;gap:8px}.staff-identity-field input{flex:1;min-width:0}.staff-identity-field>[data-slot=button]{flex-shrink:0}.staff-identity-field input[readonly]{cursor:default}
 
 .staff-access-title:focus{outline:none;box-shadow:none}
+
+.warehouse-account-card{row-gap:0}.warehouse-account-card>[data-slot=card-content]{padding-bottom:16px}
