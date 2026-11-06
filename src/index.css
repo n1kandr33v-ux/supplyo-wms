@@ -423,3 +423,7 @@ main{padding-bottom:40px}.main-shell main>[data-slot=card]:last-child{margin-bot
 .app-shell .brand-mark,.app-shell.sidebar-collapsed .brand-mark{display:block;position:absolute;max-width:none;min-width:30px;width:30px;height:30px;left:11px;top:17px;object-fit:contain;opacity:0;pointer-events:none;transition:opacity 160ms ease;filter:none;mix-blend-mode:screen}
 .app-shell.sidebar-collapsed .brand-mark{opacity:1}
 @media(prefers-reduced-motion:reduce){.app-shell .brand-image,.app-shell .brand-mark{transition:none}}
+.app-shell .brand-mark,.app-shell.sidebar-collapsed .brand-mark{display:none}
+.app-shell .brand-image,.app-shell.sidebar-collapsed .brand-image{opacity:1;transform:none;pointer-events:auto;clip-path:inset(0 0 0 0);transition:clip-path 240ms ease;object-fit:contain;object-position:left center}
+.app-shell.sidebar-collapsed .brand-image{clip-path:inset(0 125px 0 0)}
+@media(prefers-reduced-motion:reduce){.app-shell .brand-image{transition:none}}
