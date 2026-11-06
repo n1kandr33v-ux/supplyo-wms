@@ -365,3 +365,4 @@ html{scrollbar-gutter:stable;}
 .orders-table-assembly{min-width:1120px;}
 .orders-table-stocks{min-width:850px;}
 .orders-table [data-slot=table-cell]{overflow-wrap:break-word;}
+.orders-table .product-name{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:normal;overflow-wrap:anywhere;line-height:1.5;}
