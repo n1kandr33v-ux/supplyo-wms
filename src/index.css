@@ -410,3 +410,9 @@ main{padding-bottom:40px}.main-shell main>[data-slot=card]:last-child{margin-bot
 .box-count-slot{width:240px;min-width:240px}.box-count{width:240px;flex-shrink:0}.box-count #delivery-boxes{width:96px;min-width:96px;flex:0 0 96px;padding-inline:10px}.box-count [data-slot=field-label]{white-space:nowrap}
 
 .app-shell .brand-mark{width:30px;height:30px;left:11px;top:17px}
+/* Keep the same artwork and anchor while the sidebar changes width. */
+.app-shell .brand{overflow:hidden;justify-content:flex-start}
+.app-shell .brand-image,.app-shell.sidebar-collapsed .brand-image{display:block;left:12px;top:9px;width:150px;height:46px;object-fit:contain;object-position:left center;opacity:1;pointer-events:auto;transition:clip-path var(--nav-motion) ease;clip-path:inset(0 0 0 0)}
+.app-shell.sidebar-collapsed .brand-image{clip-path:inset(0 119px 0 0)}
+.app-shell .brand-mark,.app-shell.sidebar-collapsed .brand-mark{display:none}
+@media(prefers-reduced-motion:reduce){.app-shell .brand-image{transition:none}}
