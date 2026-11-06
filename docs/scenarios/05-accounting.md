@@ -1,6 +1,6 @@
 # Учёт, зарплата и счета
 
-[Открыть редактируемую схему в FigJam](https://www.figma.com/online-whiteboard/create-diagram/87c85577-c8bf-4842-9ef9-f52166fdfee2)
+[Открыть редактируемую схему в FigJam](https://www.figma.com/board/1dnVTLbZ0GRNA0h0rYqtxu)
 
 ```mermaid
 flowchart LR

@@ -1,6 +1,6 @@
 # Склады, сотрудники и права
 
-[Открыть редактируемую схему в FigJam](https://www.figma.com/online-whiteboard/create-diagram/03a7127c-4042-4a32-8b6d-4488616a32c9)
+[Открыть редактируемую схему в FigJam](https://www.figma.com/board/1dnVTLbZ0GRNA0h0rYqtxu)
 
 ```mermaid
 flowchart LR

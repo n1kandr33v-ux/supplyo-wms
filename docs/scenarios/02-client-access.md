@@ -1,6 +1,6 @@
 # Магазин и доступ фулфилменту
 
-[Открыть редактируемую схему в FigJam](https://www.figma.com/online-whiteboard/create-diagram/41ee7b02-2db5-4423-92e1-aceee1c7c6b1)
+[Открыть редактируемую схему в FigJam](https://www.figma.com/board/1dnVTLbZ0GRNA0h0rYqtxu)
 
 ```mermaid
 flowchart LR

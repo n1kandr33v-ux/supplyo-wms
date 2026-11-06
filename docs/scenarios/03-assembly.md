@@ -1,6 +1,6 @@
 # Сборка, КИЗ, печать и доставка
 
-[Открыть редактируемую схему в FigJam](https://www.figma.com/online-whiteboard/create-diagram/579c0d98-2bf7-444c-a1f3-49fdfd50c54a)
+[Открыть редактируемую схему в FigJam](https://www.figma.com/board/1dnVTLbZ0GRNA0h0rYqtxu)
 
 ```mermaid
 flowchart LR

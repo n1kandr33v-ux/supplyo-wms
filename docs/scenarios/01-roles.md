@@ -1,6 +1,6 @@
 # Роли и первый вход
 
-[Открыть редактируемую схему в FigJam](https://www.figma.com/online-whiteboard/create-diagram/6eb3d90d-eba8-4ffa-8772-0b994ed86c0d)
+[Открыть редактируемую схему в FigJam](https://www.figma.com/board/1dnVTLbZ0GRNA0h0rYqtxu)
 
 ```mermaid
 flowchart LR
