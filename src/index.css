@@ -417,3 +417,9 @@ main{padding-bottom:40px}.main-shell main>[data-slot=card]:last-child{margin-bot
 .app-shell .brand-mark,.app-shell.sidebar-collapsed .brand-mark{display:none}
 @media(prefers-reduced-motion:reduce){.app-shell .brand-image{transition:none}}
 .app-shell .brand-image,.app-shell.sidebar-collapsed .brand-image{max-width:none;min-width:150px;flex-shrink:0;transform:none;height:46px;width:150px}
+/* Separate supplied symbol for collapsed mode; do not crop the wordmark. */
+.app-shell .brand-image{clip-path:none;opacity:1;transform:translateX(0);transition:opacity 160ms ease,transform 240ms ease}
+.app-shell.sidebar-collapsed .brand-image{clip-path:none;opacity:0;pointer-events:none;transform:translateX(-8px)}
+.app-shell .brand-mark,.app-shell.sidebar-collapsed .brand-mark{display:block;position:absolute;max-width:none;min-width:30px;width:30px;height:30px;left:11px;top:17px;object-fit:contain;opacity:0;pointer-events:none;transition:opacity 160ms ease;filter:none;mix-blend-mode:screen}
+.app-shell.sidebar-collapsed .brand-mark{opacity:1}
+@media(prefers-reduced-motion:reduce){.app-shell .brand-image,.app-shell .brand-mark{transition:none}}
