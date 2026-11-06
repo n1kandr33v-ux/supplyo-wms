@@ -493,3 +493,5 @@ button.profile{width:100%;text-align:left;cursor:pointer;border-radius:10px;padd
 .warehouse-account-card{position:relative}.warehouse-account-card>[data-slot=card-header]{padding-right:60px}.warehouse-delete-action{position:absolute;right:16px;top:16px}.warehouse-account-card>[data-slot=card-content]{padding-bottom:24px}
 
 .warehouse-address-row{border-top:1px solid var(--portal-line);padding-top:14px}
+
+.warehouse-account-card>[data-slot=card-header]{position:relative}.warehouse-account-card .warehouse-delete-action{top:50%;right:16px;transform:translateY(-50%);display:inline-flex;align-items:center;justify-content:center}.warehouse-delete-action svg{display:block;margin:0}
