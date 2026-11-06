@@ -395,3 +395,5 @@ html{scrollbar-gutter:stable;}
 .orders-table-stocks .editable-stock-value:hover{box-shadow:inset 0 0 0 1px var(--portal-focus);border-color:var(--portal-focus)}
 main{padding-bottom:40px}.main-shell main>[data-slot=card]:last-child{margin-bottom:0}
 [data-slot=card-footer]:empty{display:none}[data-slot=card-content]:has(.orders-table-stocks){padding-bottom:24px}
+
+[data-slot=card-footer].stocks-table-footer:empty{display:flex;min-height:40px;background:var(--portal-elevated);border-top:1px solid var(--portal-line)}
