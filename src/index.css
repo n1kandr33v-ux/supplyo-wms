@@ -397,3 +397,5 @@ main{padding-bottom:40px}.main-shell main>[data-slot=card]:last-child{margin-bot
 [data-slot=card-footer]:empty{display:none}[data-slot=card-content]:has(.orders-table-stocks){padding-bottom:24px}
 
 [data-slot=card-footer].stocks-table-footer:empty{display:flex;min-height:40px;background:var(--portal-elevated);border-top:1px solid var(--portal-line)}
+
+[data-slot=card-content]:has(.orders-table-stocks){padding-bottom:0}[data-slot=card]:has(.orders-table-stocks){row-gap:0}
