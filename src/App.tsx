@@ -22,7 +22,7 @@ const seed:Item[]=clients.flatMap((_,c)=>names.map((name,i)=>({id:6200001000+c*1
 const statusLabels={waiting:'Ожидает',checking:'Проверяется',ready:'Готов',error:'Ошибка','kiz-error':'Ошибка КИЗ'} as const
 function orderStatus(item:Item){return item.assemblyStatus??(item.ready?'ready':'waiting')}
 function itemBarcodes(item:Item){return [...new Set([item.barcode,...(item.additionalBarcodes??[])].filter(Boolean))]}
-function ProductBarcodes({item}:{item:Item}){const codes=itemBarcodes(item);return <div className="product-barcodes">{codes.map((code,index)=><div key={code}><span>{code}</span>{codes.length>1&&<small>{index===0?'Основной':'Дополнительный'}</small>}</div>)}</div>}
+function ProductBarcodes({item}:{item:Item}){const codes=itemBarcodes(item);return <div className="product-barcodes">{codes.map(code=><div key={code}><span>{code}</span></div>)}</div>}
 function restore():Item[]{let rows:Item[];try{rows=JSON.parse(localStorage.getItem('wms-v2-demo')||'null')||seed}catch{rows=seed}if(!localStorage.getItem('wms-ready-preview-20261106')){rows=rows.map(i=>i.phase==='assembly'?{...i,ready:true,assemblyStatus:'ready' as const}:i);localStorage.setItem('wms-ready-preview-20261106','1');localStorage.setItem('wms-v2-demo',JSON.stringify(rows))}return rows.map(row=>({...row,additionalBarcodes:row.additionalBarcodes??seed.find(i=>i.id===row.id)?.additionalBarcodes??[]}))}
 
 const sections=[['overview','Обзор',LayoutDashboard],['new','Новые заказы',Package],['assembly','Сборка',ScanLine],['supplies','Поставки',Truck],['stocks','Остатки',Boxes],['settings','Настройки',Settings2]] as const
