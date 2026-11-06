@@ -399,3 +399,4 @@ main{padding-bottom:40px}.main-shell main>[data-slot=card]:last-child{margin-bot
 [data-slot=card-footer].stocks-table-footer:empty{display:flex;min-height:40px;background:var(--portal-elevated);border-top:1px solid var(--portal-line)}
 
 [data-slot=card-content]:has(.orders-table-stocks){padding-bottom:0}[data-slot=card]:has(.orders-table-stocks){row-gap:0}
+[data-slot=card-footer].table-ending{background:var(--portal-elevated);border-top:1px solid var(--portal-line);min-height:40px}[data-slot=card-footer].table-ending:empty{display:flex;min-height:40px;padding-block:0}[data-slot=card]:has([data-slot=table]){row-gap:0}[data-slot=card-content]:has([data-slot=table]){padding-bottom:0}
