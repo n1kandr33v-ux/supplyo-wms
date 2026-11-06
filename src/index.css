@@ -366,3 +366,7 @@ html{scrollbar-gutter:stable;}
 .orders-table-stocks{min-width:850px;}
 .orders-table [data-slot=table-cell]{overflow-wrap:break-word;}
 .orders-table .product-name{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:normal;overflow-wrap:anywhere;line-height:1.5;}
+.supplies-table{min-width:1050px;}
+.supplies-table [data-slot=table-head]{white-space:nowrap;}
+
+.supply-filters{display:flex;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:24px}.supply-filter{display:flex;flex-direction:column;gap:8px;min-width:170px}.supply-filter label{font-size:12px;color:var(--portal-muted)}.supply-filter:first-child{min-width:210px}.supply-filter [data-slot=select-trigger]{width:100%}
