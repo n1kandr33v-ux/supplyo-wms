@@ -496,3 +496,5 @@ button.profile{width:100%;text-align:left;cursor:pointer;border-radius:10px;padd
 
 .warehouse-account-card>[data-slot=card-header]{position:relative}.warehouse-account-card .warehouse-delete-action{top:50%;right:16px;transform:translateY(-50%);display:inline-flex;align-items:center;justify-content:center}.warehouse-delete-action svg{display:block;margin:0}
 .warehouse-staff-row{transition:background-color 150ms ease,border-color 150ms ease;overflow:hidden}.warehouse-staff-row:hover,.warehouse-staff-row:focus-within{background:var(--portal-primary-hover);border-color:var(--portal-primary-hover);color:var(--portal-on-primary)}.warehouse-staff-row:hover .staff-access-button small,.warehouse-staff-row:focus-within .staff-access-button small{color:var(--portal-on-primary)}.warehouse-staff-row:hover .staff-access-button,.warehouse-staff-row:focus-within .staff-access-button{color:var(--portal-on-primary)}
+
+.warehouse-address-row>[data-slot=button]{margin-left:auto}.warehouse-account-card .account-staff-title{margin-top:12px}
