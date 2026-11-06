@@ -505,3 +505,6 @@ button.profile{width:100%;text-align:left;cursor:pointer;border-radius:10px;padd
 .warehouse-staff-row .staff-access-button:hover small,.warehouse-staff-row .staff-access-button:focus-visible small{color:var(--portal-on-primary)}
 .dark .warehouse-staff-row .staff-remove-action:hover,.dark .warehouse-staff-row .staff-remove-action:focus-visible{background:var(--destructive);color:var(--portal-on-primary);border-color:var(--destructive)}
 .staff-remove-action{border-left:1px solid var(--portal-line);border-radius:6px;margin-left:0}
+.warehouse-staff-row:hover{background:color-mix(in srgb,var(--portal-tag) 50%,var(--portal-elevated));border-color:var(--portal-line)}
+.warehouse-staff-row .staff-access-button:hover{background:transparent;color:var(--portal-text)}
+.warehouse-staff-row .staff-access-button:hover small{color:var(--portal-muted)}
