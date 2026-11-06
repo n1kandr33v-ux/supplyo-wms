@@ -437,3 +437,5 @@ main{padding-bottom:40px}.main-shell main>[data-slot=card]:last-child{margin-bot
 .app-shell .brand-image{z-index:1}
 
 .app-shell.sidebar-collapsed .brand-image{clip-path:inset(0 122.5px 0 0)}
+
+.app-shell.sidebar-collapsed .brand-image{clip-path:inset(0 123.5px 0 0)}
