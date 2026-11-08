@@ -1,0 +1,24 @@
+
+.settings-heading{margin-top:24px;margin-bottom:20px}.settings-heading h1{font-size:26px}.settings-heading p{margin-top:6px}
+.settings-columns{width:100%;display:grid!important;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:20px;align-items:start}
+.settings-column{display:flex;flex-direction:column;gap:20px;min-width:0;align-items:stretch}
+.settings-column>[data-slot="card"]{height:fit-content;min-height:0;gap:16px;padding-top:20px;flex:0 0 auto}
+.settings-column>[data-slot="card"]>[data-slot="card-header"],.settings-column>[data-slot="card"]>[data-slot="card-content"]{padding-left:20px;padding-right:20px}
+.settings-column>[data-slot="card"]>[data-slot="card-footer"]{padding:14px 20px;gap:10px;margin-top:0;flex-wrap:wrap}
+.settings-column [data-slot="card-content"]{flex:0 0 auto;padding-bottom:0}
+.settings-column>.mt-6{margin-top:0}
+.settings-column .connected-store-examples{gap:12px}
+.settings-column .connected-store-example{padding:14px;gap:4px}
+.settings-column .connected-store-heading{margin-bottom:4px}
+.settings-column .connected-store-key{justify-content:flex-start;gap:12px;min-height:30px}
+.settings-column .connected-store-key>span{width:64px;flex:none}
+.settings-column .connected-store-key code{flex:0 1 auto}
+.settings-column .connected-store-key .store-key-edit{margin-left:auto}
+.settings-column .access-code-fields{grid-template-columns:1fr;gap:14px}
+.settings-column .access-code-result{padding:14px;gap:12px;flex-wrap:wrap}
+.settings-column .access-code-result strong{font-size:16px}
+@media(max-width:760px){.settings-columns{grid-template-columns:minmax(0,1fr)}.settings-heading{margin-top:20px}}
+
+.settings-columns[data-section]{display:block!important;max-width:840px}.settings-columns[data-section=stores]>.settings-column:last-child,.settings-columns[data-section=access]>.settings-column:last-child,.settings-columns[data-section=subscription]>.settings-column:first-child{display:none}.settings-columns[data-section=access]>.settings-column:first-child>[data-slot=card]:first-child{display:none}.settings-single{max-width:840px;margin-top:24px}.settings-single>h1{font-size:26px;margin-bottom:20px}
+
+.main-shell>main.settings-page-main{width:100%;max-width:1040px;margin:0 auto;padding:36px 32px 48px}.settings-page-main .settings-single,.settings-page-main .settings-columns[data-section]{max-width:none;width:100%}.settings-page-main .settings-single{margin-top:0}.settings-page-main .settings-heading{margin-top:0}.settings-page-main .settings-single>h1,.settings-page-main .settings-heading h1{font-size:26px}.settings-page-main .settings-single>[data-slot=card]{width:100%}@media(max-width:760px){.main-shell>main.settings-page-main{padding:24px 20px 36px}}

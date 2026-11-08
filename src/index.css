@@ -535,3 +535,22 @@ body[data-scroll-locked]{margin-right:0!important;padding-right:0!important;--re
 .client-connections{display:grid;gap:12px}.client-connection-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px;background:var(--portal-elevated);border-radius:10px}.client-connection-row>div{min-width:0;display:grid;gap:5px}.client-connection-row small{color:var(--portal-muted);overflow-wrap:anywhere}
 
 .subscription-status{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;background:var(--portal-tag);color:var(--portal-subtle);font-size:12px}
+
+.connected-store-examples{display:flex;flex-direction:column;gap:14px}.connected-store-example{padding:16px;background:var(--portal-elevated);border-radius:10px;display:flex;flex-direction:column;gap:16px}.connected-store-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}.connected-store-heading strong{font-size:14px}.connected-store-heading>span{font-size:12px;color:var(--portal-subtle)}.connected-store-key{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12px;color:var(--portal-muted)}.connected-store-key code{color:var(--portal-text);font-size:12px}
+
+.connected-store-examples{display:flex!important;flex-direction:column;gap:16px}.connected-store-example{display:flex!important;flex-direction:column;gap:12px;padding:16px;background:var(--portal-elevated,#242325);border-radius:10px}.connected-store-heading{display:flex!important;justify-content:space-between;align-items:center;gap:16px}.connected-store-key{display:flex!important;align-items:center;gap:12px;min-height:32px}.connected-store-key>span{min-width:64px}.connected-store-key code{flex:1}.connected-store-key .store-key-edit{margin-left:auto;flex:none;width:32px;height:32px;border-radius:8px}.store-key-edit:hover{background:var(--portal-primary,#272df5)!important;color:var(--portal-text,#fafafa)!important}
+
+.access-code-fields{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:760px}.access-code-result{margin-top:24px;padding:20px;background:var(--portal-elevated);border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:20px}.access-code-result>div{display:flex;flex-direction:column;gap:8px}.access-code-result strong{font-family:monospace;font-size:20px;letter-spacing:.05em;overflow-wrap:anywhere}@media(max-width:700px){.access-code-fields{grid-template-columns:1fr}.access-code-result{align-items:flex-start;flex-direction:column}}
+
+.connected-store-example{transition:background-color .18s ease}.connected-store-example:hover,.connected-store-example:focus-within{background:var(--portal-tag,#38373d)}
+
+
+.connected-store-example:hover,.connected-store-example:focus-within{background:var(--portal-elevated,#242325)}.connected-store-key{padding:4px 8px;margin:0 -8px;border-radius:8px;transition:background-color .18s ease}.connected-store-key:hover,.connected-store-key:focus-within{background:var(--portal-tag,#38373d)}
+
+
+.connected-store-example{gap:6px}.connected-store-key{min-height:30px;padding:0 8px}.connected-store-key .store-key-edit{width:28px;height:28px}
+
+
+.locked-nav-item{display:block;width:100%;border-radius:10px;cursor:not-allowed}.locked-nav-item>button{width:100%;pointer-events:none}.locked-nav-item:focus-visible{outline:2px solid var(--portal-focus);outline-offset:2px}.subscription-tooltip{z-index:100;background:var(--portal-elevated,#242325);color:var(--portal-text,#fafafa);border:1px solid var(--portal-line);border-radius:10px;padding:12px 14px;max-width:260px;box-shadow:0 8px 24px #0005;font-size:12px;line-height:1.5}.subscription-tooltip strong,.subscription-tooltip span{display:block}.subscription-tooltip span{color:var(--portal-muted);margin-top:4px}
+
+.settings-columns{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:24px;align-items:start}.settings-column{display:flex;flex-direction:column;gap:24px;min-width:0}.settings-column>[data-slot=card]{height:auto;min-height:0;align-self:stretch}.settings-column>.mt-6{margin-top:0}.settings-column [data-slot=card-content]{flex-grow:0}.settings-column [data-slot=card-footer]{margin-top:0}@media(max-width:900px){.settings-columns{grid-template-columns:1fr}}
