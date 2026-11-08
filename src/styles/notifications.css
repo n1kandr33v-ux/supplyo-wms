@@ -1,0 +1,16 @@
+/* Notifications share semantic accents; negative feedback always uses danger. */
+.toaster [data-sonner-toast].cn-toast {
+  --normal-bg: var(--primary);
+  --normal-text: var(--primary-foreground);
+  --normal-border: var(--primary);
+  background: var(--normal-bg);
+  color: var(--normal-text);
+  border-color: var(--normal-border);
+  border-radius: var(--control-radius);
+}
+.toaster [data-sonner-toast].cn-toast[data-type=error] {
+  --normal-bg: var(--destructive);
+  --normal-text: white;
+  --normal-border: var(--destructive);
+}
+.toaster [data-sonner-toast].cn-toast [data-description] { color: inherit; opacity: .9; }
