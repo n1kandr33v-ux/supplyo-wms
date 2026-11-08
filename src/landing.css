@@ -21,3 +21,18 @@
 .landing-plan-custom>div{flex:1}.landing-plan-custom h3{margin:0 0 6px;font-size:18px}.landing-plan-custom p{margin:0;color:var(--lp-muted);font-size:14px}.landing-plan-custom>span{font-size:16px;color:var(--lp-text)}
 @media(max-width:1000px){.landing-plans{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:540px){.landing-plans{grid-template-columns:1fr}.landing-plan-custom{align-items:flex-start;flex-direction:column;gap:16px}.landing-plan-custom>button{width:100%}}
+
+/* A single continuous sequence instead of an empty two-column introduction. */
+.landing-workflow{display:block}
+.workflow-heading{max-width:760px}.landing-workflow .workflow-heading>p{font-size:15px;color:var(--lp-muted);line-height:1.7}
+.landing-workflow .workflow-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:40px;border:1px solid var(--lp-line);border-radius:16px;overflow:hidden;background:var(--lp-panel)}
+.landing-workflow .workflow-steps>li,.landing-workflow .workflow-steps>li:first-child{display:flex;flex-direction:column;gap:0;padding:28px;border:0;min-width:0}
+.landing-workflow .workflow-steps>li+li{border-left:1px solid var(--lp-line)}
+.workflow-step-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:30px;color:var(--lp-muted)}
+.workflow-step-number{font-size:13px;color:var(--portal-focus,#8b8fff);font-variant-numeric:tabular-nums}
+.landing-workflow .workflow-steps h3{font-size:18px;line-height:1.4;margin-bottom:12px;letter-spacing:-.02em}
+.landing-workflow .workflow-steps p{font-size:14px;line-height:1.75;margin:0 0 28px}
+.workflow-step-detail{display:flex;align-items:flex-start;gap:8px;margin-top:auto;padding-top:18px;border-top:1px solid var(--lp-line);font-size:12px;line-height:1.6;color:var(--lp-muted)}
+.workflow-step-detail svg{flex-shrink:0;margin-top:3px;color:var(--portal-focus,#8b8fff)}
+.workflow-bottom{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:24px}.workflow-bottom>span{font-size:13px;line-height:1.6;color:var(--lp-muted)}.workflow-bottom>button{flex-shrink:0}
+@media(max-width:800px){.landing-workflow .workflow-steps{grid-template-columns:1fr}.landing-workflow .workflow-steps>li+li{border-left:0;border-top:1px solid var(--lp-line)}.workflow-step-top{margin-bottom:20px}.workflow-bottom{align-items:flex-start;flex-direction:column}}
