@@ -1,3 +1,4 @@
+import {registerInventoryCount} from './inventory-count.ts';
 import type {FastifyInstance} from 'fastify';
 import type {Database,Queries} from './database.ts';
 import type {Access} from './access.ts';
@@ -43,6 +44,7 @@ export async function registerInternalStock(app:FastifyInstance,db:Database,user
   if(!q.physical||!allowed.some(w=>w.id===q.physical))throw fail('Выберите доступный склад.',403);
   return {uid,location:JSON.stringify(['physical',owner,q.physical]),canEdit:!q.team||(await employees.memberships(uid)).find(m=>m.id===q.team)!.permissions.includes('stocks')};
  }
+ await registerInventoryCount(app,db,context,()=>running??=(reconcile().finally(()=>{running=undefined})));
  async function debit(tx:Queries,store:string,warehouse:string,source:string,barcodes:string[],quantity:number,reference:string,at:string|null){
   const location=stockLocation(store,warehouse);
   let rows=(await tx.query<any>('SELECT * FROM internal_stock_items WHERE location=$1 AND source_id=$2 FOR UPDATE',[location,source])).rows;

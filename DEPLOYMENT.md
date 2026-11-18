@@ -566,3 +566,7 @@ Active `/opt/supplyo/releases/20261117-client-labels-v1`; previous `/opt/supplyo
 
 ## 2026-11-18: complete Ozon workflows and automatic printing
 Active release `/opt/supplyo/releases/20261118-ozon-auto-print-v1`, previous `20261118-ozon-delivery-marks-v1`. Backup `/var/backups/supplyo/supplyo-20261118-144718.tar.gz`. Backend SHA256 `33e631fdc28d554b91deb3fcd4b58772ccbd0a32dc94e8cd907d9677c5b8032a`. 47 published files and public/service health verified. Includes full catalog/warehouse stock, aliases/placement, confirmed stock publishing, per-unit assembly and catalog-required KIZ, client/FF per-posting marks archive, removal of marketplace header badges, and automatic completion/label printing with persisted deduplication. 37 server tests and browser auto-flow/reload/print/scanner regressions passed. Read-only production check: auto queue contained the user requested posting with quantity=ready=1. See HANDOFF-2026-11-18.md for exact behavior and limits.
+
+
+## Инвентаризация 18.11.2026
+Добавлена серверная инвентаризация WB/Ozon: см. docs/INVENTORY-COUNT.md. Релиз /opt/supplyo/releases/20261118-inventory-count-v1.

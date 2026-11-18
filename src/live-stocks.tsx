@@ -1,3 +1,4 @@
+import {InventoryCount} from './inventory-count';
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Download, RefreshCw, Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
@@ -75,6 +76,8 @@ function MarketplaceStocks({storeId}:{storeId:string}){
 }
 
 export function LiveStocks({storeId,marketplace}:{storeId?:string;marketplace?:string}){
+ const [tab,setTab]=useState('stocks');
+ useEffect(()=>setTab('stocks'),[storeId]);
  if(!storeId)return <section className="live-card"><h1>Остатки и размещение</h1><p>Выберите подключённый кабинет для просмотра остатков.</p></section>;
- return marketplace==='ozon'?<OzonInternalStocks storeId={storeId}/>:<MarketplaceStocks storeId={storeId}/>;
+ return <><nav className="stock-mode" aria-label="Разделы остатков"><Button variant={tab==='stocks'?'default':'ghost'} onClick={()=>setTab('stocks')}>Остатки</Button><Button variant={tab==='count'?'default':'ghost'} onClick={()=>setTab('count')}>Инвентаризация</Button></nav>{tab==='count'?<InventoryCount key={storeId} storeId={storeId}/>:marketplace==='ozon'?<OzonInternalStocks storeId={storeId}/>:<MarketplaceStocks storeId={storeId}/>}</>;
 }
