@@ -1,0 +1,13 @@
+from pathlib import Path
+p=Path('src/App.tsx');s=p.read_text(encoding='utf-8-sig')
+s=s.replace("[query,setQuery]=useState('')","[query,setQuery]=useState(''),[selected,setSelected]=useState<number[]>([])")
+s=s.replace("function navigate(t:string){setTab(t);setQuery('');setStatus('Все статусы')}","function navigate(t:string){setTab(t);setQuery('');setStatus('Все статусы');setSelected([])}")
+s=s.replace("function createSupply(){setItems(prev=>prev.map(i=>fresh.some(f=>f.id===i.id)?{...i,phase:'assembly'}:i));", "function createSupply(){if(!selected.length)return;setItems(prev=>prev.map(i=>fresh.some(f=>f.id===i.id)&&selected.includes(i.id)?{...i,phase:'assembly'}:i));")
+s=s.replace("disabled={!fresh.length} onClick={createSupply}","disabled={!fresh.some(i=>selected.includes(i.id))} onClick={createSupply}")
+s=s.replace("Создать поставку</Button>","Создать поставку ({fresh.filter(i=>selected.includes(i.id)).length})</Button>")
+s=s.replace("<TableHead key={n}>{h}</TableHead>",'''<TableHead key={n}>{tab==='new'&&n===0?<input className="order-checkbox" type="checkbox" aria-label="Выбрать все показанные заказы" checked={filtered.length>0&&filtered.every(i=>selected.includes(i.id))} ref={node=>{if(node)node.indeterminate=filtered.some(i=>selected.includes(i.id))&&!filtered.every(i=>selected.includes(i.id))}} onChange={e=>setSelected(prev=>e.target.checked?[...new Set([...prev,...filtered.map(i=>i.id)])]:prev.filter(id=>!filtered.some(i=>i.id===id)))}/>:h}</TableHead>''')
+s=s.replace("<TableCell><Badge variant=\"outline\" className={i.ready?'status-ready':'status-wait'}>","<TableCell>{tab==='new'?<input className=\"order-checkbox\" type=\"checkbox\" aria-label={`Выбрать заказ ${i.id}`} checked={selected.includes(i.id)} onChange={e=>setSelected(prev=>e.target.checked?[...prev,i.id]:prev.filter(id=>id!==i.id))}/>:<Badge variant=\"outline\" className={i.ready?'status-ready':'status-wait'}>")
+s=s.replace("{i.ready?'Готово':'К сборке'}</Badge></TableCell>","{i.ready?'Готово':'К сборке'}</Badge>}</TableCell>")
+s=s.replace('Показано {filtered.length} позиций</span>',"Показано {filtered.length} позиций{tab==='new'&&` · Выбрано ${fresh.filter(i=>selected.includes(i.id)).length}`}</span>")
+s=s.replace("setClient(clients.indexOf(v));setWarehouse", "setClient(clients.indexOf(v));setSelected([]);setWarehouse")
+p.write_text(s,encoding='utf-8')

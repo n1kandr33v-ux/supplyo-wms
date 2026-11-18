@@ -1,0 +1,2 @@
+from pathlib import Path
+p=Path('src/App.tsx');s=p.read_text(encoding='utf-8');old="<CardDescription>{tab==='stocks'?'Редактируйте ячейки, адреса и количество товара.':'Заказы отсортированы по адресу хранения. Данные тестовые.'}</CardDescription>";assert old in s;s=s.replace(old,"{tab==='stocks'&&<CardDescription>Редактируйте ячейки, адреса и количество товара.</CardDescription>}");p.write_text(s,encoding='utf-8')

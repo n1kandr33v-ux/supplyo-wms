@@ -1,0 +1,2 @@
+from pathlib import Path
+p=Path('src/components/personal-account.tsx');s=p.read_text(encoding='utf-8');a=s.index('<CardDescription>Данные фулфилмента');b=s.index('{orgError&&',a);s=s[:a]+'''<CardDescription>Основные данные и контакты</CardDescription></CardHeader><CardContent><div className="account-fields">{orgFields([['name','Название фулфилмента'],['inn','ИНН'],['phone','Телефон','tel'],['email','Электронная почта','email']])}</div>'''+s[b:];p.write_text(s,encoding='utf-8')

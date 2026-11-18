@@ -1,0 +1,5 @@
+from pathlib import Path
+p=Path('src/components/date-range-picker.tsx');s=p.read_text(encoding='utf-8');s=s.replace('onChange,single=false}', 'onChange,single=false,selectMonthOnNavigate=false}').replace('single?:boolean}', 'single?:boolean;selectMonthOnNavigate?:boolean}')
+s=s.replace(' function pick(day:string)', " function navigateMonth(delta:number){const next=new Date(month.getFullYear(),month.getMonth()+delta,1);setMonth(next);if(selectMonthOnNavigate&&!single){onChange(iso(next),iso(new Date(next.getFullYear(),next.getMonth()+1,0)));setStart('');setHovered('')}}\n function pick(day:string)")
+s=s.replace('onClick={()=>setMonth(new Date(month.getFullYear(),month.getMonth()-1,1))}', 'onClick={()=>navigateMonth(-1)}').replace('onClick={()=>setMonth(new Date(month.getFullYear(),month.getMonth()+1,1))}', 'onClick={()=>navigateMonth(1)}');p.write_text(s,encoding='utf-8')
+p=Path('src/components/accounting.tsx');s=p.read_text(encoding='utf-8');s=s.replace('<DateRangePicker from={from}', '<DateRangePicker selectMonthOnNavigate from={from}');p.write_text(s,encoding='utf-8')

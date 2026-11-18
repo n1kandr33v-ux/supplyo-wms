@@ -1,0 +1,2 @@
+from pathlib import Path
+p=Path('src/components/personal-account.tsx');s=p.read_text(encoding='utf-8');needle='<CardFooter className="table-ending"/></Card>)}</div>';assert needle in s;s=s.replace(needle,'''<CardFooter className="table-ending"/></Card>)}{Array.from({length:(3-stores.length%3)%3},(_,index)=><button type="button" key={'add-store-'+index} className="warehouse-add-placeholder" onClick={()=>openStore(blankStore)}><Plus size={24}/><span>Добавить склад</span></button>)}</div>''',1);p.write_text(s,encoding='utf-8')

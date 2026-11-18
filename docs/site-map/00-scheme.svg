@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2288" height="2096" viewBox="0 0 2288 2096">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#64748B"/></marker></defs>
+<rect width="2288" height="2096" fill="#FFFFFF"/>
+<text x="70" y="43" font-family="Arial,sans-serif" font-size="17" fill="#6A7585" font-weight="400" text-anchor="start">SUPPLY / КАРТА САЙТА И ANDROID / 00</text>
+<text x="70" y="89" font-family="Arial,sans-serif" font-size="32" fill="#233044" font-weight="700" text-anchor="start">00 · Как читать карту / весь сайт</text>
+<text x="70" y="127" font-family="Arial,sans-serif" font-size="20" fill="#64748B" font-weight="400" text-anchor="start">Все роли</text>
+<text x="70" y="166" font-family="Arial,sans-serif" font-size="17" fill="#64748B" font-weight="400" text-anchor="start">Реализация: Актуальная логика на 12.11.2026. Сайт, Android и оставшиеся планы разделены.</text>
+<path d="M 1051.6666666666667 862 L 1051.6666666666667 900 L 1496.6666666666667 900 L 1496.6666666666667 982" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 936.6666666666667 862 L 936.6666666666667 1010" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 821.6666666666667 862 L 821.6666666666667 900 L 376.66666666666674 900 L 376.66666666666674 1019.3333333333333" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 1496.6666666666667 1222 L 1496.6666666666667 1358" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 936.6666666666667 1194 L 936.6666666666667 1260 L 1381.6666666666667 1260 L 1381.6666666666667 1358" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 453.3333333333334 1203.3333333333333 L 453.3333333333335 1286 L 1266.6666666666667 1286 L 1266.6666666666667 1358" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 1427.6666666666667 1542 L 1427.6666666666667 1674" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 1519.6666666666667 1542 L 1519.6666666666667 1592 L 1987.6666666666667 1592 L 1987.6666666666667 1674" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 1243.6666666666667 1542 L 1243.6666666666667 1592 L 307.66666666666674 1592 L 307.66666666666674 1674" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 300.0000000000001 1203.3333333333333 L 300 1342" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 1335.6666666666667 1542 L 1335.6666666666667 1618 L 867.6666666666667 1618 L 867.6666666666667 1674" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<a href="#01"><title>Открыть раздел 01</title>
+<rect x="706.6666666666667" y="678" width="460" height="184" rx="14" fill="#EDE6FF" stroke="#9C83CF" stroke-width="2"/>
+<text x="936.6666666666667" y="735.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">НАЧНИТЕ ЗДЕСЬ</text>
+<text x="936.6666666666667" y="763.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">01 Регистрация → 02 Подписка</text>
+<text x="936.6666666666667" y="791.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Один аккаунт может совмещать</text>
+<text x="936.6666666666667" y="819.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">несколько ролей.</text>
+</a>
+<a href="#04"><title>Открыть раздел 04</title>
+<rect x="1266.6666666666667" y="982" width="460" height="240" rx="14" fill="#EDE6FF" stroke="#9C83CF" stroke-width="2"/>
+<text x="1496.6666666666667" y="1039.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">КЛИЕНТ / ПРОДАВЕЦ</text>
+<text x="1496.6666666666667" y="1067.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">04 Свой API → 05 Доступ</text>
+<text x="1496.6666666666667" y="1095.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">фулфилменту → 08 Обзор</text>
+<text x="1496.6666666666667" y="1123.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Без собственной подписки:</text>
+<text x="1496.6666666666667" y="1151.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">подключение магазина и просмотр</text>
+<text x="1496.6666666666667" y="1179.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">своих складов у ФФ.</text>
+</a>
+<a href="#06"><title>Открыть раздел 06</title>
+<rect x="706.6666666666667" y="1010" width="460" height="184" rx="14" fill="#EDE6FF" stroke="#9C83CF" stroke-width="2"/>
+<text x="936.6666666666667" y="1067.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">ВЛАДЕЛЕЦ ФУЛФИЛМЕНТА</text>
+<text x="936.6666666666667" y="1095.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">02 Подписка → 06 Физический склад →</text>
+<text x="936.6666666666667" y="1123.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">05 Подключение клиента → 07</text>
+<text x="936.6666666666667" y="1151.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Команда → 09–12 Заказы.</text>
+</a>
+<a href="#07"><title>Открыть раздел 07</title>
+<rect x="146.66666666666674" y="1019.3333333333333" width="460" height="184" rx="14" fill="#EDE6FF" stroke="#9C83CF" stroke-width="2"/>
+<text x="376.66666666666674" y="1076.3333333333333" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">СОТРУДНИК</text>
+<text x="376.66666666666674" y="1104.3333333333333" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">01 Регистрация с выданным email → 07</text>
+<text x="376.66666666666674" y="1132.3333333333333" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Права склада → 08 Разрешённые</text>
+<text x="376.66666666666674" y="1160.3333333333333" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">склады → 10–12 Сборка и отгрузка.</text>
+</a>
+<a href="#09"><title>Открыть раздел 09</title>
+<rect x="1151.6666666666667" y="1358" width="460" height="184" rx="14" fill="#EDE6FF" stroke="#9C83CF" stroke-width="2"/>
+<text x="1381.6666666666667" y="1415.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">ОБЩАЯ РАБОТА</text>
+<text x="1381.6666666666667" y="1443.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">09 Новые заказы → 10 Сканирование</text>
+<text x="1381.6666666666667" y="1471.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">→ 11 КИЗ → 12 Передача в доставку</text>
+<text x="1381.6666666666667" y="1499.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">→ 14 История поставок.</text>
+</a>
+<a href="#15"><title>Открыть раздел 15</title>
+<rect x="1197.6666666666667" y="1674" width="460" height="184" rx="14" fill="#EDE6FF" stroke="#9C83CF" stroke-width="2"/>
+<text x="1427.6666666666667" y="1731.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">ФИНАНСЫ</text>
+<text x="1427.6666666666667" y="1759.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">15 Доходы / расходы</text>
+<text x="1427.6666666666667" y="1787.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">16 Работы / зарплата</text>
+<text x="1427.6666666666667" y="1815.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">17 Счета / чеки</text>
+</a>
+<a href="#03"><title>Открыть раздел 03</title>
+<rect x="1757.6666666666667" y="1674" width="460" height="212" rx="14" fill="#EDE6FF" stroke="#9C83CF" stroke-width="2"/>
+<text x="1987.6666666666667" y="1731.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">УПРАВЛЕНИЕ</text>
+<text x="1987.6666666666667" y="1759.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">03 Навигация и права</text>
+<text x="1987.6666666666667" y="1787.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">04 Магазины</text>
+<text x="1987.6666666666667" y="1815.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">05 Доступы / клиенты</text>
+<text x="1987.6666666666667" y="1843.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">06 Склады / 07 Сотрудники</text>
+</a>
+<a href="#13"><title>Открыть раздел 13</title>
+<rect x="77.66666666666674" y="1674" width="460" height="212" rx="14" fill="#EDE6FF" stroke="#9C83CF" stroke-width="2"/>
+<text x="307.66666666666674" y="1731.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">ПРОЧИЕ РАЗДЕЛЫ</text>
+<text x="307.66666666666674" y="1759.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">13 Печать и агент</text>
+<text x="307.66666666666674" y="1787.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">14 Остатки и размещение</text>
+<text x="307.66666666666674" y="1815.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">18 Профиль</text>
+<text x="307.66666666666674" y="1843.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">19 Сервер и обновление данных</text>
+</a>
+<rect x="660" y="280" width="460" height="268" rx="14" fill="#F5F6F8" stroke="#A5AFBE" stroke-width="2"/>
+<text x="890.0" y="337.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">ОБОЗНАЧЕНИЯ</text>
+<text x="890.0" y="365.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Синий: действие / экран</text>
+<text x="890.0" y="393.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Ромб: проверка или развилка</text>
+<text x="890.0" y="421.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Зелёный: результат</text>
+<text x="890.0" y="449.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Красный: ошибка</text>
+<text x="890.0" y="477.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Жёлтый: ожидание</text>
+<text x="890.0" y="505.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Фиолетовый: переход в другой раздел</text>
+<a href="#21"><title>Открыть раздел 21</title>
+<rect x="637.6666666666667" y="1674" width="460" height="212" rx="14" fill="#EDE6FF" stroke="#9C83CF" stroke-width="2"/>
+<text x="867.6666666666667" y="1731.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">ЧТО РАБОТАЕТ И ЧТО ОСТАЛОСЬ</text>
+<text x="867.6666666666667" y="1759.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Текущая реализация указана у каждого</text>
+<text x="867.6666666666667" y="1787.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">раздела.</text>
+<text x="867.6666666666667" y="1815.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">21 — отдельная сводка готовых</text>
+<text x="867.6666666666667" y="1843.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">функций и оставшихся планов.</text>
+</a>
+<rect x="70" y="280" width="460" height="212" rx="14" fill="#F5F6F8" stroke="#A5AFBE" stroke-width="2"/>
+<text x="300.0" y="337.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">КАК ПРАВИТЬ</text>
+<text x="300.0" y="365.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Откройте .drawio в diagrams.net. Блоки</text>
+<text x="300.0" y="393.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">и стрелки редактируются отдельно.</text>
+<text x="300.0" y="421.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Разделы 01–21 связаны переходами.</text>
+<text x="300.0" y="449.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">HTML — для просмотра.</text>
+<a href="#20"><title>Открыть раздел 20</title>
+<rect x="70" y="1342" width="460" height="212" rx="14" fill="#EDE6FF" stroke="#9C83CF" stroke-width="2"/>
+<text x="300.0" y="1399.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">ANDROID-ПРИЛОЖЕНИЕ → 20</text>
+<text x="300.0" y="1427.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Вход → магазин → поставка →</text>
+<text x="300.0" y="1455.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">карточки.</text>
+<text x="300.0" y="1483.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Локальные отметки и общие заметки</text>
+<text x="300.0" y="1511.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">независимы от статусов сайта.</text>
+</a>
+<text x="70" y="1986" font-family="Arial,sans-serif" font-size="18" fill="#475569" font-weight="400" text-anchor="start">Источник — действующий код и DEPLOYMENT.md. Схема не содержит API-ключей, паролей и персональных данных. Оранжевый означает план, а не работающую интеграцию.</text>
+<text x="70" y="2068" font-family="Arial,sans-serif" font-size="16" fill="#6A7585" font-weight="400" text-anchor="start">↖ Оглавление — слева. Файл .drawio содержит редактируемые блоки и стрелки.</text></svg>

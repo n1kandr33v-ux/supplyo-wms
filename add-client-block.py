@@ -1,0 +1,3 @@
+from pathlib import Path
+p=Path('src/App.tsx');s=p.read_text(encoding='utf-8');s="import { ClientConnections } from '@/components/client-connections'\n"+s;s=s.replace('<PrintAgentSettings/></div>}', '<PrintAgentSettings/><ClientConnections/></div>}');p.write_text(s,encoding='utf-8')
+p=Path('src/index.css');s=p.read_text(encoding='utf-8');s+='\n.client-connections{display:grid;gap:12px}.client-connection-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px;background:var(--portal-elevated);border-radius:10px}.client-connection-row>div{min-width:0;display:grid;gap:5px}.client-connection-row small{color:var(--portal-muted);overflow-wrap:anywhere}\n';p.write_text(s,encoding='utf-8')

@@ -1,0 +1,2 @@
+from pathlib import Path
+p=Path('src/App.tsx');s=p.read_text(encoding='utf-8');old="useState<Record<number,string>>(()=>{try{return JSON.parse(localStorage.getItem('wms-last-updated')||'{}')}catch{return {}}})";new="useState<Record<number,string>>(()=>{const loadedAt=new Date().toISOString();return Object.fromEntries(clients.map((_,index)=>[index,loadedAt]))})";assert old in s;s=s.replace(old,new);p.write_text(s,encoding='utf-8')

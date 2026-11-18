@@ -1,0 +1,10 @@
+from pathlib import Path
+p=Path('src/components/date-range-picker.tsx');s=p.read_text(encoding='utf-8')
+s=s.replace("[start,setStart]=useState('')","[start,setStart]=useState(''),[hovered,setHovered]=useState('')")
+s=s.replace("setStart(day);return","setStart(day);setHovered(day);return")
+s=s.replace("setStart('');setOpen(false)","setStart('');setHovered('');setOpen(false)")
+s=s.replace("setOpen(v);setStart('');","setOpen(v);setStart('');setHovered('');")
+s=s.replace('className="range-calendar-grid"','className="range-calendar-grid" onMouseLeave={()=>setHovered(\'\')}')
+s=s.replace("edge=day===(start||from)||(!start&&day===to),inside=!start&&from&&to&&day>from&&day<to;", "rangeFrom=start?(hovered&&hovered<start?hovered:start):from,rangeTo=start?(hovered&&hovered>start?hovered:start):to,edge=day===rangeFrom||day===rangeTo,inside=!!rangeFrom&&!!rangeTo&&day>rangeFrom&&day<rangeTo;")
+s=s.replace('onClick={()=>pick(day)}','onMouseEnter={()=>{if(start)setHovered(day)}} onFocus={()=>{if(start)setHovered(day)}} onClick={()=>pick(day)}')
+p.write_text(s,encoding='utf-8')

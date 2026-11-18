@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="3942" viewBox="0 0 1500 3942">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#64748B"/></marker></defs>
+<rect width="1500" height="3942" fill="#FFFFFF"/>
+<text x="70" y="43" font-family="Arial,sans-serif" font-size="17" fill="#6A7585" font-weight="400" text-anchor="start">SUPPLY / КАРТА САЙТА И ANDROID / 12</text>
+<text x="70" y="89" font-family="Arial,sans-serif" font-size="32" fill="#233044" font-weight="700" text-anchor="start">12 · Передача в доставку и этикетки коробов</text>
+<text x="70" y="127" font-family="Arial,sans-serif" font-size="20" fill="#64748B" font-weight="400" text-anchor="start">Владелец / сотрудник с правом передачи</text>
+<text x="70" y="166" font-family="Arial,sans-serif" font-size="17" fill="#64748B" font-weight="400" text-anchor="start">Реализация: Реализовано: серверный контроль готовности, СЦ/ПВЗ, короба и этикетки после передачи.</text>
+<path d="M 706.6666666666666 526.6666666666667 L 706.6666666666666 614 L 300 614 L 300 842" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 860 526.6666666666666 L 860 860.6666666666666" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 936.6666666666667 1016.6666666666666 L 936.6666666666667 1174" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 783.3333333333334 1016.6666666666666 L 783.3333333333334 1064 L 376.6666666666667 1064 L 376.6666666666667 1146" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 936.6666666666667 1330 L 936.6666666666667 1478" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 376.6666666666667 1358 L 376.6666666666667 1396 L 783.3333333333334 1396 L 783.3333333333334 1478" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 860 1662 L 860 1928" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 860 2196 L 860 2316" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 783.3333333333334 2528 L 783.3333333333334 2566 L 376.6666666666667 2566 L 376.6666666666667 2794" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 936.6666666666667 2528 L 936.6666666666667 2808" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 936.6666666666667 2964 L 936.6666666666667 3098" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 1013.3333333333335 3282 L 1013.3333333333335 3548" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 860.0000000000001 3548 L 860.0000000000001 3282" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="245" y="694" width="57" height="30" rx="4" fill="white"/>
+<text x="273.5" y="716" font-family="Arial,sans-serif" font-size="18" fill="#233044" font-weight="400" text-anchor="middle">Нет</text>
+<rect x="859" y="694" width="49" height="30" rx="4" fill="white"/>
+<text x="883.5" y="716" font-family="Arial,sans-serif" font-size="18" fill="#233044" font-weight="400" text-anchor="middle">Да</text>
+<rect x="727" y="1780" width="135" height="30" rx="4" fill="white"/>
+<text x="794.5" y="1802" font-family="Arial,sans-serif" font-size="18" fill="#233044" font-weight="400" text-anchor="middle">Подтвердить</text>
+<rect x="309.6666666666667" y="2646" width="69" height="30" rx="4" fill="white"/>
+<text x="344.1666666666667" y="2668" font-family="Arial,sans-serif" font-size="18" fill="#233044" font-weight="400" text-anchor="middle">Сбой</text>
+<rect x="935.6666666666667" y="2646" width="150" height="30" rx="4" fill="white"/>
+<text x="1010.6666666666667" y="2668" font-family="Arial,sans-serif" font-size="18" fill="#233044" font-weight="400" text-anchor="middle">Подтверждено</text>
+<rect x="1012.3333333333334" y="3400" width="93" height="30" rx="4" fill="white"/>
+<text x="1058.8333333333335" y="3422" font-family="Arial,sans-serif" font-size="18" fill="#233044" font-weight="400" text-anchor="middle">Ошибка</text>
+<rect x="713" y="3400" width="149" height="30" rx="4" fill="white"/>
+<text x="787.5" y="3422" font-family="Arial,sans-serif" font-size="18" fill="#233044" font-weight="400" text-anchor="middle">Повтор печати</text>
+<polygon points="783.3333333333333,280 1013.3333333333333,428.0 783.3333333333333,576 553.3333333333333,428.0" fill="#FFF0C9" stroke="#C99726" stroke-width="2"/>
+<text x="783.3333333333333" y="393.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">ВСЕ ЗАКАЗЫ ГОТОВЫ</text>
+<text x="783.3333333333333" y="421.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">И ПРОШЛИ</text>
+<text x="783.3333333333333" y="449.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">СЕРВЕРНУЮ</text>
+<text x="783.3333333333333" y="477.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">ПРОВЕРКУ?</text>
+<rect x="70" y="842" width="460" height="184" rx="14" fill="#FFF0C9" stroke="#C99726" stroke-width="2"/>
+<text x="300.0" y="899.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">КНОПКА НЕ ДОСТУПНА</text>
+<text x="300.0" y="927.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Есть ожидающие / проверяемые /</text>
+<text x="300.0" y="955.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">ошибочные заказы.</text>
+<text x="300.0" y="983.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Вернуться к 10–11.</text>
+<rect x="630" y="860.6666666666666" width="460" height="156" rx="14" fill="#E2F1FF" stroke="#5197CE" stroke-width="2"/>
+<text x="860.0" y="917.6666666666666" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">ВЫБРАТЬ НАПРАВЛЕНИЕ</text>
+<text x="860.0" y="945.6666666666666" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">В СЦ или в ПВЗ.</text>
+<text x="860.0" y="973.6666666666666" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Выбор слева, передача справа.</text>
+<rect x="706.6666666666667" y="1174" width="460" height="156" rx="14" fill="#E2F1FF" stroke="#5197CE" stroke-width="2"/>
+<text x="936.6666666666667" y="1231.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">В СЦ</text>
+<text x="936.6666666666667" y="1259.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Поле количества коробов скрыто.</text>
+<text x="936.6666666666667" y="1287.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Не показывать фиктивное «1 короб».</text>
+<rect x="146.66666666666669" y="1146" width="460" height="212" rx="14" fill="#E2F1FF" stroke="#5197CE" stroke-width="2"/>
+<text x="376.6666666666667" y="1203.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">В ПВЗ</text>
+<text x="376.6666666666667" y="1231.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Плавно появляется «Коробов для</text>
+<text x="376.6666666666667" y="1259.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">ПВЗ».</text>
+<text x="376.6666666666667" y="1287.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Обязательно целое число больше</text>
+<text x="376.6666666666667" y="1315.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">нуля.</text>
+<rect x="630" y="1478" width="460" height="184" rx="14" fill="#E2F1FF" stroke="#5197CE" stroke-width="2"/>
+<text x="860.0" y="1535.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">ПОДТВЕРЖДЕНИЕ</text>
+<text x="860.0" y="1563.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Кабинет, склад, поставка, заказов, СЦ</text>
+<text x="860.0" y="1591.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">/ ПВЗ и количество коробов.</text>
+<text x="860.0" y="1619.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Отмена ничего не меняет.</text>
+<rect x="630" y="1928" width="460" height="268" rx="14" fill="#E2F1FF" stroke="#5197CE" stroke-width="2"/>
+<text x="860.0" y="1985.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">ПРОВЕРИТЬ НА СЕРВЕРЕ</text>
+<text x="860.0" y="2013.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Права, кабинет/склад, printed и</text>
+<text x="860.0" y="2041.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">«Готов».</text>
+<text x="860.0" y="2069.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Для КИЗ: код сохранён, решение</text>
+<text x="860.0" y="2097.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">положительное либо filled. Проверить</text>
+<text x="860.0" y="2125.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">СЦ/ПВЗ, короба и незакрытую</text>
+<text x="860.0" y="2153.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">поставку.</text>
+<rect x="630" y="2316" width="460" height="212" rx="14" fill="#E2F1FF" stroke="#5197CE" stroke-width="2"/>
+<text x="860.0" y="2373.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">ВЫПОЛНИТЬ В WB</text>
+<text x="860.0" y="2401.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Подготовить короба / этикетки по</text>
+<text x="860.0" y="2429.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">выбранному сценарию → передать</text>
+<text x="860.0" y="2457.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">поставку.</text>
+<text x="860.0" y="2485.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Сохранить подтверждённый результат.</text>
+<rect x="146.66666666666669" y="2794" width="460" height="184" rx="14" fill="#FFE3DE" stroke="#D37D6A" stroke-width="2"/>
+<text x="376.6666666666667" y="2851.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">WB ОТКАЗАЛ / РЕЗУЛЬТАТ НЕЯСЕН</text>
+<text x="376.6666666666667" y="2879.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Показать причину или выполнить</text>
+<text x="376.6666666666667" y="2907.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">сверку.</text>
+<text x="376.6666666666667" y="2935.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Не закрывать поставку фиктивно.</text>
+<rect x="706.6666666666667" y="2808" width="460" height="156" rx="14" fill="#DFF4E4" stroke="#65A773" stroke-width="2"/>
+<text x="936.6666666666667" y="2865.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">ПЕРЕДАНА В ДОСТАВКУ</text>
+<text x="936.6666666666667" y="2893.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Записать дату, направление и короба.</text>
+<text x="936.6666666666667" y="2921.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Показать в истории → 14.</text>
+<rect x="706.6666666666667" y="3098" width="460" height="184" rx="14" fill="#E2F1FF" stroke="#5197CE" stroke-width="2"/>
+<text x="936.6666666666667" y="3155.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">АВТОПЕЧАТЬ</text>
+<text x="936.6666666666667" y="3183.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">СЦ — этикетка поставки;</text>
+<text x="936.6666666666667" y="3211.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">ПВЗ — этикетки созданных коробов.</text>
+<text x="936.6666666666667" y="3239.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Через выбранный принтер → 13.</text>
+<rect x="706.6666666666667" y="3548" width="460" height="184" rx="14" fill="#FFE3DE" stroke="#D37D6A" stroke-width="2"/>
+<text x="936.6666666666667" y="3605.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">ЕСЛИ ПЕЧАТЬ НЕ УДАЛАСЬ</text>
+<text x="936.6666666666667" y="3633.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Поставка уже передана.</text>
+<text x="936.6666666666667" y="3661.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Повторить только печать этикеток; не</text>
+<text x="936.6666666666667" y="3689.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">передавать второй раз.</text>
+<text x="70" y="3832" font-family="Arial,sans-serif" font-size="18" fill="#475569" font-weight="400" text-anchor="start">СЦ не создаёт фиктивный короб. ПВЗ требует положительного целого количества. Повторная печать отделена от повторной</text>
+<text x="70" y="3860" font-family="Arial,sans-serif" font-size="18" fill="#475569" font-weight="400" text-anchor="start">передачи в доставку.</text>
+<text x="70" y="3914" font-family="Arial,sans-serif" font-size="16" fill="#6A7585" font-weight="400" text-anchor="start">↖ Оглавление — слева. Файл .drawio содержит редактируемые блоки и стрелки.</text></svg>

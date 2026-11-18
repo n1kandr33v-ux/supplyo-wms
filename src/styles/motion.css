@@ -1,0 +1,21 @@
+/* Entrance effects run on navigation/mount, never on table data updates. */
+:is(.landing > main,.auth-layout,.live-dashboard,.live-workspace,.access-settings,.live-print-settings,[data-slot="tabs-content"][data-state="active"]) {
+  animation:supply-content-enter 220ms cubic-bezier(.2,.8,.2,1);
+}
+@keyframes supply-content-enter {from{opacity:.4}to{opacity:1}}
+
+:is(.profile-menu,[data-slot="dialog-content"],[data-slot="select-content"],[data-slot="popover-content"],[data-slot="dropdown-menu-content"])[data-state="open"] {
+  animation:supply-panel-enter 220ms cubic-bezier(.2,.8,.2,1);
+}
+:is(.profile-menu,[data-slot="dialog-content"],[data-slot="select-content"],[data-slot="popover-content"],[data-slot="dropdown-menu-content"])[data-state="closed"] {
+  animation:supply-panel-exit 140ms ease-in;
+}
+@keyframes supply-panel-enter {from{opacity:0;scale:.985}to{opacity:1;scale:1}}
+@keyframes supply-panel-exit {from{opacity:1;scale:1}to{opacity:0;scale:.985}}
+[data-slot="dialog-overlay"][data-state="open"] {animation:supply-overlay-enter 200ms ease-out;}
+[data-slot="dialog-overlay"][data-state="closed"] {animation:supply-overlay-exit 140ms ease-in;}
+@keyframes supply-overlay-enter {from{opacity:0}to{opacity:1}}
+@keyframes supply-overlay-exit {from{opacity:1}to{opacity:0}}
+@media(prefers-reduced-motion:reduce) {
+  :is(.landing > main,.auth-layout,.live-dashboard,.live-workspace,.access-settings,.live-print-settings,[data-slot="tabs-content"],.profile-menu,[data-slot="dialog-content"],[data-slot="dialog-overlay"],[data-slot="select-content"],[data-slot="popover-content"],[data-slot="dropdown-menu-content"]) {animation:none!important;}
+}

@@ -1,0 +1,2 @@
+from pathlib import Path
+p=Path('src/App.tsx');s=p.read_text(encoding='utf-8');needle='return rows.map(row=>';assert needle in s;s=s.replace(needle,"if(!localStorage.getItem('wms-ready-order-6200001006')){rows=rows.map(row=>row.id===6200001006&&row.phase==='assembly'?{...row,ready:true,assemblyStatus:'ready' as const}:row);localStorage.setItem('wms-ready-order-6200001006','1');localStorage.setItem('wms-v2-demo',JSON.stringify(rows))}return rows.map(row=>",1);p.write_text(s,encoding='utf-8')

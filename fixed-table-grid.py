@@ -1,0 +1,2 @@
+from pathlib import Path
+p=Path('src/App.tsx');s=p.read_text(encoding='utf-8-sig');needle='<Table><TableHeader><TableRow>{(tab===';replacement='''<Table className={`orders-table orders-table-${tab}`}><colgroup>{(tab==='new'?['44px','150px','auto','160px','155px','170px']:tab==='assembly'?['115px','140px','auto','140px','145px','145px','155px']:['auto','160px','110px','140px','100px','60px']).map((width,index)=><col key={index} style={{width}}/>)}</colgroup><TableHeader><TableRow>{(tab===''';s=s.replace(needle,replacement,1);p.write_text(s,encoding='utf-8')

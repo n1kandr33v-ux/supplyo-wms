@@ -1,0 +1,9 @@
+from pathlib import Path
+p=Path('src/components/personal-account.tsx');s=p.read_text(encoding='utf-8');s=s.replace("[orgError,setOrgError]=useState('')","[orgError,setOrgError]=useState(''),[staffStore,setStaffStore]=useState<Store|null>(null),[newStaffEmail,setNewStaffEmail]=useState('')")
+needle='<h3 className="account-staff-title">Сотрудники с доступом</h3>'
+assert needle in s
+s=s.replace(needle,needle+'<Button type="button" variant="outline" className="warehouse-add-staff" onClick={()=>{setStaffStore(s);setNewStaffEmail(\'\')}}><Plus size={14}/>Добавить сотрудника</Button>')
+a=s.index(' <Dialog open={!!store}')
+s=s[:a]+''' <Dialog open={!!staffStore} onOpenChange={open=>!open&&setStaffStore(null)}><DialogContent><form onSubmit={e=>{e.preventDefault();const email=newStaffEmail.trim().toLowerCase();if(!staffStore||! /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email))return;const target=stores.find(s=>s.id===staffStore.id);if(!target)return;if(target.staff.some(value=>value.toLowerCase()===email)){toast.error('Этот сотрудник уже добавлен');return}persistStores(stores.map(s=>s.id===target.id?{...s,staff:[...s.staff,email]}:s));setStaffStore(null);toast.success('Сотрудник добавлен в список склада')}}><DialogHeader><DialogTitle>Добавить сотрудника</DialogTitle><DialogDescription>{staffStore?.name}</DialogDescription></DialogHeader><Field className="account-dialog-fields"><FieldLabel htmlFor="new-staff-email">Email сотрудника</FieldLabel><Input id="new-staff-email" type="email" autoFocus required placeholder="name@example.com" value={newStaffEmail} onChange={e=>setNewStaffEmail(e.target.value)}/></Field><DialogFooter><Button type="button" variant="outline" onClick={()=>setStaffStore(null)}>Отменить</Button><Button type="submit" disabled={!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(newStaffEmail.trim())}>Добавить</Button></DialogFooter></form></DialogContent></Dialog>
+'''+s[a:]
+p.write_text(s,encoding='utf-8')

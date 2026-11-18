@@ -1,0 +1,2 @@
+from pathlib import Path
+p=Path('src/App.tsx');s=p.read_text(encoding='utf-8-sig');needle='<Button variant="outline" onClick={exportCsv}><Download data-icon="inline-start"/>Экспорт</Button>';s=s.replace(needle,needle+'''{tab==='assembly'&&<div className="assembly-progress-count" role="status" aria-live="polite">Собрано <strong>{assembly.filter(i=>orderStatus(i)==='ready').length}</strong> из <strong>{assembly.length}</strong></div>}''',1);p.write_text(s,encoding='utf-8')

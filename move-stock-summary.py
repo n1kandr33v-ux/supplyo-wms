@@ -1,0 +1,2 @@
+from pathlib import Path
+p=Path('src/App.tsx');s=p.read_text(encoding='utf-8');start=s.index("{tab==='stocks'&&<div className=\"stock-summary\"");end=s.index('<Table className={`orders-table',start);block=s[start:end];s=s[:start]+s[end:];needle="Редактируйте ячейки, адреса и количество товара.':'Заказы отсортированы по адресу хранения. Данные тестовые.'}</CardDescription></CardHeader>";assert needle in s;s=s.replace(needle,needle.replace('</CardHeader>',block+'</CardHeader>'));p.write_text(s,encoding='utf-8')

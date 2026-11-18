@@ -1,0 +1,17 @@
+const http=require('http'),fs=require('fs'),path=require('path'),assert=require('assert/strict'),puppeteer=require('puppeteer');
+(async()=>{
+const root=path.resolve('dist'),server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+decodeURIComponent(req.url.split('?')[0]));if(file!==root&&!file.startsWith(root+path.sep))return res.writeHead(404).end();try{const target=file===root?path.join(root,'index.html'):file;res.setHeader('Content-Type',({'.html':'text/html','.css':'text/css','.js':'application/javascript','.png':'image/png','.woff2':'font/woff2'})[path.extname(target)]||'application/octet-stream');res.end(fs.readFileSync(target));}catch{res.writeHead(404).end();}});
+await new Promise(r=>server.listen(0,'127.0.0.1',r));const browser=await puppeteer.launch({headless:true});
+try{
+ const page=await browser.newPage();await page.setViewport({width:1440,height:1000});const errors=[],calls=[];page.on('pageerror',e=>errors.push(e.message));
+
+
+ await page.evaluateOnNewDocument(()=>Object.defineProperty(navigator,'clipboard',{value:{writeText:async text=>{window.copied=text}}}));
+ await page.setRequestInterception(true);page.on('request',req=>{if(!req.url().includes('/api/'))return req.continue();const p=new URL(req.url()).pathname;let d={};calls.push(p);
+ if(p==='/api/me')d={name:'Тест',email:'owner@preview.test',subscription:{active:true,expires:Date.now()+86400000,limit:5},employeeAccess:[]};if(p==='/api/stores')d={stores:[{id:'ozon-shop',name:'ИП Ozon',marketplace:'ozon',status:'ready',last_synced:'2026-11-18T08:00:00Z'}]};if(p.endsWith('/warehouses'))d={warehouses:[{id:'47',name:'Казань'}]};
+ if(p.endsWith('/ozon/postings'))d={postings:[{posting_number:'123-1-1',order_number:'123-1',status:'awaiting_deliver',warehouse_id:'47',created_at:'2026-11-18T08:00:00Z',products:[{sku:'111',name:'Блузка',offer_id:'a',quantity:2}]}],total:1};
+ if(p.endsWith('/123-1-1/marks'))d={rows:[0,1].map(n=>({id:'unit-'+n,posting_number:'123-1-1',sku:'111',name:'Блузка',article:'a',barcodes:['00123'],kiz:'010001234567890021CODE'+n+'\u001d91AB',assembled_at:Date.now(),expires_at:Date.now()+86400000})),total:2,page:1,pageSize:100};return req.respond({status:200,contentType:'application/json',body:JSON.stringify(d)});
+ });
+ await page.goto('http://127.0.0.1:'+server.address().port+'/#app',{waitUntil:'networkidle0'});await page.evaluate(()=>[...document.querySelectorAll('.live-sidebar button')].find(b=>b.textContent.trim()==='Поставки').click());await page.waitForSelector('.ozon-postings-table');assert.equal(await page.$('.ozon-market-badge'),null);assert.equal(calls.filter(p=>p.endsWith('/123-1-1/marks')).length,0);await page.evaluate(()=>[...document.querySelectorAll('.ozon-postings-table button')].find(b=>b.textContent==='КИЗ').click());await page.waitForSelector('.ozon-posting-mark-item');assert.equal(await page.$$eval('.ozon-posting-mark-item',r=>r.length),2);await page.click('[aria-label="Скопировать КИЗ unit-0"]');await page.waitForFunction(()=>window.copied);assert.equal(await page.evaluate(()=>window.copied),'010001234567890021CODE0\u001d91AB');await page.screenshot({path:'tests/browser/artifacts/ozon-delivery-marks.png',fullPage:true});assert.deepEqual(errors,[]);console.log('Ozon delivery per-item marks, on-demand loading, copy and no marketplace badge passed');
+}finally{await browser.close();server.close();}
+})().catch(e=>{console.error(e);process.exitCode=1;});

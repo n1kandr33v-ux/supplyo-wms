@@ -1,0 +1,3 @@
+from pathlib import Path
+p=Path('src/components/personal-account.tsx');s=p.read_text(encoding='utf-8');s=s.replace('id="store-staff" placeholder="Имя или email сотрудника"','id="store-staff" type="email" placeholder="Email сотрудника"');s=s.replace("disabled={!staffName.trim()} onClick={()=>{if(store){setStore({...store,staff:[...new Set([...store.staff,staffName.trim()])]});setStaffName('')}}}","disabled={!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(staffName.trim())} onClick={()=>{if(store&&/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(staffName.trim())){setStore({...store,staff:[...new Set([...store.staff,staffName.trim().toLowerCase()])]});setStaffName('')}}}")
+p.write_text(s,encoding='utf-8')

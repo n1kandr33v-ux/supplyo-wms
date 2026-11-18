@@ -24,4 +24,36 @@ dist-ssr
 *.sw?
 
 .agents/
-*.py
+# Historical Python utilities and diagram/Android build sources are part of the project.
+.local-data/
+.public-test-data/
+
+.acceptance-data/
+.deploy/
+
+.android-tools/
+
+# Never publish credentials, private backups, signing keys or runtime databases.
+.env
+.env.*
+!.env.live
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.dump
+*.backup
+*PRIVATE*
+recovery-private/
+docs/site-map/_tools/node_modules/
+docs/site-map/_tools/chrome*/
+*.sqlite
+*.sqlite3
+*.db
+tests/browser/artifacts/
+
+!android-app/build-apk.py
+!android-app/setup-tools.py

@@ -1,0 +1,9 @@
+from pathlib import Path
+p=Path('src/components/personal-account.tsx');s=p.read_text(encoding='utf-8');s=s.replace("[staffFullName,setStaffFullName]=useState('')","[staffFullName,setStaffFullName]=useState(''),[removeStaff,setRemoveStaff]=useState<{storeId:string;email:string;name:string}|null>(null)")
+s=s.replace('<div className="account-staff-list">{s.staff.length?s.staff.map(name=><button', '<div className="warehouse-staff-list">{s.staff.length?s.staff.map(name=><div className="warehouse-staff-row" key={name}><button')
+s=s.replace("{s.staffNames?.[name]?<><span>{s.staffNames[name]}</span><small>{name}</small></>:<span>{name}</span>}</button>","<span>{s.staffNames?.[name]||'ФИО не указано'}</span><small>{name}</small></button><Button type=\"button\" variant=\"ghost\" size=\"icon\" aria-label={`Удалить сотрудника ${s.staffNames?.[name]||name}`} onClick={()=>setRemoveStaff({storeId:s.id,email:name,name:s.staffNames?.[name]||name})}><Trash2 size={15}/></Button></div>")
+needle=' <Dialog open={!!staffStore}'
+assert needle in s
+s=s.replace(needle,''' <Dialog open={!!removeStaff} onOpenChange={open=>!open&&setRemoveStaff(null)}><DialogContent><DialogHeader><DialogTitle>Удалить сотрудника со склада?</DialogTitle><DialogDescription>{removeStaff?.name} будет удалён из списка этого склада.</DialogDescription></DialogHeader><DialogFooter><Button variant="outline" onClick={()=>setRemoveStaff(null)}>Отменить</Button><Button onClick={()=>{if(!removeStaff)return;persistStores(stores.map(s=>{if(s.id!==removeStaff.storeId)return s;const rights={...s.staffRights},names={...s.staffNames};delete rights[removeStaff.email];delete names[removeStaff.email];return {...s,staff:s.staff.filter(email=>email!==removeStaff.email),staffRights:rights,staffNames:names}}));setRemoveStaff(null);toast.success('Сотрудник удалён со склада')}}>Удалить</Button></DialogFooter></DialogContent></Dialog>
+'''+needle,1)
+p.write_text(s,encoding='utf-8')

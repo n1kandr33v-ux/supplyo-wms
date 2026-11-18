@@ -1,0 +1,5 @@
+plugins { id 'com.android.application' }
+android { namespace 'app.supply.mobile'; compileSdk 36
+ defaultConfig { applicationId 'app.supply.mobile'; minSdk 26; targetSdk 36; versionCode 3; versionName '0.2.1' }
+ buildTypes { release { minifyEnabled false } }
+}

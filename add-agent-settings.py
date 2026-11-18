@@ -1,0 +1,2 @@
+from pathlib import Path
+p=Path('src/App.tsx');s=p.read_text(encoding='utf-8-sig');s="import { PrintAgentSettings } from '@/components/print-agent-settings'\n"+s;s=s.replace("values={['Казань','Москва','Все склады']}/></Field></FieldGroup></CardContent></Card></div>}","values={['Казань','Москва','Все склады']}/></Field></FieldGroup></CardContent></Card><PrintAgentSettings/></div>}");p.write_text(s,encoding='utf-8')

@@ -1,4 +1,4 @@
-Supplyo Print Agent (Windows)
+supply Print Agent (Windows)
 1. Extract the ZIP archive into a folder.
 2. Run start-agent.cmd. Keep the agent window open.
 3. In WMS Settings click Check connection and select a printer.

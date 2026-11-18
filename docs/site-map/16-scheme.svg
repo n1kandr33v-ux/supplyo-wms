@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1827" height="2776" viewBox="0 0 1827 2776">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#64748B"/></marker></defs>
+<rect width="1827" height="2776" fill="#FFFFFF"/>
+<text x="70" y="43" font-family="Arial,sans-serif" font-size="17" fill="#6A7585" font-weight="400" text-anchor="start">SUPPLY / КАРТА САЙТА И ANDROID / 16</text>
+<text x="70" y="89" font-family="Arial,sans-serif" font-size="32" fill="#233044" font-weight="700" text-anchor="start">16 · Работы сотрудников и зарплата</text>
+<text x="70" y="127" font-family="Arial,sans-serif" font-size="20" fill="#64748B" font-weight="400" text-anchor="start">Владелец / управляющий с финансовыми правами</text>
+<text x="70" y="166" font-family="Arial,sans-serif" font-size="17" fill="#64748B" font-weight="400" text-anchor="start">Реализация: Учёт работ и выплат есть; это запись расчёта, а не банковский перевод.</text>
+<path d="M 1373.3333333333333 410 L 1373.3333333333333 530" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 1373.3333333333333 742 L 1373.3333333333333 862" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 1373.3333333333333 1074 L 1373.3333333333333 1194" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 1373.3333333333333 1350 L 1373.3333333333333 1470" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 1296.6666666666665 1626 L 1296.6666666666665 1664 L 890 1664 L 890 1746" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 1450 1626 L 1450 1746" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 1450 1930 L 1450 2050" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 1373.3333333333333 2234 L 1373.3333333333333 2272 L 966.6666666666666 2272 L 966.6666666666666 2354" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 1526.6666666666667 2234 L 1526.6666666666665 2354" fill="none" stroke="#64748B" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="1143.3333333333333" y="280" width="460" height="130" rx="14" fill="#E2F1FF" stroke="#5197CE" stroke-width="2"/>
+<text x="1373.3333333333333" y="338.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">УЧЁТ → РАБОТЫ СОТРУДНИКОВ</text>
+<text x="1373.3333333333333" y="366.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Выбран физический склад и период.</text>
+<rect x="1143.3333333333333" y="530" width="460" height="212" rx="14" fill="#E2F1FF" stroke="#5197CE" stroke-width="2"/>
+<text x="1373.3333333333333" y="587.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">ДОБАВИТЬ РАБОТУ ЗА ДЕНЬ</text>
+<text x="1373.3333333333333" y="615.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Дата + сотрудник из списка этого</text>
+<text x="1373.3333333333333" y="643.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">склада.</text>
+<text x="1373.3333333333333" y="671.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Не вводить произвольное имя вместо</text>
+<text x="1373.3333333333333" y="699.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">сотрудника.</text>
+<rect x="1143.3333333333333" y="862" width="460" height="212" rx="14" fill="#E2F1FF" stroke="#5197CE" stroke-width="2"/>
+<text x="1373.3333333333333" y="919.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">СПИСОК РАБОТ</text>
+<text x="1373.3333333333333" y="947.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Несколько строк: работа + количество</text>
+<text x="1373.3333333333333" y="975.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">+ ставка.</text>
+<text x="1373.3333333333333" y="1003.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Например: сборка, упаковка, КИЗ,</text>
+<text x="1373.3333333333333" y="1031.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">приёмка.</text>
+<rect x="1143.3333333333333" y="1194" width="460" height="156" rx="14" fill="#E2F1FF" stroke="#5197CE" stroke-width="2"/>
+<text x="1373.3333333333333" y="1251.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">РАСЧЁТ</text>
+<text x="1373.3333333333333" y="1279.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Сумма строки = количество × ставка.</text>
+<text x="1373.3333333333333" y="1307.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Итого за день = сумма всех строк.</text>
+<rect x="1143.3333333333333" y="1470" width="460" height="156" rx="14" fill="#E2F1FF" stroke="#5197CE" stroke-width="2"/>
+<text x="1373.3333333333333" y="1527.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">ОДИН СОТРУДНИК + ОДИН ДЕНЬ</text>
+<text x="1373.3333333333333" y="1555.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Все его работы объединяются в одну</text>
+<text x="1373.3333333333333" y="1583.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">запись с раскрываемым списком.</text>
+<rect x="660" y="1746" width="460" height="184" rx="14" fill="#E2F1FF" stroke="#5197CE" stroke-width="2"/>
+<text x="890.0" y="1803.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">РЕДАКТИРОВАНИЕ</text>
+<text x="890.0" y="1831.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Исправить список и документы.</text>
+<text x="890.0" y="1859.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">После оплаты — корректировка с</text>
+<text x="890.0" y="1887.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">сохранением согласованности учёта.</text>
+<rect x="1220" y="1746" width="460" height="184" rx="14" fill="#E2F1FF" stroke="#5197CE" stroke-width="2"/>
+<text x="1450.0" y="1803.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">К ВЫПЛАТЕ</text>
+<text x="1450.0" y="1831.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Показать неоплаченные работы.</text>
+<text x="1450.0" y="1859.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">В «Зарплате» — начислено /</text>
+<text x="1450.0" y="1887.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">выплачено / осталось по сотруднику.</text>
+<rect x="1220" y="2050" width="460" height="184" rx="14" fill="#E2F1FF" stroke="#5197CE" stroke-width="2"/>
+<text x="1450.0" y="2107.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">ОТМЕТИТЬ ВЫПЛАТУ</text>
+<text x="1450.0" y="2135.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Выбрать сотрудника и оплачиваемые</text>
+<text x="1450.0" y="2163.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">работы.</text>
+<text x="1450.0" y="2191.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Сохранить дату и сумму выплаты.</text>
+<rect x="736.6666666666666" y="2354" width="460" height="212" rx="14" fill="#DFF4E4" stroke="#65A773" stroke-width="2"/>
+<text x="966.6666666666666" y="2411.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">РАСХОД ПО ЗАРПЛАТЕ → 15</text>
+<text x="966.6666666666666" y="2439.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">За одного сотрудника в день выплаты</text>
+<text x="966.6666666666666" y="2467.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">объединить работы.</text>
+<text x="966.6666666666666" y="2495.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Не создавать по расходу на каждую</text>
+<text x="966.6666666666666" y="2523.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">строку.</text>
+<rect x="1296.6666666666665" y="2354" width="460" height="212" rx="14" fill="#DFF4E4" stroke="#65A773" stroke-width="2"/>
+<text x="1526.6666666666665" y="2411.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">ВЫПЛАЧЕНО</text>
+<text x="1526.6666666666665" y="2439.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">В фильтре «К выплате» строка</text>
+<text x="1526.6666666666665" y="2467.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">исчезает.</text>
+<text x="1526.6666666666665" y="2495.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">В истории / «Все» остаётся и доступна</text>
+<text x="1526.6666666666665" y="2523.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">для просмотра.</text>
+<rect x="70" y="280" width="460" height="184" rx="14" fill="#F5F6F8" stroke="#A5AFBE" stroke-width="2"/>
+<text x="300.0" y="337.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="600" text-anchor="middle">ДЕНЬГИ ПЕРЕВОДЯТСЯ ОТДЕЛЬНО</text>
+<text x="300.0" y="365.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Кнопка фиксирует выплату в учёте.</text>
+<text x="300.0" y="393.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">Автоматические банковские выплаты в</text>
+<text x="300.0" y="421.0" font-family="Arial,sans-serif" font-size="20" fill="#233044" font-weight="400" text-anchor="middle">сценарий не включены.</text>
+<text x="70" y="2666" font-family="Arial,sans-serif" font-size="18" fill="#475569" font-weight="400" text-anchor="start">Работы и выплаты хранятся по физическому складу. Отметка выплаты создаёт расход, но не выполняет банковский перевод. Поставки и фильтр их периода описаны</text>
+<text x="70" y="2694" font-family="Arial,sans-serif" font-size="18" fill="#475569" font-weight="400" text-anchor="start">в разделе 14.</text>
+<text x="70" y="2748" font-family="Arial,sans-serif" font-size="16" fill="#6A7585" font-weight="400" text-anchor="start">↖ Оглавление — слева. Файл .drawio содержит редактируемые блоки и стрелки.</text></svg>

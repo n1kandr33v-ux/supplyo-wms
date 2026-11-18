@@ -1,0 +1,25 @@
+.access-settings{width:min(100%,1080px);margin-inline:auto;min-width:0}
+.access-settings>.live-subtitle{max-width:760px;line-height:1.6}
+.access-create h2{display:flex;align-items:center;gap:10px}
+.access-fields{display:flex;align-items:end;gap:16px;flex-wrap:wrap;margin-top:24px}
+.access-fields label{display:flex;flex:1 1 240px;min-width:0;flex-direction:column;gap:9px;font-size:14px;font-weight:500}
+.access-fields select{display:block;width:100%;min-width:0;height:40px;padding:0 12px;background:var(--secondary,#242427);border:1px solid transparent;border-radius:9px;color:inherit;font:inherit}
+.access-fields input{height:40px}
+.access-fields>button{height:40px}
+.access-fields select:focus-visible{outline:2px solid #6c68ff;outline-offset:2px}
+.access-fields select:disabled{opacity:.5}
+.access-redeem label{max-width:600px}
+.access-generated{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:20px;margin-top:24px;background:var(--secondary,#242427);border-radius:10px}
+.access-generated>div{display:flex;flex-direction:column;gap:8px;min-width:0}
+.access-generated code{font-size:16px;letter-spacing:.03em;overflow-wrap:anywhere;user-select:all}
+.access-hint,.access-generated small,.access-connection small{color:var(--muted-foreground,#a8a8ae);font-size:13px;line-height:1.6}
+.access-hint{margin-top:20px}
+.access-error{color:#ff9393;font-size:14px;margin-top:16px}
+.access-notice{color:#9bdbb5;font-size:14px;margin-top:16px}
+.access-list{margin-top:24px}
+.access-connection{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 0;border-bottom:1px solid var(--border,#2a2a2d)}
+.access-connection:last-child{border-bottom:0;padding-bottom:0}
+.access-connection-info{display:flex;flex-direction:column;gap:5px;min-width:0;overflow-wrap:anywhere}
+.access-connection-info span{font-size:14px;color:var(--muted-foreground,#a8a8ae)}
+.access-connection-actions{display:flex;flex-wrap:wrap;gap:8px;flex-shrink:0}
+@media(max-width:640px){.access-fields{gap:14px}.access-fields label{flex-basis:100%}.access-connection{align-items:start;flex-direction:column;gap:14px}.access-generated{padding:16px}.access-connection-actions{flex-shrink:1}}

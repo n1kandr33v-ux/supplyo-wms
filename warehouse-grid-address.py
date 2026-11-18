@@ -1,0 +1,5 @@
+from pathlib import Path
+p=Path('src/components/personal-account.tsx');s=p.read_text(encoding='utf-8');old='<p className="account-store-address">{s.address}</p>';assert old in s;s=s.replace(old,'<div className="warehouse-address-row"><p className="account-store-address">{s.address}</p><Button type="button" variant="ghost" size="icon" aria-label={`Изменить адрес склада ${s.name}`} title="Изменить адрес" onClick={()=>openStore(s)}><Pencil size={14}/></Button></div>');p.write_text(s,encoding='utf-8')
+p=Path('src/index.css');s=p.read_text(encoding='utf-8');s+='''
+.account-warehouse-grid{grid-template-columns:repeat(3,minmax(0,1fr));align-items:start}.warehouse-address-row{display:flex;align-items:center;gap:8px}.warehouse-address-row p{min-width:0;overflow-wrap:anywhere}.warehouse-address-row>[data-slot=button]{flex-shrink:0}.account-warehouse-grid .account-actions{flex-wrap:wrap;gap:8px}@media(max-width:1100px){.account-warehouse-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:750px){.account-warehouse-grid{grid-template-columns:1fr}}
+''';p.write_text(s,encoding='utf-8')

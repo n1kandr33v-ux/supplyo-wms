@@ -1,0 +1,17 @@
+from pathlib import Path
+p=Path('src/App.tsx');s=p.read_text(encoding='utf-8');s=s.replace("[client,setClient]=useState(0)","[client,setClient]=useState(0),[allClients,setAllClients]=useState(false)")
+s=s.replace("function navigate(t:string){setTab(t);", "function navigate(t:string){if(t!=='overview'&&t!=='profile'&&t!=='settings')setAllClients(false);setTab(t);")
+old="<Picker value={clients[client]} onChange={v=>{setClient(clients.indexOf(v));setActiveSupply('');setSelected([]);setQuery('')}} values={clients}/>"
+new="<Picker value={allClients?'Все клиенты':clients[client]} onChange={v=>{setAllClients(v==='Все клиенты');if(v==='Все клиенты')setTab('overview');else setClient(clients.indexOf(v));setActiveSupply('');setSelected([]);setQuery('')}} values={['Все клиенты',...clients]}/>"
+assert old in s;s=s.replace(old,new)
+s=s.replace("{tab==='overview'&&<>", "{tab==='overview'&&!allClients&&<>")
+needle=" {['assembly','stocks','new'].includes(tab)"
+block=''' {tab==='overview'&&allClients&&<div className="client-dashboard-grid">{clients.map((name,index)=>{const rows=items.filter(item=>item.client===index&&item.warehouse===warehouse),newCount=rows.filter(item=>item.phase==='new').length,assemblyRows=rows.filter(item=>item.phase==='assembly'),done=assemblyRows.filter(item=>orderStatus(item)==='ready').length,stock=rows.reduce((sum,item)=>sum+item.stock,0);return <Card key={name}><CardHeader><CardTitle>{name}</CardTitle><CardDescription>Wildberries · {warehouse}</CardDescription></CardHeader><CardContent><div className="client-dashboard-stats"><div><span>Новые заказы</span><strong>{newCount}</strong></div><div><span>Собрано</span><strong>{done} <small>из {assemblyRows.length}</small></strong></div><div><span>Остаток товаров</span><strong>{stock.toLocaleString('ru-RU')} <small>шт.</small></strong></div><div><span>Отгружено</span><strong>{rows.filter(item=>item.phase==='shipped').length}</strong></div></div></CardContent><CardFooter><button className="metric-link" onClick={()=>{setClient(index);setAllClients(false);setActiveSupply('');navigate('overview')}}>Открыть кабинет</button></CardFooter></Card>})}</div>}
+'''
+assert needle in s;s=s.replace(needle,block+needle)
+# refresh all clients rather than one client when viewing dashboard
+s=s.replace("setUpdated(prev=>({...prev,[target]:new Date().toISOString()}))", "setUpdated(prev=>allClients?Object.fromEntries(clients.map((_,index)=>[index,new Date().toISOString()])):({...prev,[target]:new Date().toISOString()}))")
+p.write_text(s,encoding='utf-8')
+p=Path('src/index.css');s=p.read_text(encoding='utf-8');s+='''
+.client-dashboard-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:24px}.client-dashboard-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}.client-dashboard-stats>div{display:flex;flex-direction:column;gap:10px;background:var(--portal-elevated);padding:16px;border-radius:10px}.client-dashboard-stats span{font-size:12px;color:var(--portal-muted)}.client-dashboard-stats strong{font-size:28px;font-variant-numeric:tabular-nums}.client-dashboard-stats small{font-size:12px;font-weight:400;color:var(--portal-subtle)}.client-dashboard-grid>[data-slot=card]{display:flex;flex-direction:column}.client-dashboard-grid [data-slot=card-footer]{margin-top:auto;padding:0}@media(max-width:1200px){.client-dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:700px){.client-dashboard-grid{grid-template-columns:1fr}}
+''';p.write_text(s,encoding='utf-8')

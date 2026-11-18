@@ -1,0 +1,3 @@
+from pathlib import Path
+p=Path('src/components/personal-account.tsx');s=p.read_text(encoding='utf-8');a=s.index('const sections=');b=s.index('\n',a);s=s[:a]+s[b:];s=s.replace('({section,onSectionChange:setSection}:{section:string;onSectionChange:(section:string)=>void})','({section}:{section:string})');a=s.index('<nav className="account-tabs"');b=s.index('</nav>',a)+6;s=s[:a]+s[b:];p.write_text(s,encoding='utf-8')
+p=Path('src/App.tsx');s=p.read_text(encoding='utf-8').replace('<PersonalAccount section={accountSection} onSectionChange={setAccountSection}/>','<PersonalAccount section={accountSection}/>');p.write_text(s,encoding='utf-8')

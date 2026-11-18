@@ -1,0 +1,10 @@
+from pathlib import Path
+p=Path('src/App.tsx');s=p.read_text(encoding='utf-8-sig');s=s.replace('orderedAt?:string}', 'orderedAt?:string;requiresKiz?:boolean;kiz?:string}')
+s=s.replace('orderedAt:new Date(', 'requiresKiz:c!==4,orderedAt:new Date(')
+s=s.replace("[query,setQuery]=useState('')","[query,setQuery]=useState(''),[actionItem,setActionItem]=useState<Item|null>(null),[actionMode,setActionMode]=useState<'kiz'|'print'>('print'),[kizValue,setKizValue]=useState('')")
+a=s.index("{tab==='assembly'&&<Button variant={i.ready?");b=s.index('</Button>}',a)+len('</Button>}')
+s=s[:a]+'''{tab==='assembly'&&<div className="flex items-center gap-2">{(i.requiresKiz??i.client!==4)&&<Button variant="outline" onClick={()=>{setActionItem(i);setActionMode('kiz');setKizValue(i.kiz??'')}}>КИЗ</Button>}<Button variant="outline" onClick={()=>{setActionItem(i);setActionMode('print')}}>Печать</Button></div>}'''+s[b:]
+pos=s.index(' <Dialog open={!!edit}')
+s=s[:pos]+''' <Dialog open={!!actionItem} onOpenChange={open=>!open&&setActionItem(null)}><DialogContent><DialogHeader><DialogTitle>{actionMode==='kiz'?'КИЗ товара':'Предпросмотр стикера'}</DialogTitle><DialogDescription>Заказ № {actionItem?.id} · {actionItem?.name}</DialogDescription></DialogHeader>{actionMode==='kiz'?<Field><FieldLabel htmlFor="kiz-code">Код маркировки</FieldLabel><Input id="kiz-code" autoComplete="off" value={kizValue} onChange={e=>setKizValue(e.target.value)} placeholder="Сканируйте или введите КИЗ"/></Field>:<div className="sticker-preview"><strong>{actionItem?.sticker??(actionItem?`${5951000+actionItem.id-6200001000}/${String(actionItem.id).slice(-4)}`:'')}</strong><p>{actionItem?.name} · {actionItem?.size}</p><p>Заказ № {actionItem?.id}</p><small>Предпросмотр номера. Файл этикетки WB не подключён.</small></div>}<DialogFooter>{actionMode==='kiz'?<Button disabled={!kizValue.trim()} onClick={()=>{if(actionItem){update(actionItem.id,{kiz:kizValue.trim()});setActionItem(null);toast.success('КИЗ сохранён')}}}>Сохранить</Button>:<Button onClick={()=>window.print()}>Печать</Button>}</DialogFooter></DialogContent></Dialog>
+'''+s[pos:]
+p.write_text(s,encoding='utf-8')

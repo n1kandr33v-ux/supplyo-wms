@@ -1,0 +1,2 @@
+from pathlib import Path
+p=Path('src/App.tsx');s=p.read_text(encoding='utf-8-sig');s=s.replace("{tab==='new'&&eligibleSupplies.length>0&&<Button", "{tab==='new'&&<Button");s=s.replace('disabled={!selectedOrders.length||selectedWarehouses.length!==1} onClick={()=>{setTargetSupply(eligibleSupplies[0].id)', 'disabled={!selectedOrders.length||selectedWarehouses.length!==1||!eligibleSupplies.length} onClick={()=>{if(!eligibleSupplies.length)return;setTargetSupply(eligibleSupplies[0].id)');p.write_text(s,encoding='utf-8')

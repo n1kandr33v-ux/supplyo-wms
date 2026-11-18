@@ -286,6 +286,11 @@ button:disabled,[aria-disabled=true]{cursor:not-allowed;opacity:.45;}
 .direct-print-sticker{display:none;}
 @media print{.direct-print-sticker,.direct-print-sticker *{visibility:visible;}.direct-print-sticker{display:block;position:absolute;left:0;top:0;background:white;color:black;padding:8mm;font-size:14pt;}.direct-print-sticker strong{font-size:24pt;}body:has(.direct-print-sticker) [role=dialog]{display:none;}}
 :root{--status-error:var(--destructive);--status-checking:var(--ring);}
+/* Keep the same wordmark and its S anchored in both sidebar states. */
+.app-shell .brand-image{display:block;left:12px;top:50%;transform:translateY(-50%);width:150px;height:auto;max-width:none;opacity:1;clip-path:inset(0 0 0 0);transition:clip-path var(--nav-motion) cubic-bezier(.2,.8,.2,1);}
+.app-shell .brand-mark{display:none;}
+.app-shell.sidebar-collapsed .brand-image{display:block;width:150px;height:auto;opacity:1;clip-path:inset(0 121.94px 0 0);}
+@media(prefers-reduced-motion:reduce){.app-shell .brand-image{transition:none;}}
 .status-waiting{color:var(--warning);background:color-mix(in srgb,var(--warning) 10%,var(--card));}
 .status-checking{color:var(--status-checking);background:color-mix(in srgb,var(--status-checking) 10%,var(--card));}
 .status-error,.status-kiz-error{color:var(--status-error);background:color-mix(in srgb,var(--status-error) 10%,var(--card));border-color:color-mix(in srgb,var(--status-error) 25%,var(--border));}
