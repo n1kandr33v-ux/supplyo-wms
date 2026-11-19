@@ -34,7 +34,7 @@ test('Ozon label generation coalesces tasks, enforces device/printer/warehouse a
  assert.equal((await post(owner,url+'/prepare',{...body,posting:'two-1'})).statusCode,409,'unassembled posting cannot obtain a label');
  const code=(await post(owner,'/api/access/codes',{storeId:id,warehouseId:'47'})).json().code;await post(staff,'/api/access/redeem',{code});const grant=(await app.inject({url:'/api/stores',headers:staff})).json().stores[0].id;
  assert.equal((await post(staff,'/api/stores/'+grant+'/ozon/labels/prepare',{...body,posting:'two-1'})).statusCode,409);
- const prepared=await post(owner,url+'/prepare',body);assert.equal(prepared.statusCode,200,prepared.body);const job=prepared.json().jobId;
+ await db.query("INSERT INTO ozon_ship_tasks VALUES($1,'one-1','done',$2,NULL)",[id,Date.now()]);const both=await Promise.all([post(owner,url+'/prepare',body),post(owner,url+'/prepare',body)]);const prepared=both[0];assert.equal(prepared.statusCode,200,prepared.body);assert.equal(both[1].statusCode,200,both[1].body);const job=prepared.json().jobId;assert.equal(both[1].json().jobId,job);assert.ok(Number((await db.query<any>("SELECT next_at FROM ozon_label_files WHERE store_id=$1 AND posting_number='one-1'",[id])).rows[0].next_at)<=Date.now(),'no fixed delay after assembly confirmation');
  assert.equal((await post(owner,url+'/prepare',body)).json().jobId,job);
  assert.equal((await post(owner,url+'/prepare',{...body,requestId:randomUUID()})).json().jobId,job,'staff/browser retries share one pending print');
  assert.equal((await post(owner,url+'/prepare',{...body,requestId:randomUUID(),deviceId:randomUUID()})).statusCode,409,'another physical agent cannot duplicate pending output');
@@ -42,6 +42,7 @@ test('Ozon label generation coalesces tasks, enforces device/printer/warehouse a
  const get=()=>app.inject({url:url+'/'+job+'?deviceId='+deviceId,headers:owner});
  assert.equal((await app.inject({url:url+'/'+job+'?deviceId='+randomUUID(),headers:owner})).statusCode,404);
  const advance=async()=>{await db.query('UPDATE ozon_label_files SET next_at=0');await ozonLabelTick();};
+ fail=400;await advance();assert.equal((await get()).json().state,'queued','temporary label-not-ready response retries automatically');fail=0;
  fail=429;await advance();const count=calls.length;await ozonLabelTick();assert.equal(calls.length,count);fail=0;await db.query('UPDATE stores SET api_retry_after=0 WHERE id=$1',[id]);await advance();
  assert.equal((await get()).json().state,'polling');await advance();assert.ok(!(await get()).json().stickers,'pending is never printable');
  pending=false;partial=true;await advance();assert.equal((await get()).json().state,'error');assert.ok(!(await get()).json().stickers);

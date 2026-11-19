@@ -3,7 +3,7 @@ import {Button} from './components/ui/button';
 import {Dialog,DialogContent,DialogHeader,DialogTitle,DialogFooter} from './components/ui/dialog';
 import {toast} from 'sonner';
 async function api(path:string,body?:unknown,signal?:AbortSignal){const r=await fetch('/api'+path,{method:body===undefined?'GET':'POST',headers:body===undefined?{}:{'Content-Type':'application/json','X-Supplyo-Client':'web'},body:body===undefined?undefined:JSON.stringify(body),signal});const d=await r.json();if(!r.ok)throw Error(d.error||'Не удалось подготовить печать');return d;}
-export function OzonPrintButton({storeId,posting,disabled=false,printed=false,onPrinted,autoStart=false}:{storeId:string;posting:string;disabled?:boolean;printed?:boolean;onPrinted?:()=>void;autoStart?:boolean}){
+export function OzonPrintButton({storeId,posting,disabled=false,printed=false,onPrinted,onError,autoStart=false}:{storeId:string;posting:string;disabled?:boolean;printed?:boolean;onPrinted?:()=>void;onError?:(message:string)=>void;autoStart?:boolean}){
  const [done,setDone]=useState(printed),[busy,setBusy]=useState(false),[confirm,setConfirm]=useState(false),[error,setError]=useState('');
  const autoStarted=useRef(false);
  const operation=useRef<{id:string;reprint:boolean}|null>(null),controller=useRef<AbortController|null>(null),alive=useRef(true),locked=useRef(false);
@@ -23,7 +23,7 @@ export function OzonPrintButton({storeId,posting,disabled=false,printed=false,on
   // Immutable body and stable job/device identity make an uncertain acknowledgement retry safe.
   const r=await fetch('http://127.0.0.1:17891/print-batch',{method:'POST',headers:{'Content-Type':'application/json','X-WMS-Print-Agent':'Supplyo'},body:JSON.stringify({job_id:job.jobId,device_id:health.deviceId,stickers:job.stickers,printer:job.printer}),signal:AbortSignal.timeout(300000)}),receipt=await r.json();if(!r.ok||!receipt.ok)throw Error(receipt.error||'Агент не подтвердил печать.');
   await api(base+'/'+job.jobId+'/printed',{deviceId:health.deviceId},signal);if(alive.current){setDone(true);operation.current=null;toast.success('Этикетка передана на принтер');onPrinted?.();}
- }catch(e){if(alive.current&&!signal.aborted){setError((e as Error).message);toast.error((e as Error).message);}}
+ }catch(e){if(alive.current&&!signal.aborted){setError((e as Error).message);toast.error((e as Error).message);onError?.((e as Error).message);}}
  finally{locked.current=false;if(alive.current)setBusy(false);}
  }
  useEffect(()=>{if(autoStart&&!disabled&&!done&&!autoStarted.current){autoStarted.current=true;void print();}},[autoStart,disabled,done]);
