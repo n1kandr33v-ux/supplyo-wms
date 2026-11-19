@@ -10,7 +10,7 @@ try{
  if(p==='/api/me')d={name:'Тест',email:'owner@preview.test',subscription:{active:true,expires:Date.now()+86400000,limit:5},employeeAccess:[]};
  if(p==='/api/stores')d={stores:[{id:'ozon-shop',name:'ИП Ozon',marketplace:'ozon',status:'ready',last_synced:'2026-11-12T08:00:00Z'}]};
  if(p.endsWith('/warehouses'))d={warehouses:[{id:'47',name:'Казань'}],scoped:false};
- if(p.endsWith('/ozon/assembly'))d={rows:finished?[]:rows(),total:finished?0:1,quantity:finished?0:3,ready:finished?0:(passed?2:0)+(scans>=2?1:0),finish};
+ if(p.endsWith('/ozon/assembly'))d={rows:finished?[]:rows().map(r=>({...r,postingStatus:finish?.state==='done'?'awaiting_deliver':'awaiting_packaging'})),total:finished?0:1,quantity:finished?0:3,ready:finished?0:(passed?2:0)+(scans>=2?1:0),finish};
  if(p.endsWith('/assembly/scan')){scans++;d=scans===1?{unit:'one',posting:'123-1-1',name:'Блузка',needsKiz:true}:{unit:'plain',posting:'123-1-1',needsKiz:false};}
  if(p.endsWith('/one/kiz')){saved=true;d={ok:true};}
  if(p.endsWith('/assembly/finish')){finish={state:'checking'};d={ok:true};}
@@ -26,6 +26,7 @@ try{
  await page.screenshot({path:'tests/browser/artifacts/ozon-assembly-preview.png',fullPage:true});
  await page.evaluate(()=>[...document.querySelectorAll('button')].find(b=>b.textContent==='Завершить сборку в Ozon').click());await page.waitForSelector('[role=dialog]');await page.evaluate(()=>[...document.querySelectorAll('[role=dialog] button')].find(b=>b.textContent==='Завершить сборку').click());await page.waitForFunction(()=>!document.querySelector('[role=dialog]'));
  assert.ok(calls.filter(c=>c.path.endsWith('/assembly/scan')).every(c=>JSON.parse(c.body).auto===true));assert.equal(calls.filter(c=>c.path.endsWith('/assembly/finish')).length,1);assert.ok(!calls.some(c=>/\/items\/|\/supplies\/|\/fulfillment$/.test(c.path)),'Ozon stays isolated from WB operations');
+ finish={state:'done'};await page.reload({waitUntil:'networkidle0'});await page.evaluate(()=>[...document.querySelectorAll('.live-sidebar button')].find(b=>b.textContent.trim()==='Сборка').click());await page.waitForFunction(()=>document.querySelector('.ozon-assembly-table')?.textContent.includes('Ожидает печати'));assert.ok(await page.$eval('.ozon-assembly-table',e=>[...e.querySelectorAll('button')].some(b=>b.textContent==='Печать')));
  await page.setViewport({width:686,height:900});await new Promise(r=>setTimeout(r,250));assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));assert.deepEqual(errors,[]);
  console.log('Ozon scanner automatic KIZ prompt/save, checking state, next plain scan, focus return, hidden diagnostics, completion confirmation and narrow layout passed');
 }finally{await browser.close();server.close();}

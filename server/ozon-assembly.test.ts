@@ -84,7 +84,7 @@ test('Ozon assembly scans each unit, prompts KIZ, preserves remote exemplars, ve
 
   const complete=await post(owner,url+'/finish',{posting:posting.posting_number});assert.equal(complete.statusCode,200,complete.body);assert.equal(shipCalls,1);
   assert.equal((await post(owner,url+'/finish',{posting:posting.posting_number})).statusCode,200);assert.equal(shipCalls,1);
-  assert.equal((await get()).json().quantity,0,'confirmed Ozon completion leaves active assembly');
+  assert.equal((await get()).json().quantity,3,'confirmed Ozon completion remains visible until print receipt');assert.equal((await get()).json().rows[0].postingStatus,'awaiting_deliver');await db.query("INSERT INTO ozon_print_jobs(id,store_id,posting_number,request_id,device_id,printer,completed_at,created_at) VALUES($1,$2,$3,$4,'device','Fixture',1,1)",[randomUUID(),id,posting.posting_number,randomUUID()]);assert.equal((await get()).json().quantity,3,'assembled orders remain available for label reprint');assert.equal((await get()).json().rows[0].printed,true);
   const assembled=Number((await db.query<any>('SELECT assembled_at FROM ozon_postings WHERE store_id=$1 AND posting_number=$2',[id,posting.posting_number])).rows[0].assembled_at);assert.ok(assembled>0);
   await post(owner,url+'/finish',{posting:posting.posting_number});assert.equal(Number((await db.query<any>('SELECT assembled_at FROM ozon_postings WHERE store_id=$1 AND posting_number=$2',[id,posting.posting_number])).rows[0].assembled_at),assembled,'retries never extend retention');
   await db.query("INSERT INTO fulfillment_items(store_id,id,snapshot,kiz) VALUES($1,'wb-retention-control','{}','wb-code-preserved')",[id]);
