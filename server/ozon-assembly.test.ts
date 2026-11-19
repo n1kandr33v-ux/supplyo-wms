@@ -97,6 +97,16 @@ test('Ozon assembly scans each unit, prompts KIZ, preserves remote exemplars, ve
   assert.equal(await purgeExpiredOzonMarks(db,assembled+OZON_MARK_RETENTION_MS+1),0,'cleanup is idempotent');assert.equal(calls.length,callsBeforePurge,'retention never sends a request to Ozon');
   assert.equal((await db.query<any>("SELECT kiz FROM fulfillment_items WHERE id='wb-retention-control'")).rows[0].kiz,'wb-code-preserved','WB data stays untouched');
 
+
+  posting.status='awaiting_packaging';posting.products[1].quantity=3;remote.products[1].quantity=3;remote.products[1].exemplars=[0,1,2].map(i=>({exemplar_id:String(80000+i),marks:[]}));
+  const cached=(await db.query<any>('SELECT products FROM ozon_postings WHERE store_id=$1',[id])).rows[0].products;cached.find((p:any)=>p.sku==='222').quantity=3;
+  await db.query("UPDATE ozon_postings SET status='awaiting_packaging',products=$2 WHERE store_id=$1",[id,JSON.stringify(cached)]);await db.query("DELETE FROM ozon_pick_units WHERE store_id=$1 AND sku='222'",[id]);
+  const autoId=randomUUID(),autoBody={barcode:'comb-barcode',warehouse:'47',auto:true,requestId:autoId};
+  assert.equal((await post(owner,url+'/scan',{...autoBody,warehouse:''})).statusCode,409,'auto requires a specific warehouse');
+  const batch=await post(owner,url+'/scan',autoBody);assert.equal(batch.statusCode,200,batch.body);assert.equal(batch.json().count,3);assert.equal((await post(owner,url+'/scan',autoBody)).json().count,3);
+  assert.equal((await db.query<any>("SELECT count(*)::int n FROM ozon_pick_units WHERE store_id=$1 AND sku='222' AND state='ready'",[id])).rows[0].n,3);
+  assert.equal((await post(owner,url+'/scan',{...autoBody,warehouse:'49'})).statusCode,409,'replay cannot change scope');
+  const markedAuto=await post(owner,url+'/scan',{barcode:'4670469736947',warehouse:'47',auto:true,requestId:randomUUID()});assert.equal(markedAuto.statusCode,200,markedAuto.body);assert.equal(markedAuto.json().needsKiz,true,'marked units still need individual codes');
  }finally{await app.close();}
 });
 

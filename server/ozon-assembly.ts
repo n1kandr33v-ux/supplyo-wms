@@ -46,6 +46,7 @@ export async function registerOzonAssembly(app:FastifyInstance,db:Database,key:B
  CREATE TABLE IF NOT EXISTS ozon_ship_tasks(store_id text NOT NULL,posting_number text NOT NULL,state text NOT NULL,updated_at bigint NOT NULL,error text,PRIMARY KEY(store_id,posting_number));
  CREATE INDEX IF NOT EXISTS ozon_ship_tasks_pending ON ozon_ship_tasks(updated_at) WHERE state='checking';
  CREATE INDEX IF NOT EXISTS ozon_pick_checks_due ON ozon_pick_checks(next_at);
+ CREATE TABLE IF NOT EXISTS ozon_auto_scan_receipts(store_id text NOT NULL,request_id text NOT NULL,actor text NOT NULL,scope text NOT NULL,result jsonb NOT NULL,PRIMARY KEY(store_id,request_id));
  CREATE TABLE IF NOT EXISTS ozon_pick_history(id text PRIMARY KEY,unit_id text NOT NULL,previous jsonb NOT NULL,changed_at bigint NOT NULL);`);
  const active=new Set<string>();let running=false,closing=false,lastRetention=0;
  const credentials=(s:ScopedStore)=>ozonCredentials.parse(JSON.parse(unseal(s.credential,key)));
@@ -88,11 +89,34 @@ export async function registerOzonAssembly(app:FastifyInstance,db:Database,key:B
  });
  app.post('/api/stores/:id/ozon/assembly/scan',async(req,reply)=>{
   const s=await allowed(req,reply,'assembly');if(!s)return;
-  const body=z.object({barcode:z.string().trim().min(1).max(200),warehouse:z.string().max(100).default(''),posting:z.string().max(100).default(''),requestId:z.string().uuid(),ordinal:z.number().int().nonnegative().optional()}).parse(req.body);
+  const body=z.object({barcode:z.string().trim().min(1).max(200),warehouse:z.string().max(100).default(''),posting:z.string().max(100).default(''),requestId:z.string().uuid(),ordinal:z.number().int().nonnegative().optional(),auto:z.boolean().default(false)}).parse(req.body);
   return locked(s.id,async()=>{
+   const batchScope=JSON.stringify([s.scope||body.warehouse,body.posting,body.barcode]);
+   if(body.auto){if(!s.scope&&!body.warehouse)throw new OzonAssemblyError('Для режима Авто выберите конкретный склад.');if(body.ordinal!==undefined)throw new OzonAssemblyError('Авто недоступно для отдельного экземпляра.');const receipt=(await db.query<any>('SELECT * FROM ozon_auto_scan_receipts WHERE store_id=$1 AND request_id=$2',[s.id,body.requestId])).rows[0];if(receipt){if(receipt.actor!==s.actor||receipt.scope!==batchScope)throw new OzonAssemblyError('Действие недоступно.');return receipt.result;}}
    const old=(await db.query<Unit>('SELECT * FROM ozon_pick_units WHERE store_id=$1 AND request_id=$2',[s.id,body.requestId])).rows[0];
    if(old){const p=(await db.query<any>('SELECT warehouse_id FROM ozon_postings WHERE store_id=$1 AND posting_number=$2',[s.id,old.posting_number])).rows[0];if(!p||s.scope&&p.warehouse_id!==s.scope||body.warehouse&&p.warehouse_id!==body.warehouse||body.posting&&old.posting_number!==body.posting||old.owner_id!==s.actor)throw new OzonAssemblyError('Действие недоступно.');return {unit:old.id,needsKiz:old.state==='reserved',posting:old.posting_number,sku:old.sku,reservation:old.request_id};}
    const candidates=(await db.query<any>(`SELECT p.*,item,m.required,m.checked_at FROM ozon_postings p CROSS JOIN LATERAL jsonb_array_elements(p.products) item LEFT JOIN ozon_product_marking m ON m.store_id=p.store_id AND m.sku=item->>'sku' WHERE p.store_id=$1 AND p.status='awaiting_packaging' AND ($2='' OR p.warehouse_id=$2) AND ($3='' OR p.posting_number=$3) AND (m.barcodes ? $4 OR item->>'sku'=$4 OR item->>'offer_id'=$4) ORDER BY p.created_at,p.posting_number,item->>'sku'`,[s.id,s.scope||body.warehouse,body.posting,body.barcode])).rows;
+   if(body.auto){
+    if(new Set(candidates.map(p=>p.posting_number)).size>100)throw new OzonAssemblyError('Слишком много отправлений. Укажите номер отправления.');
+    const plans:any[]=[],remotes=new Map<string,{remote:OzonPosting;data:OzonExemplars}>();
+    for(const p of candidates){
+     if(p.required===true)continue;
+     const units=(await db.query<Unit>('SELECT * FROM ozon_pick_units WHERE store_id=$1 AND posting_number=$2 AND sku=$3',[s.id,p.posting_number,p.item.sku])).rows;
+     if(!Array.from({length:p.item.quantity},(_,i)=>units.find(u=>u.ordinal===i)).some(u=>!u||u.state==='released'||u.state==='reserved'&&Number(u.reserved_until)<Date.now()))continue;
+     let checked=remotes.get(p.posting_number);if(!checked){checked={remote:await fresh(s,p.posting_number),data:await limited(s,()=>ozon.exemplars(credentials(s),p.posting_number)) as OzonExemplars};remotes.set(p.posting_number,checked);}
+     if(!ozonRequiresKiz(checked.remote,checked.data,p.item.sku,p.required===true))plans.push(p);
+    }
+    if(plans.length){await permittedStill(s,s.actor,(req.params as any).id);return db.transaction(async tx=>{
+     let count=0;const postings=new Set<string>();
+     for(const p of plans){const current=(await tx.query<any>('SELECT status FROM ozon_postings WHERE store_id=$1 AND posting_number=$2 FOR UPDATE',[s.id,p.posting_number])).rows[0];if(current?.status!=='awaiting_packaging')throw new OzonAssemblyError('Статус отправления изменился. Обновите список.');
+      const units=(await tx.query<Unit>('SELECT * FROM ozon_pick_units WHERE store_id=$1 AND posting_number=$2 AND sku=$3 FOR UPDATE',[s.id,p.posting_number,p.item.sku])).rows;
+      for(let ordinal=0;ordinal<p.item.quantity;ordinal++){const u=units.find(u=>u.ordinal===ordinal);if(u&&u.state!=='released'&&!(u.state==='reserved'&&Number(u.reserved_until)<Date.now()))continue;if(++count>1000)throw new OzonAssemblyError('Слишком много экземпляров. Укажите номер отправления.');
+       await tx.query(`INSERT INTO ozon_pick_units(id,store_id,posting_number,sku,ordinal,state,request_id,owner_id,reserved_until,updated_at,route_id) VALUES($1,$2,$3,$4,$5,'ready',$6,$7,0,$8,$9) ON CONFLICT(store_id,posting_number,sku,ordinal) DO UPDATE SET state='ready',request_id=EXCLUDED.request_id,owner_id=EXCLUDED.owner_id,route_id=EXCLUDED.route_id,reserved_until=0,updated_at=EXCLUDED.updated_at,error=NULL`,[randomUUID(),s.id,p.posting_number,p.item.sku,ordinal,randomUUID(),s.actor,Date.now(),(req.params as any).id]);postings.add(p.posting_number);
+      }
+     }
+     const result={needsKiz:false,count,postings:[...postings]};await tx.query('INSERT INTO ozon_auto_scan_receipts VALUES($1,$2,$3,$4,$5)',[s.id,body.requestId,s.actor,batchScope,JSON.stringify(result)]);return result;
+    });}
+   }
    for(const p of candidates){
     const existing=(await db.query<Unit>('SELECT * FROM ozon_pick_units WHERE store_id=$1 AND posting_number=$2 AND sku=$3 ORDER BY ordinal',[s.id,p.posting_number,p.item.sku])).rows;
     let ordinal=-1;for(let i=0;i<p.item.quantity;i++){if(body.ordinal!==undefined&&body.ordinal!==i)continue;const u=existing.find(u=>u.ordinal===i);if(!u||u.state==='released'||u.state==='ready'&&!u.kiz&&p.required===true||u.state==='reserved'&&u.reserved_until<Date.now()){ordinal=i;break;}}
