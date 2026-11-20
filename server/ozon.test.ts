@@ -50,6 +50,11 @@ test('Ozon shares cabinet queue/capacity and warehouse rights, encrypts keys, ke
   const list=(await get(owner,'/api/stores')).json().stores;assert.equal(list.find((s:any)=>s.id===id).marketplace,'ozon');assert.ok(!JSON.stringify(list).includes(token));assert.equal(list.length,2,'shared subscription counts both providers');
   assert.equal((await get(owner,`/api/stores/${id}/warehouses`)).json().warehouses.length,2);
   const loaded=(await get(owner,`/api/stores/${id}/ozon/postings`)).json();assert.equal(loaded.total,2);assert.equal(loaded.postings[0].products[0].quantity,2);assert.equal(loaded.postings[0].products[0].marking.required,true);assert.equal(loaded.postings[0].products[1].marking.required,false);assert.equal(loaded.postings[0].products[0].marking.stale,false);assert.ok(!JSON.stringify(loaded).includes('PRIVATE'));
+
+  await db.query("UPDATE ozon_postings SET status='delivering' WHERE store_id=$1 AND posting_number='0002-1'",[id]);
+  const fresh=(await get(owner,`/api/stores/${id}/ozon/postings?section=new`)).json();assert.equal(fresh.total,1);assert.equal(fresh.postings[0].posting_number,'0001-1');
+  const outbound=(await get(owner,`/api/stores/${id}/ozon/postings?section=deliveries`)).json();assert.equal(outbound.total,1);assert.equal(outbound.postings[0].status,'delivering');assert.equal((await get(owner,`/api/stores/${id}/ozon/postings?section=new&status=delivering`)).json().total,0);
+  assert.equal((await get(owner,`/api/stores/${id}/ozon/postings?section=deliveries&warehouse=47`)).json().total,0);await db.query("UPDATE ozon_postings SET status='awaiting_packaging' WHERE store_id=$1 AND posting_number='0002-1'",[id]);
   assert.equal((await get(other,`/api/stores/${id}/ozon/postings`)).statusCode,404);
   assert.equal((await post(owner,`/api/stores/${id}/supplies/create`,{orders:['1'],name:'Wrong provider'})).statusCode,501);
   assert.equal((await get(owner,`/api/stores/${id}/stocks?warehouse=47`)).statusCode,501);

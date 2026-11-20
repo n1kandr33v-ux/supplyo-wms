@@ -477,11 +477,11 @@ export async function createApp(options: {
     if(store.marketplace!=='ozon')return reply.code(400).send({error:'Выберите магазин Ozon.'});
     if(!store.employee&&!(await entitlement(await userId(req))).active)return reply.code(403).send({error:'Для работы с заказами подключите подписку.'});
     if(store.permissions&&!store.permissions.includes('view'))return reply.code(403).send({error:'Нет права просмотра заказов.'});
-    const q=z.object({warehouse:z.string().max(100).default(''),status:z.string().max(100).default(''),search:z.string().max(150).default(''),page:z.coerce.number().int().min(1).max(100000).default(1)}).parse(req.query);
-    const where="store_id=$1 AND ($2='' OR warehouse_id=$2) AND ($3='' OR status=$3) AND (posting_number ILIKE $4 OR order_number ILIKE $4 OR products::text ILIKE $4)";
-    const args=[store.id,store.scope||q.warehouse,q.status,'%'+q.search+'%'];
+    const q=z.object({section:z.enum(['all','new','deliveries']).default('all'),warehouse:z.string().max(100).default(''),status:z.string().max(100).default(''),search:z.string().max(150).default(''),page:z.coerce.number().int().min(1).max(100000).default(1)}).parse(req.query);
+    const where="store_id=$1 AND ($2='' OR warehouse_id=$2) AND ($3='' OR status=$3) AND ($5='all' OR $5='new' AND status='awaiting_packaging' OR $5='deliveries' AND status<>'awaiting_packaging') AND (posting_number ILIKE $4 OR order_number ILIKE $4 OR products::text ILIKE $4)";
+    const args=[store.id,store.scope||q.warehouse,q.status,'%'+q.search+'%',q.section];
     const total=(await db.query<{n:number}>(`SELECT count(*)::int n FROM ozon_postings WHERE ${where}`,args)).rows[0].n;
-    const postings=(await db.query(`SELECT posting_number,order_number,status,products,warehouse_id,created_at,shipment_date,scanit FROM ozon_postings WHERE ${where} ORDER BY CASE status WHEN 'awaiting_packaging' THEN 0 WHEN 'awaiting_deliver' THEN 1 ELSE 2 END,created_at DESC,posting_number LIMIT 50 OFFSET $5`,[...args,(q.page-1)*50])).rows;
+    const postings=(await db.query(`SELECT posting_number,order_number,status,products,warehouse_id,created_at,shipment_date,scanit FROM ozon_postings WHERE ${where} ORDER BY CASE status WHEN 'awaiting_packaging' THEN 0 WHEN 'awaiting_deliver' THEN 1 ELSE 2 END,created_at DESC,posting_number LIMIT 50 OFFSET $6`,[...args,(q.page-1)*50])).rows;
     const marks=(await db.query<{sku:string;required:boolean|null;tnved:string|null;checked_at:number}>('SELECT sku,required,tnved,checked_at FROM ozon_product_marking WHERE store_id=$1 AND sku=ANY($2::text[])',[store.id,[...new Set(postings.flatMap((p:any)=>p.products.map((item:any)=>item.sku)))]] )).rows;
     const bySku=new Map(marks.map(m=>[m.sku,m]));
     return {postings:postings.map((p:any)=>({...p,products:p.products.map((item:any)=>{const m=bySku.get(item.sku);return {...item,marking:{required:m?.required??null,tnved:m?.tnved??null,checkedAt:m?.checked_at??null,stale:!m||Number(m.checked_at)<Date.now()-86400000}};})})),total,page:q.page};
