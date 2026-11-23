@@ -109,3 +109,6 @@
   padding-right: 40px;
 }
 
+/* Edge adds its own reveal control; the app already provides an accessible toggle. */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear { display: none; }
