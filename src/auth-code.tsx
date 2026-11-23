@@ -20,6 +20,7 @@ export function AuthCode({request,initial,onDone,onBack}:{request:Record<string,
  const [retry,setRetry]=useState(false);
  const refs=useRef<(HTMLInputElement|null)[]>([]),locked=useRef(false),attempted=useRef('');
  const reset=request.purpose==='reset',code=digits.join(''),complete=digits.every(d=>/^\d$/.test(d));
+ useEffect(()=>{if(id&&!busy&&!verified&&digits.every(d=>!d))refs.current[0]?.focus()},[id,busy,verified]);
  useEffect(()=>{if(!wait)return;const t=setTimeout(()=>setWait(v=>Math.max(0,v-1)),1000);return()=>clearTimeout(t)},[wait]);
  async function finish(){try{await onDone()}catch{setError('Почта подтверждена, но рабочее пространство не загрузилось. Повторите вход.')}}
  async function send(){
