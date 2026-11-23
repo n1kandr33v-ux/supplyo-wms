@@ -12,6 +12,8 @@ export async function registerAuthMail(app:FastifyInstance,db:Database,key:Buffe
  app.post('/api/auth/code/request',async(req,reply)=>{
   const data=z.object({email,purpose:z.enum(['register','reset']),name:z.string().trim().min(2).max(150).optional(),phone:z.string().regex(/^\+?[\d\s()\-]{10,25}$/).optional(),password:z.string().min(8).max(128).optional(),consent:z.literal(true).optional()}).parse(req.body);
   if(data.purpose==='register'&&(!data.name||!data.phone||!data.password||!data.consent))return reply.code(400).send({error:'Заполните данные регистрации.'});
+  const existing=(await db.query<{id:string}>('SELECT id FROM users WHERE email=$1',[data.email])).rows[0];
+  if(data.purpose==='register'&&existing)return reply.code(409).send({error:'Аккаунт с этой почтой уже существует. Войдите или восстановите пароль.'});
   const now=Date.now(),id=randomUUID(),code=String(randomInt(0,1000000)).padStart(6,'0');
   const permit=await db.transaction(async tx=>{
    await tx.query('INSERT INTO email_send_limits VALUES($1,0,$2) ON CONFLICT DO NOTHING',[req.ip,now+3600000]);
@@ -23,8 +25,6 @@ export async function registerAuthMail(app:FastifyInstance,db:Database,key:Buffe
    return !!address.rows.length;
   });
   if(!permit)return reply.code(429).send({error:'Подождите перед повторной отправкой кода.'});
-  const existing=(await db.query<{id:string}>('SELECT id FROM users WHERE email=$1',[data.email])).rows[0];
-  if(data.purpose==='register'&&existing)return reply.code(409).send({error:'Аккаунт с этой почтой уже существует. Войдите или восстановите пароль.'});
   const payload=data.purpose==='register'?{name:data.name,phone:data.phone,password:await hashPassword(data.password!)}:{userId:existing?.id??null};
   await db.query('DELETE FROM email_challenges WHERE expires<$1',[now]);
   await db.query('DELETE FROM email_challenges WHERE email=$1 AND purpose=$2',[data.email,data.purpose]);
