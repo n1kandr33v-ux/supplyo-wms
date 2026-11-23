@@ -134,3 +134,12 @@ test('profile password change requires current password, keeps current session a
   assert.equal((await post('/api/account/password',{currentPassword:'NewPassword123',newPassword:'OtherPassword123'},current)).statusCode,429);
  }finally{await app.close()}
 });
+
+import {authEmailHtml} from './auth-email-template.ts';
+test('email template uses reference design, six separate digits and correct purpose',()=>{
+ const html=authEmailHtml('012345','register');
+ assert.equal((html.match(/class="otp-cell"/g)??[]).length,6);
+ assert.match(html,/>0<\/div>/);assert.match(html,/#F5F6FA/);assert.match(html,/cid:supply-logo/);assert.match(html,/Остался один шаг/);assert.ok(!html.includes('{{'));
+ const reset=authEmailHtml('987654','reset');assert.match(reset,/Восстановите доступ/);assert.ok(!reset.includes('странице регистрации'));assert.ok(!reset.includes('не регистрировались'));
+ assert.throws(()=>authEmailHtml('<script>','register'));
+});

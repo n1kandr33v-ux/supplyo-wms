@@ -1,3 +1,4 @@
+import {authEmailHtml} from './auth-email-template.ts';
 import {formatFullName,fullNameError,emailError,formatPhone,phoneError} from '../src/auth-fields.ts';
 import nodemailer from 'nodemailer';
 import {randomInt,randomUUID,createHmac} from 'node:crypto';
@@ -46,8 +47,7 @@ export async function registerAuthMail(app:FastifyInstance,db:Database,key:Buffe
    if(send)await send(data.email,code,data.purpose);
    else{
     const title=data.purpose==='register'?'Подтвердите адрес почты':'Восстановление пароля';
-    const digits=code.split('').map(d=>`<td style="padding:0 4px"><div style="background:#242325;border:1px solid #38373d;border-radius:10px;padding:16px 12px;font-size:30px;font-weight:600;color:#fafafa">${d}</div></td>`).join('');
-    await mail.sendMail({from:`supply <${process.env.SMTP_FROM??process.env.SMTP_USER}>`,to:data.email,attachments:[{filename:'supply-logo.png',path:'dist/email-logo.png',cid:'supply-logo'}],subject:`${title} — supply`,text:`${title}. Ваш код: ${code}. Код действует 10 минут. Никому не сообщайте его. Если вы не отправляли запрос, проигнорируйте письмо.`,html:`<html lang="ru"><body style="margin:0;background:#000;color:#fafafa;font-family:Geist,Arial,sans-serif"><table role="presentation" width="100%"><tr><td align="center" style="padding:40px 16px"><table role="presentation" style="width:100%;max-width:560px"><tr><td style="font-size:30px;font-weight:700;padding-bottom:24px"><img src="cid:supply-logo" alt="supply" width="150" style="display:block;width:150px;height:auto;border:0"></td></tr><tr><td style="background:#161616;border:1px solid #1f2023;border-top:3px solid #272df5;border-radius:16px;padding:32px"><h1 style="font-size:26px">${title}</h1><p style="color:#cfcfcf;line-height:1.6">Введите код на странице supply.</p><table role="presentation"><tr>${digits}</tr></table><p style="color:#cfcfcf">Код действует 10 минут.</p><p style="color:#cfcfcf;font-size:13px;line-height:1.6">Никому не сообщайте код. Если вы не отправляли запрос, проигнорируйте письмо.</p></td></tr></table></td></tr></table></body></html>`});
+    await mail.sendMail({from:`supply <${process.env.SMTP_FROM??process.env.SMTP_USER}>`,to:data.email,attachments:[{filename:'supply-logo.png',path:'dist/email-logo.png',cid:'supply-logo'}],subject:`${title} — supply`,text:`${title}. Ваш код: ${code}. Код действует 10 минут. Никому не сообщайте его. Если вы не отправляли запрос, проигнорируйте письмо.`,html:authEmailHtml(code,data.purpose)});
    }
   }catch{await db.query('DELETE FROM email_challenges WHERE id=$1',[id]);await db.query('UPDATE email_send_limits SET expires=0 WHERE ip=$1 AND expires=$2',['email:'+data.email,now+60000]);return reply.code(503).send({error:'Не удалось отправить письмо. Попробуйте отправить код ещё раз.'});}
   return {id,expiresIn:600,retryAfter:60};
