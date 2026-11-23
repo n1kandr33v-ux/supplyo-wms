@@ -10,7 +10,7 @@ const PrintAgentSettings=lazy(()=>import("./components/print-agent-settings").th
 const LiveStocks=lazy(()=>import("./live-stocks").then(module=>({default:module.LiveStocks})));
 const LiveDashboard=lazy(()=>import("./live-dashboard").then(module=>({default:module.LiveDashboard})));
 import { Toaster, toast } from "sonner";
-import { Warehouse, Calculator, Pencil, KeyRound, UserRoundPlus, Printer, Trash2 } from "lucide-react";
+import { Warehouse, Pencil, KeyRound, UserRoundPlus, Printer, Trash2 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   Boxes,
@@ -82,7 +82,7 @@ type Order = {
   created_at: string;
   warehouse_id: string;
 };
-const views = ["admin", "dashboard", "orders", "stores", "subscription", "profile", "assembly", "supplies", "warehouses", "accounting", "access", "clients", "printing", "stocks", "ozon-marks"] as const;
+const views = ["admin", "dashboard", "orders", "stores", "subscription", "profile", "assembly", "supplies", "warehouses", "access", "clients", "printing", "stocks", "ozon-marks"] as const;
 type View = typeof views[number];
 export function LiveRoot() {
   useEffect(()=>{const root=document.documentElement,wasDark=root.classList.contains("dark");root.classList.add("dark");return()=>{if(!wasDark)root.classList.remove("dark")}},[]);
@@ -194,7 +194,7 @@ export function LiveRoot() {
   const hasWmsAccess=hasSubscription||hasEmployeeAccess;
   const canManageTeam=!!team&&!!user?.employeeAccess?.some(m=>m.id===team&&m.permissions.includes("manage"));
   useEffect(() => {
-    if (user && !hasWmsAccess && ["orders", "assembly", "supplies", "stocks", "clients", "warehouses", "accounting"].includes(view)) {
+    if (user && !hasWmsAccess && ["orders", "assembly", "supplies", "stocks", "clients", "warehouses"].includes(view)) {
       setView("stores");
     }
   }, [user, hasWmsAccess, view]);
@@ -432,7 +432,6 @@ export function LiveRoot() {
               >
                 {hasSubscription && <>
                   <DropdownMenu.Item className="profile-menu-item" onSelect={()=>{setTeam(undefined);setView("warehouses")}}><Warehouse size={16}/>Склады и сотрудники</DropdownMenu.Item>
-                  <DropdownMenu.Item className="profile-menu-item" onSelect={()=>setView("accounting")}><Calculator size={16}/>Учёт</DropdownMenu.Item>
                   <DropdownMenu.Separator className="profile-menu-separator"/>
                 </>}
                 {user.employeeAccess?.filter(m=>m.permissions.includes("manage")).map(m=><DropdownMenu.Item key={m.id} className="profile-menu-item" onSelect={()=>{setTeam(m.id);setView("warehouses")}}><Warehouse size={16}/>{m.name} · сотрудники</DropdownMenu.Item>)}
@@ -627,7 +626,7 @@ export function LiveRoot() {
             <div className="live-print-settings"><Suspense fallback={<p role="status">Загружаем настройки печати…</p>}><PrintAgentSettings /></Suspense></div>
           ) : (view === "access" || (view === "clients" && hasSubscription)) ? (
             <Suspense fallback={<p role="status">Загружаем раздел…</p>}><AccessSettings key={view} mode={view as "access"|"clients"} stores={stores} onStoresChanged={async()=>{await loadStores()}} onOpen={id=>{setSelected(id);setView("orders")}} /></Suspense>
-          ) : (view === "warehouses" || view === "accounting") && (hasSubscription || (view==="warehouses" && canManageTeam)) ? (
+          ) : view === "warehouses" && (hasSubscription || canManageTeam) ? (
             <Suspense fallback={<p role="status">Загружаем раздел…</p>}><LiveWorkspace key={user.email+":"+view+":"+team} section={view} team={view==="warehouses"?team:undefined} /></Suspense>
           ) : view === "admin" ? (
             user.admin?.permissions.length?<Suspense fallback={<p>Загружаем админ-панель…</p>}><PlatformAdmin access={user.admin}/></Suspense>:<p>Нет доступа к админ-панели.</p>
