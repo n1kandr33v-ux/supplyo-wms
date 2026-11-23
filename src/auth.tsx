@@ -1,3 +1,4 @@
+import {formatFullName,fullNameError,emailError,formatPhone,phoneError} from './auth-fields';
 import { useState } from "react";
 import {AuthCode,AuthError,authRequest} from './auth-code';
 import { Eye, EyeOff } from "lucide-react";
@@ -16,6 +17,7 @@ export function Auth({
 }) {
   const [challenge,setChallenge]=useState<{id?:string;retryAfter?:number;request:Record<string,unknown>}|null>(null);
   const [existing,setExisting]=useState(false);
+  const [touched,setTouched]=useState<Record<string,boolean>>({});
   const [busy, setBusy] = useState(false),
     [email, setEmail] = useState(""),
     [name, setName] = useState(""),
@@ -26,29 +28,16 @@ export function Auth({
     [visible, setVisible] = useState(false),
     [error, setError] = useState(""),
     [consent, setConsent] = useState(false);
+  const fieldErrors={name:register?fullNameError(name):'',email:emailError(email),phone:register?phoneError(phone):''};
+  function mark(field:string){setTouched(previous=>({...previous,[field]:true}))}
+  function warning(field:keyof typeof fieldErrors){return touched[field]&&fieldErrors[field]?<p className="auth-field-error" id={'auth-'+field+'-error'} role="alert">{fieldErrors[field]}</p>:null}
+
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (busy) return;
-    if (register && (name.trim().length<2||name.trim().length>150)) {
-      setError("Укажите ФИО: от 2 до 150 символов");
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-      setError("Введите корректный адрес электронной почты");
-      return;
-    }
-    if (register && !/^\+?[\d\s()\-]+$/.test(phone.trim())) {
-      setError("Введите корректный номер телефона");
-      return;
-    }
-    if (
-      register &&
-      (phone.replace(/\D/g, "").length < 10 ||
-        phone.replace(/\D/g, "").length > 15)
-    ) {
-      setError("Введите корректный номер телефона");
-      return;
-    }
+    setTouched({name:true,email:true,phone:true});
+    const invalid=Object.entries(fieldErrors).find(([,message])=>message);
+    if(invalid){setError('Исправьте выделенные поля.');document.getElementById('auth-'+invalid[0])?.focus();return}
     if (!register && !password) {
       setError("Введите пароль");
       return;
@@ -69,7 +58,7 @@ export function Auth({
       setBusy(true);
       setError("");setExisting(false);
       try {
-        if(register){const request={email:email.trim(),password,name:name.trim(),phone,consent,purpose:'register'};const data=await authRequest('code/request',request);setChallenge({id:data.id,retryAfter:data.retryAfter,request});return;}
+        if(register){const request={email:email.trim(),password,name:formatFullName(name.trim()),phone,consent,purpose:'register'};const data=await authRequest('code/request',request);setChallenge({id:data.id,retryAfter:data.retryAfter,request});return;}
         await authRequest('login',{email:email.trim(),password});
         await onAuthenticated?.();
         window.location.hash = "app";
@@ -138,8 +127,13 @@ export function Auth({
                   autoComplete="name"
                   placeholder="Фамилия Имя Отчество"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => setName(formatFullName(e.target.value))}
+                  maxLength={150}
+                  onBlur={()=>{setName(formatFullName(name.trim()));mark("name")}}
+                  aria-invalid={!!(touched.name&&fieldErrors.name)}
+                  aria-describedby={touched.name&&fieldErrors.name?"auth-name-error":undefined}
                 />
+                {warning("name")}
               </Field>
             )}
             <Field>
@@ -150,8 +144,13 @@ export function Auth({
                 autoComplete="email"
                 placeholder="name@example.com"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                maxLength={254}
+                onChange={(e) => setEmail(e.target.value.trim())}
+                onBlur={()=>mark('email')}
+                aria-invalid={!!(touched.email&&fieldErrors.email)}
+                aria-describedby={touched.email&&fieldErrors.email?'auth-email-error':undefined}
               />
+              {warning("email")}
             </Field>
             {register && (
               <Field>
@@ -163,8 +162,26 @@ export function Auth({
                   inputMode="tel"
                   placeholder="+7 (999) 123-45-67"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  maxLength={18}
+                  onPaste={e=>{e.preventDefault();setPhone(formatPhone(e.clipboardData.getData('text')))}}
+                  onChange={(e) => {
+                    const input=e.target,position=input.selectionStart??input.value.length;
+                    const digitCount=input.value.slice(0,position).replace(/\D/g,'').length;
+                    const formatted=formatPhone(input.value);setPhone(formatted);
+                    requestAnimationFrame(()=>{let seen=0,caret=formatted.length;for(let i=0;i<formatted.length;i++)if(/\d/.test(formatted[i])&&++seen===digitCount){caret=i+1;break}input.setSelectionRange(caret,caret)});
+                  }}
+                  onKeyDown={e=>{
+                    const input=e.currentTarget,position=input.selectionStart??0;
+                    if(e.key==='Backspace'&&input.selectionStart===input.selectionEnd&&position>0&&!/\d/.test(phone[position-1]??'')){
+                      e.preventDefault();let index=position-1;while(index>1&&!/\d/.test(phone[index]))index--;
+                      if(index>1){setPhone(formatPhone(phone.slice(0,index)+phone.slice(index+1)));requestAnimationFrame(()=>input.setSelectionRange(index,index))}
+                    }
+                  }}
+                  onBlur={()=>mark('phone')}
+                  aria-invalid={!!(touched.phone&&fieldErrors.phone)}
+                  aria-describedby={touched.phone&&fieldErrors.phone?'auth-phone-error':undefined}
                 />
+                {warning("phone")}
               </Field>
             )}
             <Field>

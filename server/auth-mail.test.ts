@@ -5,7 +5,7 @@ test('email registration is gated; codes single use, resend limited; reset revok
  let code='';const {app,db}=await createApp({key:Buffer.alloc(32,7),worker:false,emailVerification:true,sendAuthCode:async(_email,value)=>{code=value}});
  const post=(url:string,payload:unknown)=>app.inject({method:'POST',url,headers:{origin:'http://localhost:8095','x-supplyo-client':'web'},payload:payload as Record<string,unknown>});
  try{
- const data={email:'code@example.test',password:'Password-123',name:'Test User',phone:'+79991234567',consent:true,purpose:'register'};
+ const data={email:'code@example.test',password:'Password-123',name:'Test User Patronymic',phone:'+79991234567',consent:true,purpose:'register'};
  assert.equal((await post('/api/auth/register',data)).statusCode,400);
  const first=await post('/api/auth/code/request',data);assert.equal(first.statusCode,200);const id=first.json().id;
  assert.equal((await post('/api/auth/code/request',data)).statusCode,429);
@@ -33,7 +33,7 @@ test('expiry, lockout, resend, SMTP failure and repeated login behave consistent
  const {app,db}=await createApp({key:Buffer.alloc(32,9),worker:false,emailVerification:true,sendAuthCode:async(_email,value)=>{if(fail)throw Error('SMTP offline');code=value;sent++}});
  const headers={origin:'http://localhost:8095','x-supplyo-client':'web'};
  const post=(url:string,payload:unknown)=>app.inject({method:'POST',url,headers,payload:payload as Record<string,unknown>});
- const data={email:'flow@example.test',password:'Password-123',name:'Test User',phone:'+79991234567',consent:true,purpose:'register'};
+ const data={email:'flow@example.test',password:'Password-123',name:'Test User Patronymic',phone:'+79991234567',consent:true,purpose:'register'};
  const unlock=()=>db.query('UPDATE email_send_limits SET expires=0');
  const request=()=>post('/api/auth/code/request',data);
  const verify=(id:string,value=code)=>post('/api/auth/code/verify',{id,code:value});
@@ -84,4 +84,28 @@ test('auth limits use the client IP only through explicitly trusted proxies',asy
   const ips=(await db.query<{ip:string}>("SELECT ip FROM email_send_limits WHERE ip NOT LIKE 'email:%' ORDER BY ip")).rows.map(row=>row.ip);
   assert.deepEqual(ips,['203.0.113.10','203.0.113.20']);
  }finally{await app.close()}
+});
+
+test('registration validates full name, email and complete phone before sending',async()=>{
+ let sent=0,code='';const {app,db}=await createApp({key:Buffer.alloc(32,6),worker:false,emailVerification:true,sendAuthCode:async(_email,value)=>{sent++;code=value}});
+ const data={email:'fields@example.test',name:'ивАНОВ иВАН иВАНОВИЧ',phone:'8 (999) 123-45-67',password:'Password-123',consent:true,purpose:'register'};
+ const post=(payload:unknown)=>app.inject({method:'POST',url:'/api/auth/code/request',headers:{origin:'http://localhost:8095','x-supplyo-client':'web'},payload:payload as Record<string,unknown>});
+ try{
+  for(const patch of [{name:'Иван'},{name:'Иван Иванов'},{phone:'8999123'},{phone:'899912345678'},{email:'wrong@'},{email:'.wrong@example.test'}])assert.equal((await post({...data,...patch})).statusCode,400);
+  assert.equal(sent,0);
+  const response=await post(data);assert.equal(response.statusCode,200);
+  assert.equal((await app.inject({method:'POST',url:'/api/auth/code/verify',headers:{origin:'http://localhost:8095','x-supplyo-client':'web'},payload:{id:response.json().id,code}})).statusCode,200);
+  const row=(await db.query<{name:string;phone:string}>('SELECT name,phone FROM users WHERE email=$1',[data.email])).rows[0];
+  assert.equal(row.name,'Иванов Иван Иванович');assert.equal(row.phone,'+7 (999) 123-45-67');
+ }finally{await app.close()}
+});
+import {formatPhone,formatFullName,fullNameError,emailError} from '../src/auth-fields.ts';
+test('pasted phones normalize, excess digits stop and full names require three parts',()=>{
+ for(const value of ['89991234567','+7 (999) 123-45-67','9991234567','8 999 123 45 67'])assert.equal(formatPhone(value),'+7 (999) 123-45-67');
+ assert.equal(formatPhone('8001234567'),'+7 (800) 123-45-67');
+ assert.equal(formatPhone('+799912345671234'),'+7 (999) 123-45-67');
+ assert.equal(formatFullName('ИВАНОВ ивАН иВАНОВИЧ'),'Иванов Иван Иванович');
+ assert.ok(fullNameError('Иван'));assert.ok(fullNameError('Иван Иванов'));assert.equal(fullNameError('Иванов Иван Иванович'),'');
+ for(const value of ['bad','bad@','bad @example.ru','.bad@example.ru','bad..name@example.ru'])assert.ok(emailError(value));
+ assert.equal(emailError('name@example.ru'),'');
 });

@@ -1,3 +1,4 @@
+import {formatFullName,fullNameError,emailError,formatPhone,phoneError} from '../src/auth-fields.ts';
 import nodemailer from 'nodemailer';
 import {randomInt,randomUUID,createHmac} from 'node:crypto';
 import type {FastifyInstance,FastifyReply} from 'fastify';
@@ -12,6 +13,14 @@ export async function registerAuthMail(app:FastifyInstance,db:Database,key:Buffe
  app.post('/api/auth/code/request',async(req,reply)=>{
   const data=z.object({email,purpose:z.enum(['register','reset']),name:z.string().trim().min(2).max(150).optional(),phone:z.string().regex(/^\+?[\d\s()\-]{10,25}$/).optional(),password:z.string().min(8).max(128).optional(),consent:z.literal(true).optional()}).parse(req.body);
   if(data.purpose==='register'&&(!data.name||!data.phone||!data.password||!data.consent))return reply.code(400).send({error:'Заполните данные регистрации.'});
+  if(emailError(data.email))return reply.code(400).send({error:emailError(data.email)});
+  if(data.purpose==='register'){
+   if(fullNameError(data.name!))return reply.code(400).send({error:fullNameError(data.name!)});
+   const raw=data.phone!.replace(/\D/g,'');
+   if(!/^(?:[78]\d{10}|\d{10})$/.test(raw))return reply.code(400).send({error:'Введите полный номер телефона в формате +7 (999) 123-45-67.'});
+   data.phone=formatPhone(data.phone!);data.name=formatFullName(data.name!.trim());
+   if(phoneError(data.phone))return reply.code(400).send({error:phoneError(data.phone)});
+  }
   const existing=(await db.query<{id:string}>('SELECT id FROM users WHERE email=$1',[data.email])).rows[0];
   if(data.purpose==='register'&&existing)return reply.code(409).send({error:'Аккаунт с этой почтой уже существует. Войдите или восстановите пароль.'});
   const now=Date.now(),id=randomUUID(),code=String(randomInt(0,1000000)).padStart(6,'0');
