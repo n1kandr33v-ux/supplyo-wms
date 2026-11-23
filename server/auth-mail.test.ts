@@ -12,6 +12,8 @@ test('email registration is gated; codes single use, resend limited; reset revok
  assert.equal((await post('/api/auth/code/verify',{id,code:code==='000000'?'111111':'000000'})).statusCode,400);
  const verified=await post('/api/auth/code/verify',{id,code});assert.equal(verified.statusCode,200);
  assert.equal((await post('/api/auth/code/verify',{id,code})).statusCode,400);
+ await db.query('UPDATE email_send_limits SET expires=0');
+ const duplicate=await post('/api/auth/code/request',data);assert.equal(duplicate.statusCode,409);assert.match(duplicate.json().error,/уже существует/);
  const login=await post('/api/auth/login',{email:data.email,password:data.password});assert.equal(login.statusCode,200);
  await db.query('UPDATE email_send_limits SET expires=0');
  const reset=await post('/api/auth/code/request',{email:data.email,purpose:'reset'});assert.equal(reset.statusCode,200);

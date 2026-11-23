@@ -24,6 +24,7 @@ export async function registerAuthMail(app:FastifyInstance,db:Database,key:Buffe
   });
   if(!permit)return reply.code(429).send({error:'Подождите перед повторной отправкой кода.'});
   const existing=(await db.query<{id:string}>('SELECT id FROM users WHERE email=$1',[data.email])).rows[0];
+  if(data.purpose==='register'&&existing)return reply.code(409).send({error:'Аккаунт с этой почтой уже существует. Войдите или восстановите пароль.'});
   const payload=data.purpose==='register'?{name:data.name,phone:data.phone,password:await hashPassword(data.password!)}:{userId:existing?.id??null};
   await db.query('DELETE FROM email_challenges WHERE expires<$1',[now]);
   await db.query('DELETE FROM email_challenges WHERE email=$1 AND purpose=$2',[data.email,data.purpose]);
@@ -50,13 +51,14 @@ export async function registerAuthMail(app:FastifyInstance,db:Database,key:Buffe
    await tx.query('DELETE FROM email_challenges WHERE id=$1',[row.id]);
    if(row.purpose==='register'){
     const id=randomUUID();const created=await tx.query('INSERT INTO users(id,email,password,name,phone) VALUES($1,$2,$3,$4,$5) ON CONFLICT(email) DO NOTHING RETURNING id',[id,row.email,payload.password,payload.name,payload.phone]);
-    return created.rows.length?{id,reset:false}:null;
+    return created.rows.length?{id,reset:false}:{existing:true as const};
    }
    await tx.query('UPDATE users SET password=$1 WHERE id=$2',[newPassword,payload.userId]);
    await tx.query('DELETE FROM sessions WHERE user_id=$1',[payload.userId]);
    return {id:payload.userId as string,reset:true};
   });
   if(!result)return reply.code(400).send({error:'Код неверен, истёк или уже использован. Запросите новый код.'});
+  if('existing' in result)return reply.code(409).send({error:'Аккаунт с этой почтой уже существует. Войдите или восстановите пароль.'});
   await session(result.id,reply);return {ok:true};
  });
 }
