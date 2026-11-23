@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {AuthCode,authRequest} from './auth-code';
+import {AuthCode,AuthError,authRequest} from './auth-code';
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,7 +14,8 @@ export function Auth({
   live?: boolean;
   onAuthenticated?: () => Promise<void>;
 }) {
-  const [challenge,setChallenge]=useState<{id?:string;request:Record<string,unknown>}|null>(null);
+  const [challenge,setChallenge]=useState<{id?:string;retryAfter?:number;request:Record<string,unknown>}|null>(null);
+  const [existing,setExisting]=useState(false);
   const [busy, setBusy] = useState(false),
     [email, setEmail] = useState(""),
     [name, setName] = useState(""),
@@ -28,8 +29,8 @@ export function Auth({
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (busy) return;
-    if (register && !name.trim()) {
-      setError("Укажите ФИО");
+    if (register && (name.trim().length<2||name.trim().length>150)) {
+      setError("Укажите ФИО: от 2 до 150 символов");
       return;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
@@ -52,8 +53,8 @@ export function Auth({
       setError("Введите пароль");
       return;
     }
-    if (register && password.length < 8) {
-      setError("Пароль должен содержать не менее 8 символов");
+    if (register && (password.length < 8||password.length>128)) {
+      setError("Пароль должен содержать от 8 до 128 символов");
       return;
     }
     if (register && password !== repeatPassword) {
@@ -66,32 +67,15 @@ export function Auth({
     }
     if (live) {
       setBusy(true);
-      setError("");
+      setError("");setExisting(false);
       try {
-        if(register){const request={email:email.trim(),password,name:name.trim(),phone,consent,purpose:'register'};const data=await authRequest('code/request',request);setChallenge({id:data.id,request});return;}
-        const response = await fetch(
-          "/api/auth/" + (register ? "register" : "login"),
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "X-Supplyo-Client": "web",
-            },
-            body: JSON.stringify({
-              email: email.trim(),
-              password,
-              name: name.trim(),
-              phone,
-              consent,
-            }),
-          },
-        );
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error);
+        if(register){const request={email:email.trim(),password,name:name.trim(),phone,consent,purpose:'register'};const data=await authRequest('code/request',request);setChallenge({id:data.id,retryAfter:data.retryAfter,request});return;}
+        await authRequest('login',{email:email.trim(),password});
         await onAuthenticated?.();
         window.location.hash = "app";
       } catch (e) {
         setError((e as Error).message || "Нет связи с сервером");
+        setExisting(e instanceof AuthError&&e.status===409);
       } finally {
         setBusy(false);
       }
@@ -130,7 +114,7 @@ export function Auth({
           <div className="auth-story-line" />
           <small>От первого скана до передачи в доставку.</small>
         </section>
-        {challenge?<AuthCode request={challenge.request} initial={challenge.id?{id:challenge.id}:undefined} onBack={()=>setChallenge(null)} onDone={async()=>{await onAuthenticated?.();window.location.hash='app'}}/>:<section className="auth-panel">
+        {challenge?<AuthCode request={challenge.request} initial={challenge.id?{id:challenge.id,retryAfter:challenge.retryAfter}:undefined} onBack={()=>setChallenge(null)} onDone={async()=>{await onAuthenticated?.();window.location.hash='app'}}/>:<section className="auth-panel">
           <div className="auth-switch">
             <a className={!register ? "selected" : ""} href="#login">
               Вход
@@ -145,7 +129,7 @@ export function Auth({
               ? "Начните с профиля, затем добавьте склад и клиентов."
               : "Войдите в рабочее пространство supply."}
           </p>
-          <form noValidate onSubmit={submit} onChange={() => setError("")}>
+          <form noValidate onSubmit={submit} onChange={() => {setError("");setExisting(false)}}>
             {register && (
               <Field>
                 <FieldLabel htmlFor="auth-name">ФИО</FieldLabel>
@@ -255,9 +239,10 @@ export function Auth({
               </p>
             )}
             <Button className="auth-submit" type="submit" disabled={busy}>
-              {busy ? "Входим…" : register ? "Создать аккаунт" : "Войти"}
+              {busy ? (register?"Отправляем код…":"Входим…") : register ? "Создать аккаунт" : "Войти"}
             </Button>
           </form>
+          {existing&&<div className="auth-existing"><a href="#login">Войти в аккаунт</a><button type="button" onClick={()=>setChallenge({request:{email:email.trim(),purpose:'reset'}})}>Восстановить пароль</button></div>}
           {live&&!register&&<button type="button" style={{marginTop:18}} onClick={()=>{if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())){setError('Сначала введите адрес почты');return}setChallenge({request:{email:email.trim(),purpose:'reset'}})}}>Забыли пароль?</button>}
           {!live && (
             <>

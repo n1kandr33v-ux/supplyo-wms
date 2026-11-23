@@ -17,6 +17,7 @@ const { app } = await createApp({
   dataDir: resolve(directory, "postgres"),
   databaseUrl: process.env.DATABASE_URL,
   key,
+  trustedProxies: process.env.TRUSTED_PROXIES?.split(",").map(value=>value.trim()).filter(Boolean),
   emailVerification: process.env.EMAIL_VERIFICATION === '1',
   testPurchases: process.argv.includes("--test-purchases") || process.env.TEST_PURCHASES === "1",
   origins: process.env.PUBLIC_ORIGIN ? process.env.PUBLIC_ORIGIN.split(',').map(s=>s.trim()) : process.argv.includes("--serve-web") ? [`http://127.0.0.1:${process.env.PORT ?? 3040}`, `http://localhost:${process.env.PORT ?? 3040}`] : undefined,

@@ -27,3 +27,61 @@ test('email registration is gated; codes single use, resend limited; reset revok
  assert.equal((await post('/api/auth/code/verify',{id:unknown.json().id,code,password:'NewPassword123'})).statusCode,400);
  }finally{await app.close()}
 });
+
+test('expiry, lockout, resend, SMTP failure and repeated login behave consistently',async()=>{
+ let code='',sent=0,fail=false;
+ const {app,db}=await createApp({key:Buffer.alloc(32,9),worker:false,emailVerification:true,sendAuthCode:async(_email,value)=>{if(fail)throw Error('SMTP offline');code=value;sent++}});
+ const headers={origin:'http://localhost:8095','x-supplyo-client':'web'};
+ const post=(url:string,payload:unknown)=>app.inject({method:'POST',url,headers,payload:payload as Record<string,unknown>});
+ const data={email:'flow@example.test',password:'Password-123',name:'Test User',phone:'+79991234567',consent:true,purpose:'register'};
+ const unlock=()=>db.query('UPDATE email_send_limits SET expires=0');
+ const request=()=>post('/api/auth/code/request',data);
+ const verify=(id:string,value=code)=>post('/api/auth/code/verify',{id,code:value});
+ try{
+  fail=true;assert.equal((await request()).statusCode,503);fail=false;
+  const first=await request();assert.equal(first.statusCode,200);const original=code;
+  for(let i=0;i<22;i++)assert.equal((await request()).statusCode,429);
+  assert.equal(sent,1); // Cooldown clicks neither send mail nor exhaust the hourly quota.
+  await unlock();const second=await request();assert.equal(second.statusCode,200);
+  assert.equal((await verify(first.json().id,original)).json().code,'CODE_EXPIRED');
+  await db.query('UPDATE email_challenges SET expires=0 WHERE id=$1',[second.json().id]);
+  assert.equal((await verify(second.json().id)).json().code,'CODE_EXPIRED');
+  await unlock();const third=await request();const wrong=code==='000000'?'111111':'000000';
+  for(let i=0;i<5;i++)assert.equal((await verify(third.json().id,wrong)).json().code,'CODE_INVALID');
+  assert.equal((await verify(third.json().id)).json().code,'CODE_EXPIRED');
+  await unlock();const fourth=await request();
+  const concurrent=await Promise.all([verify(fourth.json().id),verify(fourth.json().id)]);
+  assert.deepEqual(concurrent.map(r=>r.statusCode).sort(),[200,400]);
+  const registered=concurrent.find(r=>r.statusCode===200)!;
+  const cookie=String(registered.headers['set-cookie']).split(';')[0];
+  assert.match(String(registered.headers['set-cookie']),/HttpOnly; SameSite=Strict/);
+  const countBefore=sent;
+  for(let i=0;i<3;i++)assert.equal((await request()).statusCode,409);
+  assert.equal(sent,countBefore);
+  for(let i=0;i<12;i++)assert.equal((await post('/api/auth/login',{email:' FLOW@EXAMPLE.TEST ',password:data.password})).statusCode,200);
+  await unlock();const reset=await post('/api/auth/code/request',{email:data.email,purpose:'reset'});
+  const resetCode=code;
+  assert.equal((await post('/api/auth/code/verify',{id:reset.json().id,code:resetCode,password:'short'})).statusCode,400);
+  assert.equal((await post('/api/auth/code/verify',{id:reset.json().id,code:resetCode,password:'Changed-password-123'})).statusCode,200);
+  assert.equal((await app.inject({url:'/api/me',headers:{cookie}})).statusCode,401);
+  assert.equal((await post('/api/auth/login',{email:data.email,password:data.password})).statusCode,401);
+  const login=await post('/api/auth/login',{email:data.email,password:'Changed-password-123'});assert.equal(login.statusCode,200);
+  const current=String(login.headers['set-cookie']).split(';')[0];
+  assert.equal((await app.inject({method:'POST',url:'/api/auth/logout',headers:{...headers,cookie:current}})).statusCode,200);
+  assert.equal((await app.inject({url:'/api/me',headers:{cookie:current}})).statusCode,401);
+  await unlock();const beforeUnknown=sent;assert.equal((await post('/api/auth/code/request',{email:'unknown@example.test',purpose:'reset'})).statusCode,200);assert.equal(sent,beforeUnknown);
+  for(let i=0;i<10;i++)assert.equal((await post('/api/auth/login',{email:data.email,password:'Wrong-password-123'})).statusCode,401);
+  assert.equal((await post('/api/auth/login',{email:data.email,password:'Changed-password-123'})).statusCode,429);
+ }finally{await app.close()}
+});
+
+test('auth limits use the client IP only through explicitly trusted proxies',async()=>{
+ const {app,db}=await createApp({key:Buffer.alloc(32,3),worker:false,emailVerification:true,trustedProxies:['127.0.0.1','198.51.100.1'],sendAuthCode:async()=>{throw Error('Unknown reset must not send')}});
+ try{
+  const request=(remoteAddress:string,forwarded:string,email:string)=>app.inject({method:'POST',url:'/api/auth/code/request',remoteAddress,headers:{origin:'http://localhost:8095','x-supplyo-client':'web','x-forwarded-for':forwarded},payload:{purpose:'reset',email}});
+  assert.equal((await request('127.0.0.1','203.0.113.10, 198.51.100.1','proxy@example.test')).statusCode,200);
+  assert.equal((await request('203.0.113.20','192.0.2.99','direct@example.test')).statusCode,200);
+  const ips=(await db.query<{ip:string}>("SELECT ip FROM email_send_limits WHERE ip NOT LIKE 'email:%' ORDER BY ip")).rows.map(row=>row.ip);
+  assert.deepEqual(ips,['203.0.113.10','203.0.113.20']);
+ }finally{await app.close()}
+});

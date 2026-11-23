@@ -54,6 +54,7 @@ export async function createApp(options: {
   ozon?: OzonClient;
   ozonLabelRenderer?:(pdf:Buffer)=>Promise<PrintSticker[]>;
   origins?: string[];
+  trustedProxies?: string[];
   worker?: boolean;
   testPurchases?: boolean;
   emailVerification?: boolean;
@@ -82,7 +83,7 @@ export async function createApp(options: {
   await initOzon(db);
   const access = await createAccess(db);
   const employees = createEmployees(db,access,getWarehouses);
-  const app = Fastify({ logger: false, routerOptions: { maxParamLength: 512 }, bodyLimit: 32768, trustProxy: "127.0.0.1" });
+  const app = Fastify({ logger: false, routerOptions: { maxParamLength: 512 }, bodyLimit: 32768, trustProxy: options.trustedProxies ?? ["127.0.0.1","::1"] });
   const allowed = options.origins ?? [
     "http://127.0.0.1:8095",
     "http://localhost:8095",
@@ -168,23 +169,12 @@ export async function createApp(options: {
     }
     if (!["register", "login"].includes(action))
       return reply.code(404).send({ error: "Не найдено" });
-    const attempt = (
-      await db.query<{ count: number; reset_at: number }>(
-        "SELECT * FROM auth_attempts WHERE ip=$1",
-        [req.ip],
-      )
-    ).rows[0];
-    if (attempt && Number(attempt.reset_at) > Date.now() && attempt.count >= 10)
-      return reply
-        .code(429)
-        .send({ error: "Слишком много попыток. Повторите через 15 минут." });
-    await db.query(
-      "INSERT INTO auth_attempts VALUES($1,1,$2) ON CONFLICT(ip) DO UPDATE SET count=CASE WHEN auth_attempts.reset_at<$3 THEN 1 ELSE auth_attempts.count+1 END,reset_at=CASE WHEN auth_attempts.reset_at<$3 THEN $2 ELSE auth_attempts.reset_at END",
-      [req.ip, Date.now() + 900000, Date.now()],
-    );
-    const input = (action === "register" ? registration : credentials).parse(
-      req.body,
-    );
+    const input = (action === "register" ? registration : credentials).parse(req.body);
+    const now=Date.now();
+    const attempt=await db.query<{count:number}>(
+      "INSERT INTO auth_attempts VALUES($1,1,$2) ON CONFLICT(ip) DO UPDATE SET count=CASE WHEN auth_attempts.reset_at<=$3 THEN 1 ELSE auth_attempts.count+1 END,reset_at=CASE WHEN auth_attempts.reset_at<=$3 THEN $2 ELSE auth_attempts.reset_at END WHERE auth_attempts.reset_at<=$3 OR auth_attempts.count<10 RETURNING count",
+      [req.ip,now+900000,now]);
+    if(!attempt.rows.length)return reply.header('Retry-After','900').code(429).send({error:'Слишком много попыток. Повторите через 15 минут.',retryAfter:900});
     if (action === "register") {
       const data = registration.parse(input),
         uid = randomUUID(),
@@ -217,6 +207,7 @@ export async function createApp(options: {
         return reply.code(401).send({ error: "Неверная почта или пароль." });
       await session(user.id, reply);
     }
+    await db.query("DELETE FROM auth_attempts WHERE ip=$1",[req.ip]);
     return { ok: true };
   });
   const dummyPassword = hashPassword(randomBytes(32).toString("hex"));
