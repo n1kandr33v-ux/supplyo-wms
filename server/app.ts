@@ -1,3 +1,4 @@
+import {registerAuthMail} from './auth-mail.ts';
 import {registerOzonInventory} from './ozon-inventory.ts';
 import {registerOzonClientMarks} from './ozon-client-marks.ts';
 import {registerOzonLabels} from './ozon-labels.ts';
@@ -55,6 +56,8 @@ export async function createApp(options: {
   origins?: string[];
   worker?: boolean;
   testPurchases?: boolean;
+  emailVerification?: boolean;
+  sendAuthCode?:(email:string,code:string,purpose:string)=>Promise<void>;
 }) {
   const db = await openDatabase(options.dataDir, options.databaseUrl),
     wb = options.wb ?? wbClient,ozon=options.ozon??ozonClient;
@@ -147,8 +150,10 @@ export async function createApp(options: {
       [randomUUID(), storeId, kind],
     );
   }
+  if(options.emailVerification)await registerAuthMail(app,db,options.key,session,options.sendAuthCode);
   app.post("/api/auth/:action", async (req, reply) => {
     const { action } = req.params as { action: string };
+    if(action==='register'&&options.emailVerification)return reply.code(400).send({error:'Подтвердите почту с помощью кода.',verificationRequired:true});
     if (action === "logout") {
       const raw = req.headers.cookie?.match(
         /(?:^|;\s*)supplyo_session=([^;]+)/,

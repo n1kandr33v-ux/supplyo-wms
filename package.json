@@ -13,7 +13,8 @@
     "check:server": "tsc -p tsconfig.server.json",
     "test:server": "tsx --test server/app.test.ts server/subscription.test.ts server/fulfillment.test.ts server/workspace.test.ts server/invoices.test.ts server/access.test.ts server/employees.test.ts server/scanner.test.ts server/stocks.test.ts server/internal-stock.test.ts server/inventory-count.test.ts server/kiz-check.test.ts server/store-remove.test.ts server/mobile-notes.test.ts server/credential.test.ts server/supply-sync.test.ts server/transfer.test.ts server/ozon.test.ts server/ozon-inventory.test.ts server/ozon-assembly.test.ts server/ozon-labels.test.ts server/ozon-client-marks.test.ts",
     "start:live": "node scripts/start-live.mjs",
-    "build:live": "tsc -b && vite build --mode live"
+    "build:live": "tsc -b && vite build --mode live",
+    "test:auth": "tsx --test server/auth-mail.test.ts"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.15",
@@ -25,6 +26,7 @@
     "fflate": "^0.8.3",
     "lucide-react": "^1.69.0",
     "next-themes": "^0.4.6",
+    "nodemailer": "^10.6.1",
     "pg": "^8.23.1",
     "radix-ui": "^1.8.1",
     "react": "^19.3.1",
@@ -37,6 +39,7 @@
   },
   "devDependencies": {
     "@types/node": "^24.19.2",
+    "@types/nodemailer": "^8.0.2",
     "@types/pg": "^8.23.1",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",

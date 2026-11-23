@@ -1,4 +1,5 @@
 import { useState } from "react";
+import {AuthCode,authRequest} from './auth-code';
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +14,7 @@ export function Auth({
   live?: boolean;
   onAuthenticated?: () => Promise<void>;
 }) {
+  const [challenge,setChallenge]=useState<{id?:string;request:Record<string,unknown>}|null>(null);
   const [busy, setBusy] = useState(false),
     [email, setEmail] = useState(""),
     [name, setName] = useState(""),
@@ -66,6 +68,7 @@ export function Auth({
       setBusy(true);
       setError("");
       try {
+        if(register){const request={email:email.trim(),password,name:name.trim(),phone,consent,purpose:'register'};const data=await authRequest('code/request',request);setChallenge({id:data.id,request});return;}
         const response = await fetch(
           "/api/auth/" + (register ? "register" : "login"),
           {
@@ -127,7 +130,7 @@ export function Auth({
           <div className="auth-story-line" />
           <small>От первого скана до передачи в доставку.</small>
         </section>
-        <section className="auth-panel">
+        {challenge?<AuthCode request={challenge.request} initial={challenge.id?{id:challenge.id}:undefined} onBack={()=>setChallenge(null)} onDone={async()=>{await onAuthenticated?.();window.location.hash='app'}}/>:<section className="auth-panel">
           <div className="auth-switch">
             <a className={!register ? "selected" : ""} href="#login">
               Вход
@@ -255,6 +258,7 @@ export function Auth({
               {busy ? "Входим…" : register ? "Создать аккаунт" : "Войти"}
             </Button>
           </form>
+          {live&&!register&&<button type="button" style={{marginTop:18}} onClick={()=>{if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())){setError('Сначала введите адрес почты');return}setChallenge({request:{email:email.trim(),purpose:'reset'}})}}>Забыли пароль?</button>}
           {!live && (
             <>
               <div className="auth-preview-note">
@@ -265,7 +269,7 @@ export function Auth({
               </a>
             </>
           )}
-        </section>
+        </section>}
       </div>
       <footer className="auth-footer">
         <a href="#welcome">На главную</a>
