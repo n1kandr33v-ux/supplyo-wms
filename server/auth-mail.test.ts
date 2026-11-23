@@ -109,3 +109,28 @@ test('pasted phones normalize, excess digits stop and full names require three p
  for(const value of ['bad','bad@','bad @example.ru','.bad@example.ru','bad..name@example.ru'])assert.ok(emailError(value));
  assert.equal(emailError('name@example.ru'),'');
 });
+
+test('profile password change requires current password, keeps current session and revokes others',async()=>{
+ let code='';const {app,db}=await createApp({key:Buffer.alloc(32,8),worker:false,emailVerification:true,sendAuthCode:async(_email,value)=>{code=value}});
+ const headers={origin:'http://localhost:8095','x-supplyo-client':'web'};
+ const post=(url:string,payload:unknown,cookie='')=>app.inject({method:'POST',url,headers:{...headers,cookie},payload:payload as Record<string,unknown>});
+ const data={email:'password@example.test',name:'Test User Patronymic',phone:'+79991234567',password:'OldPassword123',consent:true,purpose:'register'};
+ try{
+  assert.equal((await post('/api/account/password',{currentPassword:data.password,newPassword:'NewPassword123'})).statusCode,401);
+  const challenge=await post('/api/auth/code/request',data);const registered=await post('/api/auth/code/verify',{id:challenge.json().id,code});
+  const current=String(registered.headers['set-cookie']).split(';')[0];
+  const login=await post('/api/auth/login',{email:data.email,password:data.password});const other=String(login.headers['set-cookie']).split(';')[0];
+  await db.query('UPDATE email_send_limits SET expires=0');const reset=await post('/api/auth/code/request',{email:data.email,purpose:'reset'});const resetCode=code;
+  assert.equal((await post('/api/account/password',{currentPassword:'WrongPassword123',newPassword:'NewPassword123'},current)).statusCode,400);
+  assert.equal((await post('/api/account/password',{currentPassword:data.password,newPassword:'short'},current)).statusCode,400);
+  assert.equal((await post('/api/account/password',{currentPassword:data.password,newPassword:data.password},current)).statusCode,400);
+  assert.equal((await post('/api/account/password',{currentPassword:data.password,newPassword:'NewPassword123'},current)).statusCode,200);
+  assert.equal((await app.inject({url:'/api/me',headers:{cookie:current}})).statusCode,200);
+  assert.equal((await app.inject({url:'/api/me',headers:{cookie:other}})).statusCode,401);
+  assert.equal((await post('/api/auth/code/verify',{id:reset.json().id,code:resetCode,password:'StolenPassword123'})).statusCode,400);
+  assert.equal((await post('/api/auth/login',{email:data.email,password:data.password})).statusCode,401);
+  assert.equal((await post('/api/auth/login',{email:data.email,password:'NewPassword123'})).statusCode,200);
+  for(let i=0;i<5;i++)assert.equal((await post('/api/account/password',{currentPassword:'WrongPassword123',newPassword:'OtherPassword123'},current)).statusCode,400);
+  assert.equal((await post('/api/account/password',{currentPassword:'NewPassword123',newPassword:'OtherPassword123'},current)).statusCode,429);
+ }finally{await app.close()}
+});

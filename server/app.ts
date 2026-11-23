@@ -289,6 +289,28 @@ export async function createApp(options: {
     );
     return { ok: true, subscription: await entitlement(uid) };
   });
+  app.post('/api/account/password',async(req,reply)=>{
+    const uid=await userId(req);if(!uid)return reply.code(401).send({error:'Войдите в аккаунт.'});
+    const input=z.object({currentPassword:z.string().min(1).max(128),newPassword:z.string().min(8).max(128)}).parse(req.body);
+    if(input.currentPassword===input.newPassword)return reply.code(400).send({error:'Новый пароль должен отличаться от текущего.'});
+    const now=Date.now(),bucket='password:'+uid;
+    const allowedAttempt=await db.query("INSERT INTO auth_attempts VALUES($1,1,$2) ON CONFLICT(ip) DO UPDATE SET count=CASE WHEN auth_attempts.reset_at<=$3 THEN 1 ELSE auth_attempts.count+1 END,reset_at=CASE WHEN auth_attempts.reset_at<=$3 THEN $2 ELSE auth_attempts.reset_at END WHERE auth_attempts.reset_at<=$3 OR auth_attempts.count<5 RETURNING count",[bucket,now+900000,now]);
+    if(!allowedAttempt.rows.length)return reply.code(429).send({error:'Слишком много попыток. Повторите через 15 минут.'});
+    const password=await hashPassword(input.newPassword);
+    const raw=req.headers.cookie?.match(/(?:^|;\s*)supplyo_session=([^;]+)/)?.[1];
+    const changed=await db.transaction(async tx=>{
+      const user=(await tx.query<{password:string;email:string}>('SELECT password,email FROM users WHERE id=$1 FOR UPDATE',[uid])).rows[0];
+      // Recheck session under the user lock so an already revoked session cannot change the password.
+      if(!user||!(await tx.query('SELECT token FROM sessions WHERE token=$1 AND user_id=$2 AND expires>$3',[digest(raw??''),uid,Date.now()])).rows.length)return false;
+      if(!(await verifyPassword(input.currentPassword,user.password)))return false;
+      await tx.query('UPDATE users SET password=$1 WHERE id=$2',[password,uid]);
+      await tx.query('DELETE FROM sessions WHERE user_id=$1 AND token<>$2',[uid,digest(raw??'')]);
+      if(options.emailVerification)await tx.query('DELETE FROM email_challenges WHERE email=$1 AND purpose=\'reset\'',[user.email]);
+      await tx.query('DELETE FROM auth_attempts WHERE ip=$1',[bucket]);return true;
+    });
+    if(!changed)return reply.code(400).send({error:'Текущий пароль неверен. Проверьте его и повторите.'});
+    return {ok:true};
+  });
   app.get("/api/me", async (req) => ({
     testPurchasesEnabled: !!options.testPurchases,
     ...(

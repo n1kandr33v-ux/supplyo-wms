@@ -1,3 +1,4 @@
+import {ChangePassword} from './change-password';
 const OzonClientMarks=lazy(()=>import('./ozon-client-marks').then(m=>({default:m.OzonClientMarks})));
 const OzonAssembly=lazy(()=>import('./ozon-assembly').then(m=>({default:m.OzonAssembly})));
 const OzonOrders=lazy(()=>import("./ozon-orders").then(m=>({default:m.OzonOrders})));
@@ -637,6 +638,7 @@ export function LiveRoot() {
                 <strong>{user.email}</strong>
               </div>
               {user.employeeAccess?.map(m=><div className="live-detail" key={m.id}><span>Доступ к складу</span><strong>{m.name} · по подписке организации</strong></div>)}
+              <ChangePassword/>
               <h2>Моя подписка</h2>
               {user.subscription.limit>0&&<div className="live-detail"><span>Тариф</span><strong>{planName}{user.subscription.isTest?' · тестовая подписка':''}</strong></div>}
               <div className="live-detail"><span>Статус</span><strong>{hasSubscription?'Активна':user.subscription.expires?'Истекла':'Не подключена'}</strong></div>
