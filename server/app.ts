@@ -1,3 +1,4 @@
+import {registerAdmin} from './admin.ts';
 import {registerAuthMail} from './auth-mail.ts';
 import {registerOzonInventory} from './ozon-inventory.ts';
 import {registerOzonClientMarks} from './ozon-client-marks.ts';
@@ -55,6 +56,7 @@ export async function createApp(options: {
   ozonLabelRenderer?:(pdf:Buffer)=>Promise<PrintSticker[]>;
   origins?: string[];
   trustedProxies?: string[];
+  adminEmail?:string;
   worker?: boolean;
   testPurchases?: boolean;
   emailVerification?: boolean;
@@ -311,7 +313,9 @@ export async function createApp(options: {
     if(!changed)return reply.code(400).send({error:'Текущий пароль неверен. Проверьте его и повторите.'});
     return {ok:true};
   });
+  const platformAdmin=await registerAdmin(app,db,userId,options.adminEmail??'');
   app.get("/api/me", async (req) => ({
+    admin:await platformAdmin.context(await userId(req)),
     testPurchasesEnabled: !!options.testPurchases,
     ...(
       await db.query<{ name: string; email: string; phone: string }>(

@@ -1,3 +1,4 @@
+const PlatformAdmin=lazy(()=>import('./platform-admin').then(m=>({default:m.PlatformAdmin})));
 import {ChangePassword} from './change-password';
 const OzonClientMarks=lazy(()=>import('./ozon-client-marks').then(m=>({default:m.OzonClientMarks})));
 const OzonAssembly=lazy(()=>import('./ozon-assembly').then(m=>({default:m.OzonAssembly})));
@@ -81,12 +82,13 @@ type Order = {
   created_at: string;
   warehouse_id: string;
 };
-const views = ["dashboard", "orders", "stores", "subscription", "profile", "assembly", "supplies", "warehouses", "accounting", "access", "clients", "printing", "stocks", "ozon-marks"] as const;
+const views = ["admin", "dashboard", "orders", "stores", "subscription", "profile", "assembly", "supplies", "warehouses", "accounting", "access", "clients", "printing", "stocks", "ozon-marks"] as const;
 type View = typeof views[number];
 export function LiveRoot() {
   useEffect(()=>{const root=document.documentElement,wasDark=root.classList.contains("dark");root.classList.add("dark");return()=>{if(!wasDark)root.classList.remove("dark")}},[]);
 
   const [user, setUser] = useState<{
+      admin?:{root:boolean;permissions:string[]};
       name: string;
       email: string;
       testPurchasesEnabled: boolean;
@@ -434,6 +436,7 @@ export function LiveRoot() {
                   <DropdownMenu.Separator className="profile-menu-separator"/>
                 </>}
                 {user.employeeAccess?.filter(m=>m.permissions.includes("manage")).map(m=><DropdownMenu.Item key={m.id} className="profile-menu-item" onSelect={()=>{setTeam(m.id);setView("warehouses")}}><Warehouse size={16}/>{m.name} · сотрудники</DropdownMenu.Item>)}
+                {!!user.admin?.permissions.length&&<DropdownMenu.Item className="profile-menu-item" onSelect={()=>setView("admin")}><Settings size={16}/>Админ-панель</DropdownMenu.Item>}
                 <DropdownMenu.Item
                   className="profile-menu-item"
                   onSelect={() => setView("profile")}
@@ -626,6 +629,8 @@ export function LiveRoot() {
             <Suspense fallback={<p role="status">Загружаем раздел…</p>}><AccessSettings key={view} mode={view as "access"|"clients"} stores={stores} onStoresChanged={async()=>{await loadStores()}} onOpen={id=>{setSelected(id);setView("orders")}} /></Suspense>
           ) : (view === "warehouses" || view === "accounting") && (hasSubscription || (view==="warehouses" && canManageTeam)) ? (
             <Suspense fallback={<p role="status">Загружаем раздел…</p>}><LiveWorkspace key={user.email+":"+view+":"+team} section={view} team={view==="warehouses"?team:undefined} /></Suspense>
+          ) : view === "admin" ? (
+            user.admin?.permissions.length?<Suspense fallback={<p>Загружаем админ-панель…</p>}><PlatformAdmin access={user.admin}/></Suspense>:<p>Нет доступа к админ-панели.</p>
           ) : view === "profile" ? (
             <section className="live-card live-account">
               <h1>Об аккаунте</h1>
