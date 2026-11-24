@@ -1,3 +1,5 @@
+import {InventoryCount} from './inventory-count';
+import {Toaster} from 'sonner';
 import {useEffect,useMemo,useState,useRef} from 'react';
 import {ArrowLeft,ChevronRight,LogOut,Package,RefreshCw,Search,Store as StoreIcon,Eye,EyeOff,Check,StickyNote,X,Send,Trash2,Boxes} from 'lucide-react';
 import {compareAddresses} from './lib/address-sort';
@@ -12,6 +14,7 @@ async function api(path:string,body?:unknown){
 }
 export function MobileApp(){
  const [user,setUser]=useState<{name:string;email:string}|null>(null),[starting,setStarting]=useState(true),[stores,setStores]=useState<Store[]>([]),[error,setError]=useState('');
+ const [mode,setMode]=useState<'assembly'|'inventory'>('assembly');
  const [route,setRoute]=useState(location.hash),[refresh,setRefresh]=useState(0);
  const storeId=route.startsWith('#mobile/store/')?decodeURIComponent(route.slice(14)):'';
  const selected=stores.find(s=>s.id===storeId);
@@ -22,16 +25,16 @@ export function MobileApp(){
  async function logout(){try{await api('/auth/logout',{});setUser(null);setStores([]);location.hash='mobile';}catch(e){setError((e as Error).message);}}
  return <div className="supply-mobile"><header className="m-top"><img src="/brand-logo.png" alt="supply"/>{user&&<button className="m-icon" aria-label="Выйти" onClick={()=>void logout()}><LogOut size={20}/></button>}</header>
  {starting?<main className="m-page"><div className="m-skeleton"/><div className="m-skeleton"/><p className="m-muted" role="status">Загружаем supply…</p></main>:!user?<MobileLogin onLogin={authenticate} initialError={error}/>:<main className="m-page">
- {selected?<><button className="m-back" onClick={()=>{location.hash='mobile';}}><ArrowLeft size={18}/>Магазины</button>{selected.marketplace==='ozon'?<div className="m-empty"><h2>Ozon</h2><p>Отправления FBS доступны на сайте. Мобильную сборку Ozon подключим следующим этапом.</p></div>:<MobileAssembly key={selected.id} store={selected} account={user.email} onUnauthorized={()=>setUser(null)}/>} </>:<>
+ {selected?<><button className="m-back" onClick={()=>{location.hash='mobile';}}><ArrowLeft size={18}/>Магазины</button><div className="m-work-modes"><button className={mode==='assembly'?'active':''} onClick={()=>setMode('assembly')}>Сборка</button><button className={mode==='inventory'?'active':''} onClick={()=>setMode('inventory')}>Инвентаризация</button></div>{mode==='inventory'?<InventoryCount key={selected.id} storeId={selected.id} mobile/>:selected.marketplace==='ozon'?<div className="m-empty"><h2>Ozon</h2><p>Отправления FBS доступны на сайте. Мобильную сборку Ozon подключим следующим этапом.</p></div>:<MobileAssembly key={selected.id} store={selected} account={user.email} onUnauthorized={()=>setUser(null)}/>} </>:<>
  <div className="m-title-row"><div><p className="m-eyebrow">Рабочее пространство</p><h1>Магазины</h1></div><button className="m-icon" aria-label="Обновить магазины" onClick={()=>setRefresh(n=>n+1)}><RefreshCw size={20}/></button></div>
- <p className="m-muted m-intro">{user.name||user.email}, выберите магазин для сборки.</p>
+ <p className="m-muted m-intro">{user.name||user.email}, выберите магазин для сборки или инвентаризации.</p>
  {error&&<p className="m-error" role="alert">{error}</p>}
  {storeId&&!selected&&<p className="m-error">Магазин недоступен. Выберите другой магазин.</p>}
  <div className="m-shop-list">{stores.map(s=><button className="m-shop" key={s.id} onClick={()=>{location.hash='mobile/store/'+encodeURIComponent(s.id);}}><span className="m-shop-icon"><StoreIcon size={23}/></span><span><strong>{s.name}</strong><small>{s.warehouse_name||(s.marketplace==='ozon'?'Ozon':'Wildberries')}</small></span><ChevronRight size={20}/></button>)}</div>
  {!stores.length&&<div className="m-empty"><StoreIcon size={30}/><h2>Нет доступных магазинов</h2><p>Подключите магазин на сайте supply или попросите владельца выдать доступ.</p><button className="m-secondary" onClick={()=>setRefresh(n=>n+1)}>Обновить</button></div>}
  </>}
  </main>}
- <footer className="m-footer"><Boxes size={15}/> supply · Сборка заказов</footer></div>;
+ <Toaster theme="dark" position="top-center" richColors/><footer className="m-footer"><Boxes size={15}/> supply · Склад и сборка</footer></div>;
 }
 function MobileLogin({onLogin,initialError}:{onLogin:()=>Promise<void>;initialError:string}){
  const [email,setEmail]=useState(''),[password,setPassword]=useState(''),[visible,setVisible]=useState(false),[busy,setBusy]=useState(false),[error,setError]=useState(initialError);

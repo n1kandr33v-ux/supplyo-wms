@@ -16,7 +16,7 @@ with zipfile.ZipFile(build/'unsigned.apk','a',compression=zipfile.ZIP_DEFLATED) 
 run(bt/'zipalign.exe','-f','4',build/'unsigned.apk',build/'aligned.apk')
 key=root/'.signing/preview.p12';key.parent.mkdir(exist_ok=True)
 if not key.exists():run(jdk/'keytool.exe','-genkeypair','-keystore',key,'-storepass','android','-keypass','android','-alias','androiddebugkey','-keyalg','RSA','-keysize','2048','-validity','10000','-dname','CN=supply preview,O=supply,C=RU')
-output=build/'supply-android-0.2.1.apk'
+output=build/'supply-android-0.3.0.apk'
 run(jdk/'java.exe','-jar',bt/'lib/apksigner.jar','sign','--ks',key,'--ks-pass','pass:android','--ks-key-alias','androiddebugkey','--out',output,build/'aligned.apk')
 run(jdk/'java.exe','-jar',bt/'lib/apksigner.jar','verify','--verbose',output)
 run(bt/'aapt.exe','dump','badging',output)
